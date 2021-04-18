@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_vegan_app_web_admin/auth_page.dart';
+import 'package:untitled_vegan_app_web_admin/backend.dart';
 import 'package:untitled_vegan_app_web_admin/user.dart';
 
 class MainPage extends StatefulWidget {
@@ -11,6 +12,11 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    Backend.unauthCallback = () {
+      setState(() {
+        User.currentNullable = null;
+      });
+    };
   }
 
   @override
