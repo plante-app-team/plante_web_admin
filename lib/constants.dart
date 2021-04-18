@@ -1,0 +1,1 @@
+const BACKEND_ADDRESS = '185.52.2.206:8080';
