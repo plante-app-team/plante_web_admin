@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_vegan_app_web_admin/main_page.dart';
-import 'package:untitled_vegan_app_web_admin/user.dart';
+import 'package:untitled_vegan_app_web_admin/ui/main_page.dart';
+import 'package:untitled_vegan_app_web_admin/model/user.dart';
 
 void main() async {
   await User.staticInit();

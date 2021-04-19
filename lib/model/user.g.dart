@@ -26,6 +26,9 @@ class _$UserSerializer implements StructuredSerializer<User> {
           specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'rights_group',
+      serializers.serialize(object.userGroup,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -54,6 +57,10 @@ class _$UserSerializer implements StructuredSerializer<User> {
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'rights_group':
+          result.userGroup = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
       }
     }
 
@@ -68,6 +75,8 @@ class _$User extends User {
   final String backendClientToken;
   @override
   final String name;
+  @override
+  final int userGroup;
 
   factory _$User([void Function(UserBuilder)? updates]) =>
       (new UserBuilder()..update(updates)).build();
@@ -75,12 +84,14 @@ class _$User extends User {
   _$User._(
       {required this.backendId,
       required this.backendClientToken,
-      required this.name})
+      required this.name,
+      required this.userGroup})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(backendId, 'User', 'backendId');
     BuiltValueNullFieldError.checkNotNull(
         backendClientToken, 'User', 'backendClientToken');
     BuiltValueNullFieldError.checkNotNull(name, 'User', 'name');
+    BuiltValueNullFieldError.checkNotNull(userGroup, 'User', 'userGroup');
   }
 
   @override
@@ -96,13 +107,16 @@ class _$User extends User {
     return other is User &&
         backendId == other.backendId &&
         backendClientToken == other.backendClientToken &&
-        name == other.name;
+        name == other.name &&
+        userGroup == other.userGroup;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, backendId.hashCode), backendClientToken.hashCode),
-        name.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, backendId.hashCode), backendClientToken.hashCode),
+            name.hashCode),
+        userGroup.hashCode));
   }
 
   @override
@@ -110,7 +124,8 @@ class _$User extends User {
     return (newBuiltValueToStringHelper('User')
           ..add('backendId', backendId)
           ..add('backendClientToken', backendClientToken)
-          ..add('name', name))
+          ..add('name', name)
+          ..add('userGroup', userGroup))
         .toString();
   }
 }
@@ -131,6 +146,10 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
+  int? _userGroup;
+  int? get userGroup => _$this._userGroup;
+  set userGroup(int? userGroup) => _$this._userGroup = userGroup;
+
   UserBuilder();
 
   UserBuilder get _$this {
@@ -139,6 +158,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
       _backendId = $v.backendId;
       _backendClientToken = $v.backendClientToken;
       _name = $v.name;
+      _userGroup = $v.userGroup;
       _$v = null;
     }
     return this;
@@ -163,7 +183,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
                 backendId, 'User', 'backendId'),
             backendClientToken: BuiltValueNullFieldError.checkNotNull(
                 backendClientToken, 'User', 'backendClientToken'),
-            name: BuiltValueNullFieldError.checkNotNull(name, 'User', 'name'));
+            name: BuiltValueNullFieldError.checkNotNull(name, 'User', 'name'),
+            userGroup: BuiltValueNullFieldError.checkNotNull(
+                userGroup, 'User', 'userGroup'));
     replace(_$result);
     return _$result;
   }

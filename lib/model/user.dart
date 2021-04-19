@@ -16,6 +16,8 @@ abstract class User implements Built<User, UserBuilder> {
   String get backendClientToken;
   @BuiltValueField(wireName: 'name')
   String get name;
+  @BuiltValueField(wireName: 'rights_group')
+  int get userGroup;
 
   static User? fromJson(Map<String, dynamic> json) {
     return BuildValueHelper.jsonSerializers.deserializeWith(User.serializer, json);
@@ -25,12 +27,6 @@ abstract class User implements Built<User, UserBuilder> {
     return BuildValueHelper.jsonSerializers.serializeWith(
         User.serializer, this) as Map<String, dynamic>;
   }
-
-  factory User([void Function(UserBuilder) updates]) = _$User;
-  User._();
-  static Serializer<User> get serializer => _$userSerializer;
-
-
 
   static Future<void> staticInit() async {
     final prefs = await SharedPreferences.getInstance();
@@ -54,4 +50,9 @@ abstract class User implements Built<User, UserBuilder> {
   }
 
   static User get current => currentNullable!;
+
+
+  factory User([void Function(UserBuilder) updates]) = _$User;
+  User._();
+  static Serializer<User> get serializer => _$userSerializer;
 }

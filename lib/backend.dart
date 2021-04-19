@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:untitled_vegan_app_web_admin/user.dart';
+import 'package:untitled_vegan_app_web_admin/model/user.dart';
 
 const _BACKEND_ADDRESS = '185.52.2.206:8080';
 
@@ -8,9 +8,9 @@ class Backend {
 
   static Future<http.Response> get(
       String path,
-      Map<String, String>? queryParams,
-      {Map<String, String>? headers}) async {
-    final url = Uri.http(_BACKEND_ADDRESS, path, queryParams = queryParams);
+      [Map<String, String>? queryParams,
+       Map<String, String>? headers]) async {
+    final url = Uri.http(_BACKEND_ADDRESS, path, queryParams);
     final headersReally = Map<String, String>.from(headers ?? Map<String, String>());
     if (User.currentNullable != null) {
       headersReally["Authorization"] = "Bearer ${User.current.backendClientToken}";

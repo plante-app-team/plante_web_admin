@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_vegan_app_web_admin/auth_page.dart';
+import 'package:untitled_vegan_app_web_admin/ui/auth_page.dart';
 import 'package:untitled_vegan_app_web_admin/backend.dart';
-import 'package:untitled_vegan_app_web_admin/user.dart';
+import 'package:untitled_vegan_app_web_admin/ui/moderator_task/moderator_task_page.dart';
+import 'package:untitled_vegan_app_web_admin/model/user.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _MainPageState extends State<MainPage> {
       body: Container(child:
         User.currentNullable == null
             ? AuthPage(() { setState((){}); })
-            : Text("Yee haa! Hello, ${User.current.name}")
+            : ModeratorTaskPage()
     ));
   }
 }
