@@ -20,8 +20,8 @@ class VegStatus extends EnumClass {
 
   static VegStatus? safeValueOf(String name) {
     try {
-      return valueOf(name);
-    } on ArgumentError catch(e) {
+      return valueOf(name.toLowerCase());
+    } on ArgumentError {
       return null;
     }
   }

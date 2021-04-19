@@ -11,6 +11,7 @@ class Backend {
       [Map<String, String>? queryParams,
        Map<String, String>? headers]) async {
     final url = Uri.http(_BACKEND_ADDRESS, path, queryParams);
+    print("Request start: ${url.toString()}");
     final headersReally = Map<String, String>.from(headers ?? Map<String, String>());
     if (User.currentNullable != null) {
       headersReally["Authorization"] = "Bearer ${User.current.backendClientToken}";
@@ -20,6 +21,7 @@ class Backend {
       User.currentNullable = null;
       unauthCallback?.call();
     }
+    print("Request finished: ${url.toString()}");
     return response;
   }
 }

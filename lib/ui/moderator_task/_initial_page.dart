@@ -7,6 +7,7 @@ import 'package:untitled_vegan_app_web_admin/model/moderator_task.dart';
 
 import '_next_page_callback.dart';
 import '_no_tasks_page.dart';
+import '_product_change_task_page.dart';
 import '_user_report_task_page.dart';
 
 class InitialPage extends StatelessWidget {
@@ -29,7 +30,7 @@ class InitialPage extends StatelessWidget {
         if (task.taskType == "user_report") {
           callback.call(UserReportTaskPage(callback, tasks[0], product));
         } else if (task.taskType == "product_change") {
-          callback.call(Text("Not supported yet")); //ProductChangeTaskPage(tasks[0], product));
+          callback.call(ProductChangeTaskPage(callback, tasks[0], product!));
         } else {
           callback.call(Text("Error: unknown task type ${task.taskType}"));
         }

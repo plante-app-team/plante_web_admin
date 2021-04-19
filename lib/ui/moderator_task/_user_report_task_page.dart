@@ -7,6 +7,7 @@ import 'package:untitled_vegan_app_web_admin/model/backend_product.dart';
 import 'package:untitled_vegan_app_web_admin/model/moderator_task.dart';
 import 'package:untitled_vegan_app_web_admin/model/veg_status.dart';
 import 'package:untitled_vegan_app_web_admin/ui/moderator_task/_initial_page.dart';
+import 'package:untitled_vegan_app_web_admin/ui/moderator_task/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '_next_page_callback.dart';
@@ -60,6 +61,14 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (loading) CircularProgressIndicator(),
+
+          Text("Получена жалоба на продукт", style: Theme.of(context).textTheme.headline5),
+          Text("Пожалуйста, попробуйте исправить проблему из текста жалобы. "
+               "Для этого возможно придётся перейти на страницу продукта в "
+               "Open Food Facts и отредактировать его там, либо поменять "
+               "вег-статус продукта тут."),
+          SizedBox(height: 50),
+
           Row(children: [
             Text("Продукт: ", style: Theme.of(context).textTheme.headline6),
             Linkify(
@@ -70,6 +79,10 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
             )
           ]),
           Row(children: [
+            Text("Пользователь: ", style: Theme.of(context).textTheme.headline6),
+            Text(task.taskSourceUserId)
+          ]),
+          Row(children: [
             Text("Жалоба: ", style: Theme.of(context).textTheme.headline6),
             SizedBox(width: 400, child: Text(
                 task.textFromUser ?? "NO TEXT",
@@ -78,8 +91,9 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
           ]),
 
           if (product != null) vegStatusesWidget(product!),
-          if (product == null) SizedBox(width: double.infinity, child: Text(
-              "Продукт существует только в Open Food Facts")),
+          if (product == null) SizedBox(
+              width: double.infinity,
+              child: Text("Продукт существует только в Open Food Facts")),
 
           SizedBox(height: 50),
 
@@ -99,8 +113,7 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
     ])));
   }
 
-  Widget vegStatusesWidget(BackendProduct product) {
-    return Row(children: [
+  Widget vegStatusesWidget(BackendProduct product) =>
       Column(children: [
         Row(children: [
           Checkbox(
@@ -115,124 +128,25 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
               }),
           Text("Изменить вег-статусы")
         ]),
-
-        Text("Вегетарианский статус, источник: ${product.vegetarianStatusSource}"),
-        Row(children: [
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.positive,
-                groupValue: vegetarianStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    vegetarianStatus = value;
-                  });
-                }),
-            Text("Точно да"),
-          ]),
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.negative,
-                groupValue: vegetarianStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    vegetarianStatus = value;
-                  });
-                }),
-            Text("Точно нет"),
-          ]),
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.possible,
-                groupValue: vegetarianStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    vegetarianStatus = value;
-                  });
-                }),
-            Text("Возможно, зависит от производства"),
-          ]),
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.unknown,
-                groupValue: vegetarianStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    vegetarianStatus = value;
-                  });
-                }),
-            Text("Непонятно"),
-          ]),
-        ]),
-      ]),
-      Column(children: [
-        Text("Веганский статус, источник: ${product.veganStatusSource}"),
-        Row(children: [
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.positive,
-                groupValue: veganStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    veganStatus = value;
-                  });
-                }),
-            Text("Точно да"),
-          ]),
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.negative,
-                groupValue: veganStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    veganStatus = value;
-                  });
-                }),
-            Text("Точно нет"),
-          ]),
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.possible,
-                groupValue: veganStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    veganStatus = value;
-                  });
-                }),
-            Text("Возможно, зависит от производства"),
-          ]),
-          Row(children: [
-            Radio<VegStatus>(
-                value: VegStatus.unknown,
-                groupValue: veganStatus,
-                onChanged: !editVegStatuses ? null : (VegStatus? value) {
-                  setState(() {
-                    veganStatus = value;
-                  });
-                }),
-            Text("Непонятно"),
-          ]),
-        ]),
-      ])
-    ]);
-  }
+        VegStatusesWidget(
+            (vegetarianStatus, veganStatus) {
+              setState(() {
+                this.vegetarianStatus = vegetarianStatus;
+                this.veganStatus = veganStatus;
+              });
+            },
+            editVegStatuses,
+            vegetarianStatus,
+            product.vegetarianStatusSource,
+            veganStatus,
+            product.veganStatusSource)
+      ]);
 
   void showModerateBothStatusesWarning() {
-    Widget okButton = OutlinedButton(
-      child: Text("OK"),
-      onPressed: () { Navigator.of(context).pop(); },
-    );
-    AlertDialog alert = AlertDialog(
-      content: Text("Пожалуйста, промодерируйте оба статуса - и вегетарианский, и веганский"),
-      actions: [
-        okButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Пожалуйста, промодерируйте оба статуса - и вегетарианский, и веганский"),
+            duration: Duration(seconds: 10)));
   }
 
   void onSendClicked() async {
