@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:platform_device_id/platform_device_id.dart';
-import 'package:untitled_vegan_app_web_admin/backend.dart';
+import 'package:plante_web_admin/backend.dart';
 
-import 'package:untitled_vegan_app_web_admin/google_authorizer.dart';
-import 'package:untitled_vegan_app_web_admin/model/user.dart';
+import 'package:plante_web_admin/google_authorizer.dart';
+import 'package:plante_web_admin/model/user.dart';
 
 class AuthPage extends StatefulWidget {
   final Function() doneCallback;

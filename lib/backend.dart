@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:untitled_vegan_app_web_admin/model/user.dart';
+import 'package:plante_web_admin/model/user.dart';
 
 const _BACKEND_ADDRESS = '185.52.2.206:8080';
 

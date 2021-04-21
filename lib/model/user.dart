@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled_vegan_app_web_admin/build_value_helper.dart';
+import 'package:plante_web_admin/build_value_helper.dart';
 
 part 'user.g.dart';
 

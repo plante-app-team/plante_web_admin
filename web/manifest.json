@@ -1,6 +1,6 @@
 {
-    "name": "untitled_vegan_app_web_admin",
-    "short_name": "untitled_vegan_app_web_admin",
+    "name": "plante_web_admin",
+    "short_name": "plante_web_admin",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

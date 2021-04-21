@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_vegan_app_web_admin/model/veg_status.dart';
+import 'package:plante_web_admin/model/veg_status.dart';
 
 typedef OnVegStatusesChangeCallback =
 void Function(VegStatus? vegetarianStatus, VegStatus? veganStatus);

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.untitled_vegan_app_web_admin">
+    package="com.example.plante_web_admin">
    <application
-        android:label="untitled_vegan_app_web_admin"
+        android:label="plante_web_admin"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

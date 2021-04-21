@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:untitled_vegan_app_web_admin/backend.dart';
-import 'package:untitled_vegan_app_web_admin/model/backend_product.dart';
-import 'package:untitled_vegan_app_web_admin/model/moderator_task.dart';
+import 'package:plante_web_admin/backend.dart';
+import 'package:plante_web_admin/model/backend_product.dart';
+import 'package:plante_web_admin/model/moderator_task.dart';
 
 import '_next_page_callback.dart';
 import '_no_tasks_page.dart';

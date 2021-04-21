@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_vegan_app_web_admin/ui/moderator_task/_initial_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/_initial_page.dart';
 
 class ModeratorTaskPage extends StatefulWidget {
   @override

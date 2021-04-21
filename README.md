@@ -1,4 +1,4 @@
-# untitled_vegan_app_web_admin
+# plante_web_admin
 
 A new Flutter project.
 

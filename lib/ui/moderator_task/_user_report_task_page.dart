@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:untitled_vegan_app_web_admin/backend.dart';
-import 'package:untitled_vegan_app_web_admin/model/backend_product.dart';
-import 'package:untitled_vegan_app_web_admin/model/moderator_task.dart';
-import 'package:untitled_vegan_app_web_admin/model/veg_status.dart';
-import 'package:untitled_vegan_app_web_admin/ui/moderator_task/_initial_page.dart';
-import 'package:untitled_vegan_app_web_admin/ui/moderator_task/veg_statuses_widget.dart';
+import 'package:plante_web_admin/backend.dart';
+import 'package:plante_web_admin/model/backend_product.dart';
+import 'package:plante_web_admin/model/moderator_task.dart';
+import 'package:plante_web_admin/model/veg_status.dart';
+import 'package:plante_web_admin/ui/moderator_task/_initial_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '_next_page_callback.dart';
