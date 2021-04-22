@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:plante_web_admin/model/user.dart';
 
-const _BACKEND_ADDRESS = '185.52.2.206:8080';
+const _BACKEND_ADDRESS = 'planteapp.com';
 
 class Backend {
   static Function()? unauthCallback;
@@ -10,7 +10,7 @@ class Backend {
       String path,
       [Map<String, String>? queryParams,
        Map<String, String>? headers]) async {
-    final url = Uri.http(_BACKEND_ADDRESS, path, queryParams);
+    final url = Uri.https(_BACKEND_ADDRESS, "/backend/$path", queryParams);
     print("Request start: ${url.toString()}");
     final headersReally = Map<String, String>.from(headers ?? Map<String, String>());
     if (User.currentNullable != null) {
