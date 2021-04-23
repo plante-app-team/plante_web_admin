@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Untitled Vegan App Web Admin',
+      title: 'Plante Web Admin',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
