@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plante_web_admin/ui/main_page.dart';
 import 'package:plante_web_admin/model/user.dart';
+import 'package:plante_web_admin/ui/moderator_task/moderator_task_page.dart';
 
 void main() async {
   await User.staticInit();
@@ -13,10 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Plante Web Admin',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MainPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MainPage(),
+        '/next_moderator_task': (context) =>
+            Builder(builder: (b) { return ModeratorTaskPage(); }),
+      },
     );
   }
 }

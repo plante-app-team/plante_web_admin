@@ -23,6 +23,8 @@ class _ModeratorTaskPageState extends State<ModeratorTaskPage> {
         });
       });
     }
-    return realPage!;
+    return Scaffold(
+      body: realPage!,
+    );
   }
 }
