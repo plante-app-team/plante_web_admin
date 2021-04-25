@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:platform_device_id/platform_device_id.dart';
@@ -41,10 +42,25 @@ class _AuthPageState extends State<AuthPage> {
               final googleAccount = await GoogleAuthorizer.auth();
               final deviceId = await PlatformDeviceId.getDeviceId;
               final deviceIdEncoded = base64Encode(deviceId!.codeUnits);
-              final resp = await Backend.get(
+              var resp = await Backend.get(
                   "login_user/",
                   {"googleIdToken": googleAccount.idToken,
                     "deviceId": deviceIdEncoded});
+
+              if (kDebugMode) {
+                final json = jsonDecode(resp.body);
+                if (json["error"] == "not_registered") {
+                  await Backend.get(
+                      "register_user/",
+                      {"googleIdToken": googleAccount.idToken,
+                        "deviceId": deviceIdEncoded,
+                        "userName": "local always moderator"});
+                  resp = await Backend.get(
+                      "login_user/",
+                      {"googleIdToken": googleAccount.idToken,
+                        "deviceId": deviceIdEncoded});
+                }
+              }
 
               final user = User.fromJson(jsonDecode(resp.body));
               if (user != null && user.userGroup == 1) {
