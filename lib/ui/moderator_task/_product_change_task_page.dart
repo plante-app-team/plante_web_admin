@@ -80,7 +80,7 @@ class _ProductChangeTaskPageState extends State<ProductChangeTaskPage> {
           ]),
           Row(children: [
             Text("Пользователь: ", style: Theme.of(context).textTheme.headline6),
-            Text(task.taskSourceUserId)
+            SelectableText(task.taskSourceUserId)
           ]),
 
           vegStatusesWidget(product),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plante_web_admin/ui/auth_page.dart';
 import 'package:plante_web_admin/backend.dart';
-import 'package:plante_web_admin/ui/main_actions_page.dart';
+import 'package:plante_web_admin/ui/main_actions_widget.dart';
 import 'package:plante_web_admin/model/user.dart';
 
 class MainPage extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
       body: Container(child:
         User.currentNullable == null
             ? AuthPage(() { setState((){}); })
-            : MainActionsPage()
+            : MainActionsWidget()
     ));
   }
 }

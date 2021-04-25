@@ -80,11 +80,11 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
           ]),
           Row(children: [
             Text("Пользователь: ", style: Theme.of(context).textTheme.headline6),
-            Text(task.taskSourceUserId)
+            SelectableText(task.taskSourceUserId)
           ]),
           Row(children: [
             Text("Жалоба: ", style: Theme.of(context).textTheme.headline6),
-            SizedBox(width: 400, child: Text(
+            SizedBox(width: 400, child: SelectableText(
                 task.textFromUser ?? "NO TEXT",
                 maxLines: null,
                 textAlign: TextAlign.left))
