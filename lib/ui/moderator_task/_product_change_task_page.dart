@@ -123,7 +123,7 @@ class _ProductChangeTaskPageState extends State<ProductChangeTaskPage> {
         loading = true;
       });
       var resp = await Backend.get("moderate_product_veg_statuses/", {
-        "barcode": task.barcode,
+        "barcode": task.barcode!,
         "vegetarianStatus": vegetarianStatus!.name,
         "veganStatus": veganStatus!.name
       });

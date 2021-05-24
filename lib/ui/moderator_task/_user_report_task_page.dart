@@ -156,7 +156,7 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
       });
       if (editVegStatuses) {
         final resp = await Backend.get("moderate_product_veg_statuses/", {
-          "barcode": task.barcode,
+          "barcode": task.barcode!,
           "vegetarianStatus": vegetarianStatus!.name,
           "veganStatus": veganStatus!.name
         });

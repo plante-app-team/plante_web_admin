@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:plante_web_admin/build_value_helper.dart';
@@ -10,7 +8,9 @@ abstract class ModeratorTask implements Built<ModeratorTask, ModeratorTaskBuilde
   @BuiltValueField(wireName: 'id')
   int get id;
   @BuiltValueField(wireName: 'barcode')
-  String get barcode;
+  String? get barcode;
+  @BuiltValueField(wireName: 'osm_id')
+  String? get osmId;
   @BuiltValueField(wireName: 'task_type')
   String get taskType;
   @BuiltValueField(wireName: 'task_source_user_id')

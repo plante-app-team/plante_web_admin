@@ -21,9 +21,6 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
-      'barcode',
-      serializers.serialize(object.barcode,
-          specifiedType: const FullType(String)),
       'task_type',
       serializers.serialize(object.taskType,
           specifiedType: const FullType(String)),
@@ -35,6 +32,20 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
           specifiedType: const FullType(int)),
     ];
     Object? value;
+    value = object.barcode;
+    if (value != null) {
+      result
+        ..add('barcode')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.osmId;
+    if (value != null) {
+      result
+        ..add('osm_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.textFromUser;
     if (value != null) {
       result
@@ -84,6 +95,10 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
           result.barcode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'osm_id':
+          result.osmId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'task_type':
           result.taskType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -123,7 +138,9 @@ class _$ModeratorTask extends ModeratorTask {
   @override
   final int id;
   @override
-  final String barcode;
+  final String? barcode;
+  @override
+  final String? osmId;
   @override
   final String taskType;
   @override
@@ -144,7 +161,8 @@ class _$ModeratorTask extends ModeratorTask {
 
   _$ModeratorTask._(
       {required this.id,
-      required this.barcode,
+      this.barcode,
+      this.osmId,
       required this.taskType,
       required this.taskSourceUserId,
       this.textFromUser,
@@ -154,7 +172,6 @@ class _$ModeratorTask extends ModeratorTask {
       this.resolutionTime})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'ModeratorTask', 'id');
-    BuiltValueNullFieldError.checkNotNull(barcode, 'ModeratorTask', 'barcode');
     BuiltValueNullFieldError.checkNotNull(
         taskType, 'ModeratorTask', 'taskType');
     BuiltValueNullFieldError.checkNotNull(
@@ -176,6 +193,7 @@ class _$ModeratorTask extends ModeratorTask {
     return other is ModeratorTask &&
         id == other.id &&
         barcode == other.barcode &&
+        osmId == other.osmId &&
         taskType == other.taskType &&
         taskSourceUserId == other.taskSourceUserId &&
         textFromUser == other.textFromUser &&
@@ -193,7 +211,9 @@ class _$ModeratorTask extends ModeratorTask {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, id.hashCode), barcode.hashCode),
+                            $jc(
+                                $jc($jc($jc(0, id.hashCode), barcode.hashCode),
+                                    osmId.hashCode),
                                 taskType.hashCode),
                             taskSourceUserId.hashCode),
                         textFromUser.hashCode),
@@ -208,6 +228,7 @@ class _$ModeratorTask extends ModeratorTask {
     return (newBuiltValueToStringHelper('ModeratorTask')
           ..add('id', id)
           ..add('barcode', barcode)
+          ..add('osmId', osmId)
           ..add('taskType', taskType)
           ..add('taskSourceUserId', taskSourceUserId)
           ..add('textFromUser', textFromUser)
@@ -230,6 +251,10 @@ class ModeratorTaskBuilder
   String? _barcode;
   String? get barcode => _$this._barcode;
   set barcode(String? barcode) => _$this._barcode = barcode;
+
+  String? _osmId;
+  String? get osmId => _$this._osmId;
+  set osmId(String? osmId) => _$this._osmId = osmId;
 
   String? _taskType;
   String? get taskType => _$this._taskType;
@@ -268,6 +293,7 @@ class ModeratorTaskBuilder
     if ($v != null) {
       _id = $v.id;
       _barcode = $v.barcode;
+      _osmId = $v.osmId;
       _taskType = $v.taskType;
       _taskSourceUserId = $v.taskSourceUserId;
       _textFromUser = $v.textFromUser;
@@ -297,8 +323,8 @@ class ModeratorTaskBuilder
         new _$ModeratorTask._(
             id: BuiltValueNullFieldError.checkNotNull(
                 id, 'ModeratorTask', 'id'),
-            barcode: BuiltValueNullFieldError.checkNotNull(
-                barcode, 'ModeratorTask', 'barcode'),
+            barcode: barcode,
+            osmId: osmId,
             taskType: BuiltValueNullFieldError.checkNotNull(
                 taskType, 'ModeratorTask', 'taskType'),
             taskSourceUserId: BuiltValueNullFieldError.checkNotNull(

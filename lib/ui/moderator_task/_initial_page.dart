@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:plante_web_admin/backend.dart';
 import 'package:plante_web_admin/model/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
+import 'package:plante_web_admin/ui/moderator_task/_osm_shop_creation_task_page.dart';
 
 import '_next_page_callback.dart';
 import '_no_tasks_page.dart';
@@ -25,12 +26,19 @@ class InitialPage extends StatelessWidget {
       }
       if (tasks.isNotEmpty) {
         final task = tasks[0];
-        final product = await retrieveProduct(task.barcode);
+        final BackendProduct? product;
+        if (task.barcode != null) {
+          product = await retrieveProduct(task.barcode!);
+        } else {
+          product = null;
+        }
 
         if (task.taskType == "user_report") {
           callback.call(UserReportTaskPage(callback, tasks[0], product));
         } else if (task.taskType == "product_change") {
           callback.call(ProductChangeTaskPage(callback, tasks[0], product!));
+        } else if (task.taskType == "osm_shop_creation") {
+          callback.call(OsmShopCreationTaskPage(callback, tasks[0], task.osmId!));
         } else {
           callback.call(Text("Error: unknown task type ${task.taskType}"));
         }
