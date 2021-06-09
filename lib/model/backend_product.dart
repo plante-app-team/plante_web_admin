@@ -5,6 +5,8 @@ import 'package:plante_web_admin/build_value_helper.dart';
 part 'backend_product.g.dart';
 
 abstract class BackendProduct implements Built<BackendProduct, BackendProductBuilder> {
+  static final empty = BackendProduct((v) => v.barcode = '');
+
   @BuiltValueField(wireName: 'server_id')
   int? get serverId;
   @BuiltValueField(wireName: 'barcode')

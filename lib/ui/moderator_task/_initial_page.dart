@@ -27,7 +27,7 @@ class InitialPage extends StatelessWidget {
       if (tasks.isNotEmpty) {
         final task = tasks[0];
         final BackendProduct? product;
-        if (task.barcode != null) {
+        if (task.barcode != null && task.barcode!.trim().isNotEmpty) {
           product = await retrieveProduct(task.barcode!);
         } else {
           product = null;
@@ -36,7 +36,7 @@ class InitialPage extends StatelessWidget {
         if (task.taskType == "user_report") {
           callback.call(UserReportTaskPage(callback, tasks[0], product));
         } else if (task.taskType == "product_change") {
-          callback.call(ProductChangeTaskPage(callback, tasks[0], product!));
+          callback.call(ProductChangeTaskPage(callback, tasks[0], product ?? BackendProduct.empty));
         } else if (task.taskType == "osm_shop_creation") {
           callback.call(OsmShopCreationTaskPage(callback, tasks[0], task.osmId!));
         } else {

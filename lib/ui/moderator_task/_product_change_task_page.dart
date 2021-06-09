@@ -69,15 +69,20 @@ class _ProductChangeTaskPageState extends State<ProductChangeTaskPage> {
                "нужно понять правильные вег-статусы продукта и выбрать их."),
           SizedBox(height: 50),
 
-          Row(children: [
-            Text("Продукт: ", style: Theme.of(context).textTheme.headline6),
-            Linkify(
-              text: "https://ru.openfoodfacts.org/product/${task.barcode}/",
-              onOpen: (e) {
-                launch(e.url);
-              },
-            )
-          ]),
+          if (product.barcode.isNotEmpty)
+            Row(children: [
+              Text("Продукт: ", style: Theme.of(context).textTheme.headline6),
+              Linkify(
+                text: "https://ru.openfoodfacts.org/product/${task.barcode}/",
+                onOpen: (e) {
+                  launch(e.url);
+                },
+              )
+            ]),
+          if (product.barcode.isEmpty)
+            Text("Пустой продукт - произошла серверная ошибка. "
+                "Нажмите \"Промодерировано\" и сообщите о об ошибке разработчику",
+                style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.red)),
           Row(children: [
             Text("Пользователь: ", style: Theme.of(context).textTheme.headline6),
             SelectableText(task.taskSourceUserId)
@@ -122,13 +127,15 @@ class _ProductChangeTaskPageState extends State<ProductChangeTaskPage> {
       setState(() {
         loading = true;
       });
-      var resp = await Backend.get("moderate_product_veg_statuses/", {
-        "barcode": task.barcode!,
-        "vegetarianStatus": vegetarianStatus!.name,
-        "veganStatus": veganStatus!.name
-      });
-      assert(jsonDecode(resp.body)["result"] == "ok");
-      resp = await Backend.get("resolve_moderator_task/", {
+      if (task.barcode != null && task.barcode!.trim().isNotEmpty) {
+        final resp = await Backend.get("moderate_product_veg_statuses/", {
+          "barcode": task.barcode!,
+          "vegetarianStatus": vegetarianStatus!.name,
+          "veganStatus": veganStatus!.name
+        });
+        assert(jsonDecode(resp.body)["result"] == "ok");
+      }
+      final resp = await Backend.get("resolve_moderator_task/", {
         "taskId": task.id.toString()
       });
       assert(jsonDecode(resp.body)["result"] == "ok");
