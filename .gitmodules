@@ -1,0 +1,3 @@
+[submodule "submodules/plante"]
+	path = submodules/plante
+	url = git@github.com:blazern/plante.git

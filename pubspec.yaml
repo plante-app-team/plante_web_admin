@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.2
   google_sign_in: ^5.0.2
   shared_preferences: ^2.0.5
@@ -32,6 +34,9 @@ dependencies:
   built_collection: ^5.0.0
   url_launcher: ^6.0.3
   flutter_linkify: ^5.0.2
+  intl: ^0.17.0
+  plante:
+    path: submodules/plante
 
 dev_dependencies:
   flutter_test:
@@ -41,3 +46,44 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/google_icon.svg
+    - assets/back_arrow.svg
+    - assets/add_photo.svg
+    - assets/cancel_circle.svg
+    - assets/info_icon.svg
+    - assets/veg_status_vegan.svg
+    - assets/veg_status_vegetarian.svg
+    - assets/veg_status_negative.svg
+    - assets/veg_status_unknown.png
+    - assets/veg_status_source_auto.svg
+    - assets/veg_status_source_community.svg
+    - assets/veg_status_source_moderator.svg
+    - assets/veg_status_source_unknown.svg
+    - assets/expand_down.svg
+    - assets/expand_up.svg
+    - assets/marker_abstract.svg
+    - assets/barcode.svg
+    - assets/history.svg
+    - assets/cancel.svg
+    - assets/menu_ellipsis.svg
+    - assets/flash_disabled.svg
+    - assets/flash_enabled.svg
+    - assets/settings.svg
+    - assets/barcode_scan_mode.svg
+    - assets/barcode_type_mode.svg
+    - assets/map_marker_empty.svg
+    - assets/map_marker_filled.svg
+    - assets/map_marker_selected.svg
+    - assets/map_marker_group_empty.svg
+    - assets/map_marker_group_filled.svg
+    - assets/map_marker_accented.svg
+    - assets/map_marker_group_accented.svg
+    - assets/map_marker_group_selected.svg
+    - assets/my_location.svg
+    - assets/plus_shop.svg
+    - assets/cancel_circle_light.svg
+    - assets/map_check_mark.svg
+    - assets/location.svg

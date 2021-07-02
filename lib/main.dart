@@ -3,6 +3,7 @@ import 'package:plante_web_admin/ui/main_page.dart';
 import 'package:plante_web_admin/model/user.dart';
 import 'package:plante_web_admin/ui/manage_users/manage_users_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/moderator_task_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   await User.staticInit();
@@ -15,6 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Plante Web Admin',
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       initialRoute: '/',
       routes: {
         '/': (context) => MainPage(),
