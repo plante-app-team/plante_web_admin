@@ -1,4 +1,6 @@
 {
+    "web_global_send": "Send",
+
     "web_main_actions_widget_nameless_moderator": "nameless moderator",
     "web_main_actions_widget_hello": "Hello, ",
     "web_main_actions_widget_your_id": "Your ID: ",
@@ -22,7 +24,6 @@
     "web_user_report_task_page_complaint": "Complaint: ",
     "web_user_report_task_page_product_exists_only_in_off": "The product exists only in Open Food Facts",
     "web_user_report_task_page_moderated": "Moderated",
-    "web_user_report_task_page_send": "Send",
     "web_user_report_task_page_change_veg_statuses": "Change veg-statuses",
     "web_user_report_task_page_please_moderate_both_veg_statuses": "Please, moderate both statuses - vegetarian and vegan",
 
@@ -32,14 +33,12 @@
     "web_product_change_task_page_empty_product_error_descr": "Empty product - server error occurred. Click \"Moderated\" and report the error to the developer",
     "web_product_change_task_page_user": "User: ",
     "web_product_change_task_page_moderated": "Moderated",
-    "web_product_change_task_page_send": "Send",
 
     "web_osm_shop_creation_task_page_title": "Shop is created within Open Street Map",
     "web_osm_shop_creation_task_page_descr": "Please verify that the created within Open Street Map shop:\n- has a proper name\n- has a realistic location\nIf there's something not right about the shop, it should be removed",
     "web_osm_shop_creation_task_page_shop": "Shop: ",
     "web_osm_shop_creation_task_page_user": "User: ",
     "web_osm_shop_creation_task_page_moderated": "Moderated",
-    "web_osm_shop_creation_task_page_send": "Send",
 
     "web_no_tasks_page_title": "There are no moderation tasks",
 
@@ -50,5 +49,9 @@
     "web_manage_users_page_deletion_dialog_positive": "Yes!",
     "web_manage_users_page_user_deleted": "The user is deleted",
     "web_manage_users_page_user_not_found": "Such a user is not found",
-    "web_manage_users_page_error_occurred": "Error"
+    "web_manage_users_page_error_occurred": "Error",
+
+    "web_moderator_page_base_unassign": "Unassign task from me",
+    "web_moderator_page_base_unassign_dialog_title": "Unassign task",
+    "web_moderator_page_base_unassign_dialog_descr": "Unassign the task? You'll be able to assign it back only manually"
 }

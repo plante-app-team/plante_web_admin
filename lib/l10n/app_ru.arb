@@ -1,4 +1,6 @@
 {
+    "web_global_send": "Отправить",
+
     "web_main_actions_widget_nameless_moderator": "безымянный модератор",
     "web_main_actions_widget_hello": "Привет,",
     "web_main_actions_widget_your_id": "Твой ID: ",
@@ -22,7 +24,6 @@
     "web_user_report_task_page_complaint": "Жалоба: ",
     "web_user_report_task_page_product_exists_only_in_off": "Продукт существует только в Open Food Facts",
     "web_user_report_task_page_moderated": "Промодерировано",
-    "web_user_report_task_page_send": "Отправить",
     "web_user_report_task_page_change_veg_statuses": "Изменить вег-статусы",
     "web_user_report_task_page_please_moderate_both_veg_statuses": "Пожалуйста, промодерируйте оба статуса - и вегетарианский, и веганский",
 
@@ -32,14 +33,12 @@
     "web_product_change_task_page_empty_product_error_descr": "Пустой продукт - произошла серверная ошибка. Нажмите \"Промодерировано\" и сообщите о об ошибке разработчику",
     "web_product_change_task_page_user": "Пользователь: ",
     "web_product_change_task_page_moderated": "Промодерировано",
-    "web_product_change_task_page_send": "Отправить",
 
     "web_osm_shop_creation_task_page_title": "Магазин создан в Open Street Map",
     "web_osm_shop_creation_task_page_descr": "Пожалуйста, убедитесь, что созданный магазин в Open Street Map:\n- имеет нормальное название\n- имеет правдоподобную локацию\nЕсли с магазином что-то не так, его следует удалить",
     "web_osm_shop_creation_task_page_shop": "Магазин: ",
     "web_osm_shop_creation_task_page_user": "Пользователь: ",
     "web_osm_shop_creation_task_page_moderated": "Промодерировано",
-    "web_osm_shop_creation_task_page_send": "Отправить",
 
     "web_no_tasks_page_title": "Задач на модерацию нет",
 
@@ -50,5 +49,9 @@
     "web_manage_users_page_deletion_dialog_positive": "Да!",
     "web_manage_users_page_user_deleted": "Пользователь удалён",
     "web_manage_users_page_user_not_found": "Такой пользователь не найден",
-    "web_manage_users_page_error_occurred": "Ошибочка"
+    "web_manage_users_page_error_occurred": "Ошибочка",
+
+    "web_moderator_page_base_unassign": "Снять задачу с меня",
+    "web_moderator_page_base_unassign_dialog_title": "Снятие задачи",
+    "web_moderator_page_base_unassign_dialog_descr": "Снять с себя задачу? Назначить на себя её обратно можно будет только вручную"
 }
