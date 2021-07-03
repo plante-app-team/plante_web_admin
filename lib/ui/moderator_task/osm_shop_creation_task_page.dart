@@ -8,8 +8,8 @@ import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
 
-import '_initial_page.dart';
-import '_next_page_callback.dart';
+import 'initial_page.dart';
+import 'next_page_callback.dart';
 
 class OsmShopCreationTaskPage extends StatefulWidget {
   final NextPageCallback callback;

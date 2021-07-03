@@ -5,12 +5,12 @@ import 'package:get_it/get_it.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
-import 'package:plante_web_admin/ui/moderator_task/_osm_shop_creation_task_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/osm_shop_creation_task_page.dart';
 
-import '_next_page_callback.dart';
-import '_no_tasks_page.dart';
-import '_product_change_task_page.dart';
-import '_user_report_task_page.dart';
+import 'next_page_callback.dart';
+import 'no_tasks_page.dart';
+import 'product_change_task_page.dart';
+import 'user_report_task_page.dart';
 
 class InitialPage extends StatefulWidget {
   final NextPageCallback callback;

@@ -47,14 +47,14 @@ class _AuthPageState extends State<AuthPage>
   void onUserParamsUpdate(UserParams? userParams) {
     setState(() {
       _user = userParams;
+      if (_user != null) {
+        doneCallback.call();
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_user != null) {
-      doneCallback.call();
-    }
     return Center(
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       if (loading) CircularProgressIndicator(),

@@ -7,12 +7,12 @@ import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
-import 'package:plante_web_admin/ui/moderator_task/_initial_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/initial_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
 
-import '_next_page_callback.dart';
+import 'next_page_callback.dart';
 
 class UserReportTaskPage extends StatefulWidget {
   final NextPageCallback callback;
