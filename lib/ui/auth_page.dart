@@ -89,7 +89,7 @@ class _AuthPageState extends State<AuthPage>
               }
 
               final user = UserParams.fromJson(jsonDecode(resp.body));
-              if (user != null && user.userGroup == 1) {
+              if (user != null && (user.userGroup ?? 1) < 3) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(context
                         .strings.web_auth_page_error_user_is_not_moderator)));
