@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:plante_web_admin/backend.dart';
-import 'package:plante_web_admin/model/backend_product.dart';
+import 'package:get_it/get_it.dart';
+import 'package:plante/model/veg_status.dart';
+import 'package:plante/outside/backend/backend.dart';
+import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
-import 'package:plante_web_admin/model/veg_status.dart';
 import 'package:plante_web_admin/ui/moderator_task/_initial_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,6 +26,8 @@ class UserReportTaskPage extends StatefulWidget {
 }
 
 class _UserReportTaskPageState extends State<UserReportTaskPage> {
+  final _backend = GetIt.I.get<Backend>();
+
   final NextPageCallback callback;
   final ModeratorTask task;
   final BackendProduct? product;
@@ -45,10 +48,11 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
     return moderated;
   }
 
-  _UserReportTaskPageState(this.callback, this.task, BackendProduct? product):
-      product = product,
-      vegetarianStatus = VegStatus.safeValueOf(product?.vegetarianStatus ?? ""),
-      veganStatus = VegStatus.safeValueOf(product?.veganStatus ?? "");
+  _UserReportTaskPageState(this.callback, this.task, BackendProduct? product)
+      : product = product,
+        vegetarianStatus =
+            VegStatus.safeValueOf(product?.vegetarianStatus ?? ""),
+        veganStatus = VegStatus.safeValueOf(product?.veganStatus ?? "");
 
   @override
   void initState() {
@@ -57,64 +61,64 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: SizedBox(width: 700, child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (loading) CircularProgressIndicator(),
-
-          Text("Получена жалоба на продукт", style: Theme.of(context).textTheme.headline5),
-          Text("Пожалуйста, попробуйте исправить проблему из текста жалобы. "
-               "Для этого возможно придётся перейти на страницу продукта в "
-               "Open Food Facts и отредактировать его там, либо поменять "
-               "вег-статус продукта тут."),
-          SizedBox(height: 50),
-
-          Row(children: [
-            Text("Продукт: ", style: Theme.of(context).textTheme.headline6),
-            Linkify(
-              text: "https://ru.openfoodfacts.org/product/${task.barcode}/",
-              onOpen: (e) {
-                launch(e.url);
-              },
-            )
-          ]),
-          Row(children: [
-            Text("Пользователь: ", style: Theme.of(context).textTheme.headline6),
-            SelectableText(task.taskSourceUserId)
-          ]),
-          Row(children: [
-            Text("Жалоба: ", style: Theme.of(context).textTheme.headline6),
-            SizedBox(width: 400, child: SelectableText(
-                task.textFromUser ?? "NO TEXT",
-                maxLines: null,
-                textAlign: TextAlign.left))
-          ]),
-
-          if (product != null) vegStatusesWidget(product!),
-          if (product == null) SizedBox(
-              width: double.infinity,
-              child: Text("Продукт существует только в Open Food Facts")),
-
-          SizedBox(height: 50),
-
-          Row(children: [
-            Checkbox(
-                value: moderated,
-                onChanged: (bool? value) {
-                  setState(() {
-                    moderated = value ?? false;
-                  });
-                }),
-            Text("Промодерировано")
-          ]),
-          OutlinedButton(
-              child: Text("Отправить"),
-              onPressed: canSend ? onSendClicked : null)
-    ])));
+    return Center(
+        child: SizedBox(
+            width: 700,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              if (loading) CircularProgressIndicator(),
+              Text("Получена жалоба на продукт",
+                  style: Theme.of(context).textTheme.headline5),
+              Text(
+                  "Пожалуйста, попробуйте исправить проблему из текста жалобы. "
+                  "Для этого возможно придётся перейти на страницу продукта в "
+                  "Open Food Facts и отредактировать его там, либо поменять "
+                  "вег-статус продукта тут."),
+              SizedBox(height: 50),
+              Row(children: [
+                Text("Продукт: ", style: Theme.of(context).textTheme.headline6),
+                Linkify(
+                  text: "https://ru.openfoodfacts.org/product/${task.barcode}/",
+                  onOpen: (e) {
+                    launch(e.url);
+                  },
+                )
+              ]),
+              Row(children: [
+                Text("Пользователь: ",
+                    style: Theme.of(context).textTheme.headline6),
+                SelectableText(task.taskSourceUserId)
+              ]),
+              Row(children: [
+                Text("Жалоба: ", style: Theme.of(context).textTheme.headline6),
+                SizedBox(
+                    width: 400,
+                    child: SelectableText(task.textFromUser ?? "NO TEXT",
+                        maxLines: null, textAlign: TextAlign.left))
+              ]),
+              if (product != null) vegStatusesWidget(product!),
+              if (product == null)
+                SizedBox(
+                    width: double.infinity,
+                    child: Text("Продукт существует только в Open Food Facts")),
+              SizedBox(height: 50),
+              Row(children: [
+                Checkbox(
+                    value: moderated,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        moderated = value ?? false;
+                      });
+                    }),
+                Text("Промодерировано")
+              ]),
+              OutlinedButton(
+                  child: Text("Отправить"),
+                  onPressed: canSend ? onSendClicked : null)
+            ])));
   }
 
-  Widget vegStatusesWidget(BackendProduct product) =>
-      Column(children: [
+  Widget vegStatusesWidget(BackendProduct product) => Column(children: [
         Row(children: [
           Checkbox(
               value: editVegStatuses,
@@ -128,25 +132,20 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
               }),
           Text("Изменить вег-статусы")
         ]),
-        VegStatusesWidget(
-            (vegetarianStatus, veganStatus) {
-              setState(() {
-                this.vegetarianStatus = vegetarianStatus;
-                this.veganStatus = veganStatus;
-              });
-            },
-            editVegStatuses,
-            vegetarianStatus,
-            product.vegetarianStatusSource,
-            veganStatus,
-            product.veganStatusSource)
+        VegStatusesWidget((vegetarianStatus, veganStatus) {
+          setState(() {
+            this.vegetarianStatus = vegetarianStatus;
+            this.veganStatus = veganStatus;
+          });
+        }, editVegStatuses, vegetarianStatus, product.vegetarianStatusSource,
+            veganStatus, product.veganStatusSource)
       ]);
 
   void showModerateBothStatusesWarning() {
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("Пожалуйста, промодерируйте оба статуса - и вегетарианский, и веганский"),
-            duration: Duration(seconds: 10)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            "Пожалуйста, промодерируйте оба статуса - и вегетарианский, и веганский"),
+        duration: Duration(seconds: 10)));
   }
 
   void onSendClicked() async {
@@ -155,16 +154,16 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
         loading = true;
       });
       if (editVegStatuses) {
-        final resp = await Backend.get("moderate_product_veg_statuses/", {
+        final resp =
+            await _backend.customGet("moderate_product_veg_statuses/", {
           "barcode": task.barcode!,
           "vegetarianStatus": vegetarianStatus!.name,
           "veganStatus": veganStatus!.name
         });
         assert(jsonDecode(resp.body)["result"] == "ok");
       }
-      final resp = await Backend.get("resolve_moderator_task/", {
-        "taskId": task.id.toString()
-      });
+      final resp = await _backend
+          .customGet("resolve_moderator_task/", {"taskId": task.id.toString()});
       assert(jsonDecode(resp.body)["result"] == "ok");
       callback.call(InitialPage(callback));
     } finally {

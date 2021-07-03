@@ -421,7 +421,7 @@ packages:
     source: hosted
     version: "2.0.3"
   get_it:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: get_it
       url: "https://pub.dartlang.org"
@@ -755,7 +755,7 @@ packages:
       path: "submodules/plante"
       relative: true
     source: path
-    version: "21.06.290+27"
+    version: "21.06.300+28"
   platform:
     dependency: transitive
     description:

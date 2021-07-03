@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:plante_web_admin/model/veg_status.dart';
+import 'package:plante/model/veg_status.dart';
 
-typedef OnVegStatusesChangeCallback =
-void Function(VegStatus? vegetarianStatus, VegStatus? veganStatus);
+typedef OnVegStatusesChangeCallback = void Function(
+    VegStatus? vegetarianStatus, VegStatus? veganStatus);
 
 class VegStatusesWidget extends StatelessWidget {
   final OnVegStatusesChangeCallback _callback;
@@ -12,22 +12,21 @@ class VegStatusesWidget extends StatelessWidget {
   final VegStatus? _veganStatus;
   final String? _veganStatusSource;
 
-  VegStatusesWidget(
-      this._callback,
-      this._editable,
-      this._vegetarianStatus,
-      this._vegetarianStatusSource,
-      this._veganStatus,
-      this._veganStatusSource);
-  
+  VegStatusesWidget(this._callback, this._editable, this._vegetarianStatus,
+      this._vegetarianStatusSource, this._veganStatus, this._veganStatusSource);
+
   @override
   Widget build(BuildContext context) {
-    final vegetarianChangeCallback = !_editable ? null : (VegStatus? value) {
-      _callback.call(value, _veganStatus);
-    };
-    final veganChangeCallback = !_editable ? null : (VegStatus? value) {
-      _callback.call(_vegetarianStatus, value);
-    };
+    final vegetarianChangeCallback = !_editable
+        ? null
+        : (VegStatus? value) {
+            _callback.call(value, _veganStatus);
+          };
+    final veganChangeCallback = !_editable
+        ? null
+        : (VegStatus? value) {
+            _callback.call(_vegetarianStatus, value);
+          };
 
     return Column(children: [
       Row(children: [
@@ -62,7 +61,6 @@ class VegStatusesWidget extends StatelessWidget {
             Text("Непонятно"),
           ]),
         ]),
-
         Column(children: [
           Text("Веганский статус,\nисточник: $_veganStatusSource"),
           Row(children: [

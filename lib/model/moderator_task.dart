@@ -4,7 +4,8 @@ import 'package:plante_web_admin/build_value_helper.dart';
 
 part 'moderator_task.g.dart';
 
-abstract class ModeratorTask implements Built<ModeratorTask, ModeratorTaskBuilder> {
+abstract class ModeratorTask
+    implements Built<ModeratorTask, ModeratorTaskBuilder> {
   @BuiltValueField(wireName: 'id')
   int get id;
   @BuiltValueField(wireName: 'barcode')
@@ -28,15 +29,17 @@ abstract class ModeratorTask implements Built<ModeratorTask, ModeratorTaskBuilde
   int? get resolutionTime;
 
   static ModeratorTask? fromJson(Map<String, dynamic> json) {
-    return BuildValueHelper.jsonSerializers.deserializeWith(ModeratorTask.serializer, json);
+    return BuildValueHelper.jsonSerializers
+        .deserializeWith(ModeratorTask.serializer, json);
   }
 
   Map<String, dynamic> toJson() {
-    return BuildValueHelper.jsonSerializers.serializeWith(
-        ModeratorTask.serializer, this) as Map<String, dynamic>;
+    return BuildValueHelper.jsonSerializers
+        .serializeWith(ModeratorTask.serializer, this) as Map<String, dynamic>;
   }
 
-  factory ModeratorTask([void Function(ModeratorTaskBuilder) updates]) = _$ModeratorTask;
+  factory ModeratorTask([void Function(ModeratorTaskBuilder) updates]) =
+      _$ModeratorTask;
   ModeratorTask._();
   static Serializer<ModeratorTask> get serializer => _$moderatorTaskSerializer;
 }
