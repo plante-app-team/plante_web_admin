@@ -10,6 +10,7 @@ import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/moderator_task/_initial_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:plante/l10n/strings.dart';
 
 import '_next_page_callback.dart';
 
@@ -67,16 +68,13 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (loading) CircularProgressIndicator(),
-              Text("Получена жалоба на продукт",
+              Text(context.strings.web_user_report_task_page_title,
                   style: Theme.of(context).textTheme.headline5),
-              Text(
-                  "Пожалуйста, попробуйте исправить проблему из текста жалобы. "
-                  "Для этого возможно придётся перейти на страницу продукта в "
-                  "Open Food Facts и отредактировать его там, либо поменять "
-                  "вег-статус продукта тут."),
+              Text(context.strings.web_user_report_task_page_descr),
               SizedBox(height: 50),
               Row(children: [
-                Text("Продукт: ", style: Theme.of(context).textTheme.headline6),
+                Text(context.strings.web_user_report_task_page_product,
+                    style: Theme.of(context).textTheme.headline6),
                 Linkify(
                   text: "https://ru.openfoodfacts.org/product/${task.barcode}/",
                   onOpen: (e) {
@@ -85,12 +83,13 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
                 )
               ]),
               Row(children: [
-                Text("Пользователь: ",
+                Text(context.strings.web_user_report_task_page_user,
                     style: Theme.of(context).textTheme.headline6),
                 SelectableText(task.taskSourceUserId)
               ]),
               Row(children: [
-                Text("Жалоба: ", style: Theme.of(context).textTheme.headline6),
+                Text(context.strings.web_user_report_task_page_complaint,
+                    style: Theme.of(context).textTheme.headline6),
                 SizedBox(
                     width: 400,
                     child: SelectableText(task.textFromUser ?? "NO TEXT",
@@ -100,7 +99,8 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
               if (product == null)
                 SizedBox(
                     width: double.infinity,
-                    child: Text("Продукт существует только в Open Food Facts")),
+                    child: Text(context.strings
+                        .web_user_report_task_page_product_exists_only_in_off)),
               SizedBox(height: 50),
               Row(children: [
                 Checkbox(
@@ -110,10 +110,10 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
                         moderated = value ?? false;
                       });
                     }),
-                Text("Промодерировано")
+                Text(context.strings.web_user_report_task_page_moderated)
               ]),
               OutlinedButton(
-                  child: Text("Отправить"),
+                  child: Text(context.strings.web_user_report_task_page_send),
                   onPressed: canSend ? onSendClicked : null)
             ])));
   }
@@ -130,7 +130,7 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
                   showModerateBothStatusesWarning();
                 }
               }),
-          Text("Изменить вег-статусы")
+          Text(context.strings.web_user_report_task_page_change_veg_statuses)
         ]),
         VegStatusesWidget((vegetarianStatus, veganStatus) {
           setState(() {
@@ -143,8 +143,8 @@ class _UserReportTaskPageState extends State<UserReportTaskPage> {
 
   void showModerateBothStatusesWarning() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-            "Пожалуйста, промодерируйте оба статуса - и вегетарианский, и веганский"),
+        content: Text(context.strings
+            .web_user_report_task_page_please_moderate_both_veg_statuses),
         duration: Duration(seconds: 10)));
   }
 

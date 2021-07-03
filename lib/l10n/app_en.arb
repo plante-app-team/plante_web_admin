@@ -1,3 +1,54 @@
 {
-    "web_hello_world": "Hello World!"
+    "web_main_actions_widget_nameless_moderator": "nameless moderator",
+    "web_main_actions_widget_hello": "Hello, ",
+    "web_main_actions_widget_your_id": "Your ID: ",
+    "web_main_actions_widget_next_moderation_task": "Next moderation task",
+    "web_main_actions_widget_next_users_management": "Users management",
+
+    "web_auth_page_sign_in_with_google": "Sign in Google",
+    "web_auth_page_error_user_is_not_moderator": "The user is not a moderator",
+
+    "web_veg_statuses_widget_vegetarian_status_and_source": "Vegetarian status,\nsource: ",
+    "web_veg_statuses_widget_vegan_status_and_source": "Vegan status,\nsource: ",
+    "web_veg_statuses_widget_veg_status_positive": "Positive",
+    "web_veg_statuses_widget_veg_status_negative": "Negative",
+    "web_veg_statuses_widget_veg_status_possible": "Ambiguous",
+    "web_veg_statuses_widget_veg_status_unknown": "Unknown",
+
+    "web_user_report_task_page_title": "Product complaint received",
+    "web_user_report_task_page_descr": "Please try to resolve the problem from the user's product complaint. \nIn order to do that you may need to open the product page in \nOpen Food Facts and to edit the product there, or to change product's veg-status here.",
+    "web_user_report_task_page_product": "Product: ",
+    "web_user_report_task_page_user": "User: ",
+    "web_user_report_task_page_complaint": "Complaint: ",
+    "web_user_report_task_page_product_exists_only_in_off": "The product exists only in Open Food Facts",
+    "web_user_report_task_page_moderated": "Moderated",
+    "web_user_report_task_page_send": "Send",
+    "web_user_report_task_page_change_veg_statuses": "Change veg-statuses",
+    "web_user_report_task_page_please_moderate_both_veg_statuses": "Please, moderate both statuses - vegetarian and vegan",
+
+    "web_product_change_task_page_title": "Product created/modified",
+    "web_product_change_task_page_descr": "Please, check that the product in Open Food Facts:\n- has a proper packaging photo\n- has a proper ingredients photo\n- ingredients text is taken from the ingredients photo\n- brands and categories, if present, fit the product.\nBy products ingredients in Open Food Facts (and by googling) you should figure out the proper veg-statuses of the product and select them",
+    "web_product_change_task_page_product": "Product: ",
+    "web_product_change_task_page_empty_product_error_descr": "Empty product - server error occurred. Click \"Moderated\" and report the error to the developer",
+    "web_product_change_task_page_user": "User: ",
+    "web_product_change_task_page_moderated": "Moderated",
+    "web_product_change_task_page_send": "Send",
+
+    "web_osm_shop_creation_task_page_title": "Shop is created within Open Street Map",
+    "web_osm_shop_creation_task_page_descr": "Please verify that the created within Open Street Map shop:\n- has a proper name\n- has a realistic location\nIf there's something not right about the shop, it should be removed",
+    "web_osm_shop_creation_task_page_shop": "Shop: ",
+    "web_osm_shop_creation_task_page_user": "User: ",
+    "web_osm_shop_creation_task_page_moderated": "Moderated",
+    "web_osm_shop_creation_task_page_send": "Send",
+
+    "web_no_tasks_page_title": "There are no moderation tasks",
+
+    "web_manage_users_page_user_id": "User ID",
+    "web_manage_users_page_delete_user": "Delete the user",
+    "web_manage_users_page_user_deletion_dialog_title": "User deletion",
+    "web_manage_users_page_deletion_dialog_q": "Are you sure you want to delete the user?\nThis action cannot be undone",
+    "web_manage_users_page_deletion_dialog_positive": "Yes!",
+    "web_manage_users_page_user_deleted": "The user is deleted",
+    "web_manage_users_page_user_not_found": "Such a user is not found",
+    "web_manage_users_page_error_occurred": "Error"
 }

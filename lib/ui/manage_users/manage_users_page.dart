@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:plante/outside/backend/backend.dart';
+import 'package:plante/l10n/strings.dart';
 
 class ManageUsersPage extends StatefulWidget {
   @override
@@ -25,13 +26,15 @@ class _ManageUsersPageState extends State<ManageUsersPage> {
                   children: [
                     TextField(
                       decoration: InputDecoration(
-                        labelText: "ID пользователя",
+                        labelText:
+                            context.strings.web_manage_users_page_user_id,
                       ),
                       controller: _userIdController,
                     ),
                     SizedBox(height: 50),
                     OutlinedButton(
-                        child: Text("Удалить пользователя"),
+                        child: Text(
+                            context.strings.web_manage_users_page_delete_user),
                         onPressed: deleteUser),
                   ]),
             )));
@@ -46,14 +49,15 @@ class _ManageUsersPageState extends State<ManageUsersPage> {
             builder: (context, setState) => AlertDialog(
                   title: Row(children: [
                     if (_loading) CircularProgressIndicator(),
-                    Text("Удаление пользователя")
+                    Text(context.strings
+                        .web_manage_users_page_user_deletion_dialog_title)
                   ]),
                   content: Text(
-                      "Действительно удалить пользователя $deletedUserId?\n"
-                      "Это действие невозможно отменить"),
+                      context.strings.web_manage_users_page_deletion_dialog_q),
                   actions: <Widget>[
                     TextButton(
-                      child: Text("Да!"),
+                      child: Text(context.strings
+                          .web_manage_users_page_deletion_dialog_positive),
                       onPressed: () async {
                         setState(() {
                           _loading = true;
@@ -63,19 +67,23 @@ class _ManageUsersPageState extends State<ManageUsersPage> {
                               "delete_user/", {"userId": deletedUserId});
                           final json = jsonDecode(resp.body);
                           if (json["result"] == "ok") {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Пользователь удалён")));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(context.strings
+                                    .web_manage_users_page_user_deleted)));
                             _userIdController.clear();
                           } else if (json["error"] == "user_not_found") {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text("Такой пользователь не найден")));
+                                content: Text(context.strings
+                                    .web_manage_users_page_user_not_found)));
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Ошибочка")));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(context.strings
+                                    .web_manage_users_page_error_occurred)));
                           }
                         } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Ошибочка")));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(context.strings
+                                  .web_manage_users_page_error_occurred)));
                         } finally {
                           setState(() {
                             _loading = false;

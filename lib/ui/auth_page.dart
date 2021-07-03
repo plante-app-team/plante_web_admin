@@ -6,10 +6,9 @@ import 'package:get_it/get_it.dart';
 import 'package:plante/model/user_params.dart';
 import 'package:plante/model/user_params_controller.dart';
 import 'package:plante/outside/backend/backend.dart';
-
 import 'package:platform_device_id/platform_device_id.dart';
-
 import 'package:plante_web_admin/google_authorizer.dart';
+import 'package:plante/l10n/strings.dart';
 
 class AuthPage extends StatefulWidget {
   final Function() doneCallback;
@@ -60,7 +59,7 @@ class _AuthPageState extends State<AuthPage>
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       if (loading) CircularProgressIndicator(),
       OutlinedButton(
-          child: Text("Войти через Google"),
+          child: Text(context.strings.web_auth_page_sign_in_with_google),
           onPressed: () async {
             try {
               setState(() {
@@ -92,7 +91,8 @@ class _AuthPageState extends State<AuthPage>
               final user = UserParams.fromJson(jsonDecode(resp.body));
               if (user != null && user.userGroup == 1) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Пользователь не является модераторором")));
+                    content: Text(context
+                        .strings.web_auth_page_error_user_is_not_moderator)));
                 return;
               }
               _userParamsController.setUserParams(user);

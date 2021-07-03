@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:plante/l10n/strings.dart';
 
 import '_initial_page.dart';
 import '_next_page_callback.dart';
@@ -40,16 +41,13 @@ class _OsmShopCreationTaskPageState extends State<OsmShopCreationTaskPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (loading) CircularProgressIndicator(),
-              Text("Магазин создан в Open Street Map",
+              Text(context.strings.web_osm_shop_creation_task_page_title,
                   style: Theme.of(context).textTheme.headline5),
-              Text(
-                  "Пожалуйста, убедитесь, что созданный магазин в Open Street Map:\n"
-                  "- имеет нормальное название\n"
-                  "- имеет правдоподобную локацию\n"
-                  "Если с магазином что-то не так, его следует удалить"),
+              Text(context.strings.web_osm_shop_creation_task_page_descr),
               SizedBox(height: 50),
               Row(children: [
-                Text("Магазин: ", style: Theme.of(context).textTheme.headline6),
+                Text(context.strings.web_osm_shop_creation_task_page_shop,
+                    style: Theme.of(context).textTheme.headline6),
                 Linkify(
                   text:
                       "https://www.openstreetmap.org/node/${widget.task.osmId}/",
@@ -59,7 +57,7 @@ class _OsmShopCreationTaskPageState extends State<OsmShopCreationTaskPage> {
                 )
               ]),
               Row(children: [
-                Text("Пользователь: ",
+                Text(context.strings.web_osm_shop_creation_task_page_user,
                     style: Theme.of(context).textTheme.headline6),
                 SelectableText(widget.task.taskSourceUserId)
               ]),
@@ -72,10 +70,11 @@ class _OsmShopCreationTaskPageState extends State<OsmShopCreationTaskPage> {
                         moderated = value ?? false;
                       });
                     }),
-                Text("Промодерировано")
+                Text(context.strings.web_osm_shop_creation_task_page_moderated)
               ]),
               OutlinedButton(
-                  child: Text("Отправить"),
+                  child: Text(
+                      context.strings.web_osm_shop_creation_task_page_send),
                   onPressed: canSend ? onSendClicked : null)
             ])));
   }

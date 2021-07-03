@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plante/model/veg_status.dart';
+import 'package:plante/l10n/strings.dart';
 
 typedef OnVegStatusesChangeCallback = void Function(
     VegStatus? vegetarianStatus, VegStatus? veganStatus);
@@ -31,65 +32,67 @@ class VegStatusesWidget extends StatelessWidget {
     return Column(children: [
       Row(children: [
         Column(children: [
-          Text("Вегетарианский статус,\nисточник: $_vegetarianStatusSource"),
+          Text(
+              '${context.strings.web_veg_statuses_widget_vegetarian_status_and_source} $_vegetarianStatusSource'),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.positive,
                 groupValue: _vegetarianStatus,
                 onChanged: vegetarianChangeCallback),
-            Text("Точно да"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_positive),
           ]),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.negative,
                 groupValue: _vegetarianStatus,
                 onChanged: vegetarianChangeCallback),
-            Text("Точно нет"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_negative),
           ]),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.possible,
                 groupValue: _vegetarianStatus,
                 onChanged: vegetarianChangeCallback),
-            Text("Возможно"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_possible),
           ]),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.unknown,
                 groupValue: _vegetarianStatus,
                 onChanged: vegetarianChangeCallback),
-            Text("Непонятно"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_unknown),
           ]),
         ]),
         Column(children: [
-          Text("Веганский статус,\nисточник: $_veganStatusSource"),
+          Text(
+              '${context.strings.web_veg_statuses_widget_vegan_status_and_source} $_veganStatusSource'),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.positive,
                 groupValue: _veganStatus,
                 onChanged: veganChangeCallback),
-            Text("Точно да"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_positive),
           ]),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.negative,
                 groupValue: _veganStatus,
                 onChanged: veganChangeCallback),
-            Text("Точно нет"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_negative),
           ]),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.possible,
                 groupValue: _veganStatus,
                 onChanged: veganChangeCallback),
-            Text("Возможно"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_possible),
           ]),
           Row(children: [
             Radio<VegStatus>(
                 value: VegStatus.unknown,
                 groupValue: _veganStatus,
                 onChanged: veganChangeCallback),
-            Text("Непонятно"),
+            Text(context.strings.web_veg_statuses_widget_veg_status_unknown),
           ]),
         ]),
       ]),

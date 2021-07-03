@@ -10,6 +10,7 @@ import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/moderator_task/_initial_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:plante/l10n/strings.dart';
 
 import '_next_page_callback.dart';
 
@@ -64,19 +65,13 @@ class _ProductChangeTaskPageState extends State<ProductChangeTaskPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (loading) CircularProgressIndicator(),
-              Text("Продукт создан/изменён",
+              Text(context.strings.web_product_change_task_page_title,
                   style: Theme.of(context).textTheme.headline5),
-              Text("Пожалуйста, убедитесь, что продукт в Open Food Facts:\n"
-                  "- имеет нормальное фото упаковки\n"
-                  "- имеет нормальное фото состава\n"
-                  "- текст состава соответствует фото\n"
-                  "- имя бренда и категорий, если есть, соответствуют продукту.\n"
-                  "По составу продукта в Open Food Facts (и возможно гуглением) "
-                  "нужно понять правильные вег-статусы продукта и выбрать их."),
+              Text(context.strings.web_product_change_task_page_descr),
               SizedBox(height: 50),
               if (product.barcode.isNotEmpty)
                 Row(children: [
-                  Text("Продукт: ",
+                  Text(context.strings.web_product_change_task_page_product,
                       style: Theme.of(context).textTheme.headline6),
                   Linkify(
                     text:
@@ -88,14 +83,14 @@ class _ProductChangeTaskPageState extends State<ProductChangeTaskPage> {
                 ]),
               if (product.barcode.isEmpty)
                 Text(
-                    "Пустой продукт - произошла серверная ошибка. "
-                    "Нажмите \"Промодерировано\" и сообщите о об ошибке разработчику",
+                    context.strings
+                        .web_product_change_task_page_empty_product_error_descr,
                     style: Theme.of(context)
                         .textTheme
                         .headline6
                         ?.copyWith(color: Colors.red)),
               Row(children: [
-                Text("Пользователь: ",
+                Text(context.strings.web_product_change_task_page_user,
                     style: Theme.of(context).textTheme.headline6),
                 SelectableText(task.taskSourceUserId)
               ]),
@@ -109,10 +104,11 @@ class _ProductChangeTaskPageState extends State<ProductChangeTaskPage> {
                         moderated = value ?? false;
                       });
                     }),
-                Text("Промодерировано")
+                Text(context.strings.web_product_change_task_page_moderated)
               ]),
               OutlinedButton(
-                  child: Text("Отправить"),
+                  child:
+                      Text(context.strings.web_product_change_task_page_send),
                   onPressed: canSend ? onSendClicked : null)
             ])));
   }

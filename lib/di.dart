@@ -18,7 +18,8 @@ import 'package:plante/user_params_fetcher.dart';
 void initDI() {
   GetIt.I.registerSingleton<Settings>(_FakeSettings());
   GetIt.I.registerSingleton<Analytics>(_FakeAnalytics());
-  GetIt.I.registerSingleton<TakenProductsImagesStorage>(_FakeTakenProductsImagesStorage());
+  GetIt.I.registerSingleton<TakenProductsImagesStorage>(
+      _FakeTakenProductsImagesStorage());
 
   GetIt.I.registerSingleton<SharedPreferencesHolder>(SharedPreferencesHolder());
   GetIt.I.registerSingleton<LangCodeHolder>(LangCodeHolder());
@@ -71,16 +72,13 @@ class _FakeSettings implements Settings {
 
 class _FakeAnalytics implements Analytics {
   @override
-  void onPageHidden(String? pageName) {
-  }
+  void onPageHidden(String? pageName) {}
 
   @override
-  void onPageShown(String? pageName) {
-  }
+  void onPageShown(String? pageName) {}
 
   @override
-  void sendEvent(String event, [Map<String, dynamic>? params]) {
-  }
+  void sendEvent(String event, [Map<String, dynamic>? params]) {}
 }
 
 class _FakeTakenProductsImagesStorage implements TakenProductsImagesStorage {
@@ -107,6 +105,5 @@ class _FakeTakenProductsImagesStorage implements TakenProductsImagesStorage {
   Future<void> get loadedFuture => Future.value();
 
   @override
-  Future<void> store(Uri localFile) async {
-  }
+  Future<void> store(Uri localFile) async {}
 }
