@@ -5,19 +5,19 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
-import 'package:plante_web_admin/ui/moderator_task/veg_statuses_widget.dart';
+import 'package:plante_web_admin/ui/moderator_task/page/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
 
-import 'moderator_page_state_base.dart';
-import 'next_page_callback.dart';
+import 'moderator_page_base.dart';
 
-class UserReportTaskPage extends StatefulWidget {
-  final NextPageCallback callback;
+class UserReportTaskPage extends ModeratorTaskPage {
+  final VoidCallback callback;
   final ModeratorTask task;
   final BackendProduct? backendProduct;
 
-  UserReportTaskPage(this.callback, this.task, this.backendProduct);
+  UserReportTaskPage(this.callback, this.task, this.backendProduct, {Key? key})
+      : super(key: key);
 
   @override
   _UserReportTaskPageState createState() =>
@@ -41,7 +41,7 @@ class _UserReportTaskPageState
   }
 
   _UserReportTaskPageState(
-      NextPageCallback callback, ModeratorTask task, BackendProduct? product)
+      VoidCallback callback, ModeratorTask task, BackendProduct? product)
       : product = product,
         vegetarianStatus =
             VegStatus.safeValueOf(product?.vegetarianStatus ?? ""),

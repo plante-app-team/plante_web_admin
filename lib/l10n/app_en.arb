@@ -4,7 +4,8 @@
     "web_main_actions_widget_nameless_moderator": "nameless moderator",
     "web_main_actions_widget_hello": "Hello, ",
     "web_main_actions_widget_your_id": "Your ID: ",
-    "web_main_actions_widget_next_moderation_task": "Next moderation task",
+    "web_main_actions_widget_next_moderation_task": "Assign to me next moderation task",
+    "web_main_actions_widget_list_moderation_tasks": "Moderator tasks list",
     "web_main_actions_widget_next_users_management": "Users management",
 
     "web_auth_page_sign_in_with_google": "Sign in Google",
@@ -53,5 +54,12 @@
 
     "web_moderator_page_base_unassign": "Unassign task from me",
     "web_moderator_page_base_unassign_dialog_title": "Unassign task",
-    "web_moderator_page_base_unassign_dialog_descr": "Unassign the task? You'll be able to assign it back only manually"
+    "web_moderator_page_base_unassign_dialog_descr": "Unassign the task? You'll be able to assign it back only manually",
+
+    "web_moderator_tasks_list_page_forward": "Forward",
+    "web_moderator_tasks_list_page_backward": "Backward",
+
+    "web_moderator_task_list_item_task_user_complaint": "User complaint",
+    "web_moderator_task_list_item_task_product_update": "Product created or updated",
+    "web_moderator_task_list_item_task_shop_created": "Shop created in Open Street Map"
 }

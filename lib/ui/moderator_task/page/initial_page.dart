@@ -3,14 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:plante/outside/backend/backend.dart';
-import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
-import 'package:plante_web_admin/ui/moderator_task/osm_shop_creation_task_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/page/moderator_page_base.dart';
 
 import 'next_page_callback.dart';
-import 'no_tasks_page.dart';
-import 'product_change_task_page.dart';
-import 'user_report_task_page.dart';
+import '../no_tasks_page.dart';
 
 class InitialPage extends StatefulWidget {
   final NextPageCallback callback;
@@ -35,24 +32,11 @@ class _InitialPageState extends State<InitialPage> {
       }
       if (tasks.isNotEmpty) {
         final task = tasks[0];
-        final BackendProduct? product;
-        if (task.barcode != null && task.barcode!.trim().isNotEmpty) {
-          product = await retrieveProduct(task.barcode!);
-        } else {
-          product = null;
-        }
-
-        if (task.taskType == "user_report") {
-          callback.call(UserReportTaskPage(callback, tasks[0], product));
-        } else if (task.taskType == "product_change") {
-          callback.call(ProductChangeTaskPage(
-              callback, tasks[0], product ?? BackendProduct.empty));
-        } else if (task.taskType == "osm_shop_creation") {
-          callback
-              .call(OsmShopCreationTaskPage(callback, tasks[0], task.osmId!));
-        } else {
-          callback.call(Text("Error: unknown task type ${task.taskType}"));
-        }
+        final nextPageCallback = () {
+          callback.call(InitialPage(callback));
+        };
+        callback.call(
+            await ModeratorTaskPage.create(task, nextPageCallback, context));
       } else {
         callback.call(NoTasksPage());
       }
@@ -66,7 +50,7 @@ class _InitialPageState extends State<InitialPage> {
     final json = jsonDecode(resp.body);
     final tasksJson = json['tasks'] as List<dynamic>;
     return tasksJson
-        .map((e) => ModeratorTask.fromJson(e as Map<String, dynamic>)!)
+        .map((e) => ModeratorTask.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 
@@ -77,15 +61,5 @@ class _InitialPageState extends State<InitialPage> {
         json["result"] == "ok" ||
             json["error"] == "no_unresolved_moderator_tasks",
         json);
-  }
-
-  Future<BackendProduct?> retrieveProduct(String barcode) async {
-    final resp =
-        await _backend.customGet("product_data/", {"barcode": barcode});
-    final json = jsonDecode(resp.body);
-    if (json["error"] == "product_not_found") {
-      return null;
-    }
-    return BackendProduct.fromJson(json);
   }
 }

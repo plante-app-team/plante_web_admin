@@ -4,16 +4,14 @@ import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
 
-import 'moderator_page_state_base.dart';
-import 'next_page_callback.dart';
+import 'moderator_page_base.dart';
 
-class OsmShopCreationTaskPage extends StatefulWidget {
-  final NextPageCallback callback;
+class OsmShopCreationTaskPage extends ModeratorTaskPage {
+  final VoidCallback callback;
   final ModeratorTask task;
   final String osmId;
 
-  const OsmShopCreationTaskPage(this.callback, this.task, this.osmId,
-      {Key? key})
+  OsmShopCreationTaskPage(this.callback, this.task, this.osmId, {Key? key})
       : super(key: key);
 
   @override
@@ -23,7 +21,7 @@ class OsmShopCreationTaskPage extends StatefulWidget {
 
 class _OsmShopCreationTaskPageState
     extends ModeratorPageStateBase<OsmShopCreationTaskPage> {
-  _OsmShopCreationTaskPageState(NextPageCallback callback, ModeratorTask task)
+  _OsmShopCreationTaskPageState(VoidCallback callback, ModeratorTask task)
       : super(callback, task);
 
   @override

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:plante_web_admin/ui/moderator_task/initial_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/page/initial_page.dart';
 
-class ModeratorTaskPage extends StatefulWidget {
+class AutoModeratorTaskPage extends StatefulWidget {
   @override
-  _ModeratorTaskPageState createState() => _ModeratorTaskPageState();
+  _AutoModeratorTaskPageState createState() => _AutoModeratorTaskPageState();
 }
 
-class _ModeratorTaskPageState extends State<ModeratorTaskPage> {
+class _AutoModeratorTaskPageState extends State<AutoModeratorTaskPage> {
   Widget? realPage;
 
   @override

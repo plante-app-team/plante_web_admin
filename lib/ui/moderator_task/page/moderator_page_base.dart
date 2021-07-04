@@ -3,21 +3,66 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:plante/model/user_params.dart';
+import 'package:plante/model/user_params_controller.dart';
 import 'package:plante/outside/backend/backend.dart';
+import 'package:plante/outside/backend/backend_product.dart';
+import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante/ui/base/ui_utils.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
-import 'package:plante_web_admin/ui/moderator_task/next_page_callback.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante_web_admin/ui/moderator_task/page/osm_shop_creation_task_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/page/product_change_task_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/page/user_report_task_page.dart';
 
-import 'initial_page.dart';
+abstract class ModeratorTaskPage extends StatefulWidget {
+  ModeratorTaskPage({Key? key}) : super(key: key);
+
+  static Future<ModeratorTaskPage> create(
+      ModeratorTask task, VoidCallback callback, BuildContext context,
+      {Key? key}) async {
+    final backend = GetIt.I.get<Backend>();
+
+    final BackendProduct? product;
+    if ((task.barcode ?? '').trim().isNotEmpty) {
+      product = await _retrieveProduct(task.barcode!, backend);
+    } else {
+      product = null;
+    }
+
+    if (task.taskType == "user_report") {
+      return UserReportTaskPage(callback, task, product);
+    } else if (task.taskType == "product_change") {
+      return ProductChangeTaskPage(
+          callback, task, product ?? BackendProduct.empty);
+    } else if (task.taskType == "osm_shop_creation") {
+      return OsmShopCreationTaskPage(callback, task, task.osmId!);
+    } else {
+      showSnackBar("Error: unknown task type ${task.taskType}", context);
+      throw Exception("Error: unknown task type ${task.taskType}");
+    }
+  }
+
+  static Future<BackendProduct?> _retrieveProduct(
+      String barcode, Backend backend) async {
+    final resp = await backend.customGet("product_data/", {"barcode": barcode});
+    final json = jsonDecode(resp.body);
+    if (json["error"] == "product_not_found") {
+      return null;
+    }
+    return BackendProduct.fromJson(json);
+  }
+}
 
 abstract class ModeratorPageStateBase<T extends StatefulWidget>
     extends State<T> {
   final backend = GetIt.I.get<Backend>();
-  final NextPageCallback callback;
+  final _userParamsController = GetIt.I.get<UserParamsController>();
+  final VoidCallback callback;
   final ModeratorTask task;
   bool _loading = false;
   bool _moderated = false;
+  UserParams get _user => _userParamsController.cachedUserParams!;
 
   ModeratorPageStateBase(this.callback, this.task);
 
@@ -41,13 +86,14 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (_loading) CircularProgressIndicator(),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: OutlinedButton(
-                    child:
-                        Text(context.strings.web_moderator_page_base_unassign),
-                    onPressed: _onUnassignClicked,
-                  )),
+              if (task.assignee == _user.backendId)
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: OutlinedButton(
+                      child: Text(
+                          context.strings.web_moderator_page_base_unassign),
+                      onPressed: _onUnassignClicked,
+                    )),
               buildPage(context),
               SizedBox(height: 50),
               Row(children: [
@@ -75,7 +121,7 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
       final resp = await backend
           .customGet("resolve_moderator_task/", {"taskId": task.id.toString()});
       assert(jsonDecode(resp.body)["result"] == "ok");
-      callback.call(InitialPage(callback));
+      callback.call();
     });
   }
 
@@ -95,8 +141,8 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
   void _onUnassignClicked() async {
     showDoOrCancelDialog(
         context,
-        context.strings.web_moderator_page_base_unassign_dialog_title,
         context.strings.web_moderator_page_base_unassign_dialog_descr,
+        context.strings.web_moderator_page_base_unassign_dialog_title,
         _unassign);
   }
 
@@ -105,7 +151,7 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
       final resp = await backend
           .customGet("reject_moderator_task/", {"taskId": task.id.toString()});
       assert(jsonDecode(resp.body)["result"] == "ok");
-      callback.call(InitialPage(callback));
+      callback.call();
     });
   }
 }

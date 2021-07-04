@@ -50,6 +50,13 @@ class _MainActionsWidgetState extends State<MainActionsWidget>
         SizedBox(height: 50),
         OutlinedButton(
             child: Text(
+                context.strings.web_main_actions_widget_list_moderation_tasks),
+            onPressed: () {
+              Navigator.pushNamed(context, '/list_moderator_tasks');
+            }),
+        SizedBox(height: 10),
+        OutlinedButton(
+            child: Text(
                 context.strings.web_main_actions_widget_next_moderation_task),
             onPressed: () {
               Navigator.pushNamed(context, '/next_moderator_task');

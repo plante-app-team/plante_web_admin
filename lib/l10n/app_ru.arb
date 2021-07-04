@@ -4,7 +4,8 @@
     "web_main_actions_widget_nameless_moderator": "безымянный модератор",
     "web_main_actions_widget_hello": "Привет,",
     "web_main_actions_widget_your_id": "Твой ID: ",
-    "web_main_actions_widget_next_moderation_task": "Следующая задача модерации",
+    "web_main_actions_widget_next_moderation_task": "Назначить мне следующую задачу модерации",
+    "web_main_actions_widget_list_moderation_tasks": "Список задач модерации",
     "web_main_actions_widget_next_users_management": "Управление пользователями",
 
     "web_auth_page_sign_in_with_google": "Войти через Google",
@@ -53,5 +54,12 @@
 
     "web_moderator_page_base_unassign": "Снять задачу с меня",
     "web_moderator_page_base_unassign_dialog_title": "Снятие задачи",
-    "web_moderator_page_base_unassign_dialog_descr": "Снять с себя задачу? Назначить на себя её обратно можно будет только вручную"
+    "web_moderator_page_base_unassign_dialog_descr": "Снять с себя задачу? Назначить на себя её обратно можно будет только вручную",
+
+    "web_moderator_tasks_list_page_forward": "Вперёд",
+    "web_moderator_tasks_list_page_backward": "Назад",
+
+    "web_moderator_task_list_item_task_user_complaint": "Жалоба пользователя",
+    "web_moderator_task_list_item_task_product_update": "Продукт создан или изменён",
+    "web_moderator_task_list_item_task_shop_created": "Создан магазин в Open Street Map"
 }
