@@ -5,7 +5,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
-import 'package:plante_web_admin/ui/moderator_task/page/veg_statuses_widget.dart';
+import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
 
@@ -35,7 +35,15 @@ class _UserReportTaskPageState
   @override
   bool get canSend {
     if (editVegStatuses) {
-      return vegetarianStatus != null && veganStatus != null;
+      if (vegetarianStatus == null && veganStatus == null) {
+        // Erased
+        return true;
+      } else if (vegetarianStatus != null && veganStatus != null) {
+        // Filled
+        return true;
+      } else {
+        return false;
+      }
     }
     return true;
   }
@@ -120,12 +128,18 @@ class _UserReportTaskPageState
   @protected
   Future<bool> sendExtraData() async {
     if (editVegStatuses) {
-      final resp = await backend.customGet("moderate_product_veg_statuses/", {
-        "barcode": task.barcode!,
-        "vegetarianStatus": vegetarianStatus!.name,
-        "veganStatus": veganStatus!.name
-      });
-      return jsonDecode(resp.body)["result"] == "ok";
+      if (vegetarianStatus != null && veganStatus != null) {
+        final resp = await backend.customGet("moderate_product_veg_statuses/", {
+          "barcode": task.barcode!,
+          "vegetarianStatus": vegetarianStatus!.name,
+          "veganStatus": veganStatus!.name
+        });
+        return jsonDecode(resp.body)["result"] == "ok";
+      } else {
+        final resp = await backend.customGet(
+            "clear_product_veg_statuses/", {"barcode": task.barcode!});
+        return jsonDecode(resp.body)["result"] == "ok";
+      }
     }
     return true;
   }

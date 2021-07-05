@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:plante/model/user_params.dart';
 import 'package:plante/model/user_params_controller.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante/ui/base/components/button_outlined_plante.dart';
 
 class MainActionsWidget extends StatefulWidget {
   const MainActionsWidget({Key? key}) : super(key: key);
@@ -48,26 +49,29 @@ class _MainActionsWidgetState extends State<MainActionsWidget>
           SelectableText(_user?.backendId ?? "")
         ]),
         SizedBox(height: 50),
-        OutlinedButton(
-            child: Text(
-                context.strings.web_main_actions_widget_list_moderation_tasks),
-            onPressed: () {
+        SizedBox(
+            width: 400,
+            child: ButtonOutlinedPlante.withText(
+                context.strings.web_main_actions_widget_list_moderation_tasks,
+                onPressed: () {
               Navigator.pushNamed(context, '/list_moderator_tasks');
-            }),
+            })),
         SizedBox(height: 10),
-        OutlinedButton(
-            child: Text(
-                context.strings.web_main_actions_widget_next_moderation_task),
-            onPressed: () {
+        SizedBox(
+            width: 400,
+            child: ButtonOutlinedPlante.withText(
+                context.strings.web_main_actions_widget_next_moderation_task,
+                onPressed: () {
               Navigator.pushNamed(context, '/next_moderator_task');
-            }),
+            })),
         SizedBox(height: 10),
-        OutlinedButton(
-            child: Text(
-                context.strings.web_main_actions_widget_next_users_management),
-            onPressed: () {
+        SizedBox(
+            width: 400,
+            child: ButtonOutlinedPlante.withText(
+                context.strings.web_main_actions_widget_next_users_management,
+                onPressed: () {
               Navigator.pushNamed(context, '/manage_users');
-            }),
+            })),
       ]),
     );
   }

@@ -17,6 +17,7 @@
     "web_veg_statuses_widget_veg_status_negative": "Negative",
     "web_veg_statuses_widget_veg_status_possible": "Ambiguous",
     "web_veg_statuses_widget_veg_status_unknown": "Unknown",
+    "web_veg_statuses_widget_erase_product_veg_statuses": "Erase veg-statuses of the product",
 
     "web_user_report_task_page_title": "Product complaint received",
     "web_user_report_task_page_descr": "Please try to resolve the problem from the user's product complaint. \nIn order to do that you may need to open the product page in \nOpen Food Facts and to edit the product there, or to change product's veg-status here.",

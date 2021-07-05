@@ -49,20 +49,21 @@ class _ModeratorTasksListPageState extends State<ModeratorTasksListPage> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            if (_pageNumber > 0)
-                              SizedBox(
-                                  width: 300,
-                                  child: ButtonOutlinedPlante.withText(
-                                      context.strings
-                                          .web_moderator_tasks_list_page_backward,
-                                      onPressed: _pageBack)),
-                            if (_nextPage.isNotEmpty)
-                              SizedBox(
-                                  width: 300,
-                                  child: ButtonOutlinedPlante.withText(
-                                      context.strings
-                                          .web_moderator_tasks_list_page_forward,
-                                      onPressed: _pageForward)),
+                            SizedBox(
+                                width: 300,
+                                child: ButtonOutlinedPlante.withText(
+                                    context.strings
+                                        .web_moderator_tasks_list_page_backward,
+                                    onPressed:
+                                        _pageNumber > 0 ? _pageBack : null)),
+                            SizedBox(
+                                width: 300,
+                                child: ButtonOutlinedPlante.withText(
+                                    context.strings
+                                        .web_moderator_tasks_list_page_forward,
+                                    onPressed: _nextPage.isNotEmpty
+                                        ? _pageForward
+                                        : null)),
                           ]),
                       Column(
                           mainAxisAlignment: MainAxisAlignment.center,

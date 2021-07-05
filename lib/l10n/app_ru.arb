@@ -17,6 +17,7 @@
     "web_veg_statuses_widget_veg_status_negative": "Отрицательно",
     "web_veg_statuses_widget_veg_status_possible": "Неоднозначно",
     "web_veg_statuses_widget_veg_status_unknown": "Неизвестно",
+    "web_veg_statuses_widget_erase_product_veg_statuses": "Стереть вег-статусы продукта",
 
     "web_user_report_task_page_title": "Получена жалоба на продукт",
     "web_user_report_task_page_descr": "Пожалуйста, попробуйте исправить проблему из текста жалобы. \nДля этого возможно придётся перейти на страницу продукта в \nOpen Food Facts и отредактировать его там, либо поменять вег-статус продукта тут.",
