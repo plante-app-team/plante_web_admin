@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plante_web_admin/di.dart';
 import 'package:plante_web_admin/ui/main_page.dart';
+import 'package:plante_web_admin/ui/manage_products/manage_product_page.dart';
 import 'package:plante_web_admin/ui/manage_users/manage_users_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_list_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/unassigned_moderator_task_page.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
             }),
         '/next_moderator_task': (context) => Builder(builder: (b) {
               return AutoModeratorTaskPage();
+            }),
+        '/manage_products': (context) => Builder(builder: (b) {
+              return ManageProductPage();
             }),
         '/manage_users': (context) => Builder(builder: (b) {
               return ManageUsersPage();

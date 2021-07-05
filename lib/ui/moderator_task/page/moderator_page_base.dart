@@ -11,6 +11,7 @@ import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante/ui/base/ui_utils.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/osm_shop_creation_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/product_change_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/user_report_task_page.dart';
@@ -97,14 +98,14 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
               buildPage(context),
               SizedBox(height: 50),
               Row(children: [
-                Checkbox(
+                CheckboxText(
+                    text: context.strings.web_user_report_task_page_moderated,
                     value: _moderated,
                     onChanged: (bool? value) {
                       setState(() {
                         _moderated = value ?? false;
                       });
                     }),
-                Text(context.strings.web_user_report_task_page_moderated)
               ]),
               OutlinedButton(
                   child: Text(context.strings.web_global_send),

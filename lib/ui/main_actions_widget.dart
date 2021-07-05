@@ -68,6 +68,14 @@ class _MainActionsWidgetState extends State<MainActionsWidget>
         SizedBox(
             width: 400,
             child: ButtonOutlinedPlante.withText(
+                context.strings.web_main_actions_widget_products_management,
+                onPressed: () {
+              Navigator.pushNamed(context, '/manage_products');
+            })),
+        SizedBox(height: 10),
+        SizedBox(
+            width: 400,
+            child: ButtonOutlinedPlante.withText(
                 context.strings.web_main_actions_widget_next_users_management,
                 onPressed: () {
               Navigator.pushNamed(context, '/manage_users');

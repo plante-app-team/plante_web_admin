@@ -6,6 +6,7 @@
     "web_main_actions_widget_your_id": "Твой ID: ",
     "web_main_actions_widget_next_moderation_task": "Назначить мне следующую задачу модерации",
     "web_main_actions_widget_list_moderation_tasks": "Список задач модерации",
+    "web_main_actions_widget_products_management": "Управление продуктами",
     "web_main_actions_widget_next_users_management": "Управление пользователями",
 
     "web_auth_page_sign_in_with_google": "Войти через Google",
@@ -62,5 +63,10 @@
 
     "web_moderator_task_list_item_task_user_complaint": "Жалоба пользователя",
     "web_moderator_task_list_item_task_product_update": "Продукт создан или изменён",
-    "web_moderator_task_list_item_task_shop_created": "Создан магазин в Open Street Map"
+    "web_moderator_task_list_item_task_shop_created": "Создан магазин в Open Street Map",
+
+    "web_manage_product_page_search": "Поиск",
+    "web_manage_product_page_product_not_found": "Продукт не найден",
+    "web_manage_product_page_type_barcode": "Введите штрихкод",
+    "web_manage_product_page_send_modifications": "Отправить изменения"
 }
