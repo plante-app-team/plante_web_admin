@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:plante/model/veg_status.dart';
@@ -8,6 +6,7 @@ import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante_web_admin/backend_extensions.dart';
 
 import 'moderator_page_base.dart';
 
@@ -27,10 +26,12 @@ class ProductChangeTaskPage extends ModeratorTaskPage {
 
 class _ProductChangeTaskPageState
     extends ModeratorPageStateBase<ProductChangeTaskPage> {
-  final BackendProduct product;
+  BackendProduct product;
 
-  VegStatus? vegetarianStatus;
-  VegStatus? veganStatus;
+  VegStatus? get vegetarianStatus =>
+      VegStatus.safeValueOf(product.vegetarianStatus ?? '');
+  VegStatus? get veganStatus =>
+      VegStatus.safeValueOf(product.veganStatus ?? '');
 
   @override
   bool get canSend {
@@ -48,9 +49,6 @@ class _ProductChangeTaskPageState
   _ProductChangeTaskPageState(
       VoidCallback callback, ModeratorTask task, BackendProduct product)
       : product = product,
-        vegetarianStatus =
-            VegStatus.safeValueOf(product.vegetarianStatus ?? ""),
-        veganStatus = VegStatus.safeValueOf(product.veganStatus ?? ""),
         super(callback, task);
 
   @override
@@ -84,33 +82,29 @@ class _ProductChangeTaskPageState
             style: Theme.of(context).textTheme.headline6),
         SelectableText(task.taskSourceUserId)
       ]),
-      vegStatusesWidget(product),
+      vegStatusesWidget(),
     ]);
   }
 
-  Widget vegStatusesWidget(BackendProduct product) =>
-      VegStatusesWidget((vegetarianStatus, veganStatus) {
+  Widget vegStatusesWidget() => VegStatusesWidget((updatedProduct) {
         setState(() {
-          this.vegetarianStatus = vegetarianStatus;
-          this.veganStatus = veganStatus;
+          product = updatedProduct;
         });
-      }, true, vegetarianStatus, product.vegetarianStatusSource, veganStatus,
-          product.veganStatusSource);
+      }, true, product);
 
   @protected
   Future<bool> sendExtraData() async {
     if (task.barcode != null && task.barcode!.trim().isNotEmpty) {
-      if (vegetarianStatus != null && veganStatus != null) {
-        final resp = await backend.customGet("moderate_product_veg_statuses/", {
-          "barcode": task.barcode!,
-          "vegetarianStatus": vegetarianStatus!.name,
-          "veganStatus": veganStatus!.name
-        });
-        return jsonDecode(resp.body)["result"] == "ok";
-      } else {
-        final resp = await backend.customGet(
-            "clear_product_veg_statuses/", {"barcode": task.barcode!});
-        return jsonDecode(resp.body)["result"] == "ok";
+      final resp = await backend.moderateProduct(
+          product.barcode,
+          product.vegetarianStatus!,
+          product.veganStatus!,
+          product.moderatorVegetarianChoiceReason,
+          product.moderatorVegetarianSourcesText,
+          product.moderatorVeganChoiceReason,
+          product.moderatorVeganSourcesText);
+      if (resp.isErr) {
+        throw Exception('Backend error: ${resp.unwrapErr()}');
       }
     }
     return true;

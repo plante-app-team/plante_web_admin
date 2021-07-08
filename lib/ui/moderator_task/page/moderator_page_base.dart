@@ -7,6 +7,7 @@ import 'package:plante/model/user_params.dart';
 import 'package:plante/model/user_params_controller.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_product.dart';
+import 'package:plante/ui/base/components/button_outlined_plante.dart';
 import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante/ui/base/ui_utils.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
@@ -107,9 +108,11 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
                       });
                     }),
               ]),
-              OutlinedButton(
-                  child: Text(context.strings.web_global_send),
-                  onPressed: _canSend ? _onSendClicked : null)
+              SizedBox(
+                  width: 500,
+                  child: ButtonOutlinedPlante.withText(
+                      context.strings.web_global_send,
+                      onPressed: _canSend ? _onSendClicked : null))
             ])));
   }
 

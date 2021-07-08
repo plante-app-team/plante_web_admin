@@ -1,13 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
+import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante_web_admin/backend_extensions.dart';
 
 import 'moderator_page_base.dart';
 
@@ -26,11 +26,14 @@ class UserReportTaskPage extends ModeratorTaskPage {
 
 class _UserReportTaskPageState
     extends ModeratorPageStateBase<UserReportTaskPage> {
-  final BackendProduct? product;
+  BackendProduct? product;
 
   bool editVegStatuses = false;
-  VegStatus? vegetarianStatus;
-  VegStatus? veganStatus;
+
+  VegStatus? get vegetarianStatus =>
+      VegStatus.safeValueOf(product?.vegetarianStatus ?? '');
+  VegStatus? get veganStatus =>
+      VegStatus.safeValueOf(product?.veganStatus ?? '');
 
   @override
   bool get canSend {
@@ -51,9 +54,6 @@ class _UserReportTaskPageState
   _UserReportTaskPageState(
       VoidCallback callback, ModeratorTask task, BackendProduct? product)
       : product = product,
-        vegetarianStatus =
-            VegStatus.safeValueOf(product?.vegetarianStatus ?? ""),
-        veganStatus = VegStatus.safeValueOf(product?.veganStatus ?? ""),
         super(callback, task);
 
   @override
@@ -86,7 +86,7 @@ class _UserReportTaskPageState
             child: SelectableText(task.textFromUser ?? "NO TEXT",
                 maxLines: null, textAlign: TextAlign.left))
       ]),
-      if (product != null) vegStatusesWidget(product!),
+      if (product != null) vegStatusesWidget(),
       if (product == null)
         SizedBox(
             width: double.infinity,
@@ -95,27 +95,23 @@ class _UserReportTaskPageState
     ]);
   }
 
-  Widget vegStatusesWidget(BackendProduct product) => Column(children: [
+  Widget vegStatusesWidget() => Column(children: [
         Row(children: [
-          Checkbox(
+          CheckboxText(
+              text:
+                  context.strings.web_user_report_task_page_change_veg_statuses,
               value: editVegStatuses,
               onChanged: (bool? value) {
                 setState(() {
                   editVegStatuses = value ?? false;
                 });
-                if (editVegStatuses) {
-                  showModerateBothStatusesWarning();
-                }
               }),
-          Text(context.strings.web_user_report_task_page_change_veg_statuses)
         ]),
-        VegStatusesWidget((vegetarianStatus, veganStatus) {
+        VegStatusesWidget((updatedProduct) {
           setState(() {
-            this.vegetarianStatus = vegetarianStatus;
-            this.veganStatus = veganStatus;
+            product = updatedProduct;
           });
-        }, editVegStatuses, vegetarianStatus, product.vegetarianStatusSource,
-            veganStatus, product.veganStatusSource)
+        }, editVegStatuses, product!)
       ]);
 
   void showModerateBothStatusesWarning() {
@@ -127,18 +123,17 @@ class _UserReportTaskPageState
 
   @protected
   Future<bool> sendExtraData() async {
-    if (editVegStatuses) {
-      if (vegetarianStatus != null && veganStatus != null) {
-        final resp = await backend.customGet("moderate_product_veg_statuses/", {
-          "barcode": task.barcode!,
-          "vegetarianStatus": vegetarianStatus!.name,
-          "veganStatus": veganStatus!.name
-        });
-        return jsonDecode(resp.body)["result"] == "ok";
-      } else {
-        final resp = await backend.customGet(
-            "clear_product_veg_statuses/", {"barcode": task.barcode!});
-        return jsonDecode(resp.body)["result"] == "ok";
+    if (editVegStatuses && product != null) {
+      final resp = await backend.moderateProduct(
+          product!.barcode,
+          product!.vegetarianStatus!,
+          product!.veganStatus!,
+          product!.moderatorVegetarianChoiceReason,
+          product!.moderatorVegetarianSourcesText,
+          product!.moderatorVeganChoiceReason,
+          product!.moderatorVeganSourcesText);
+      if (resp.isErr) {
+        throw Exception('Backend error: ${resp.unwrapErr()}');
       }
     }
     return true;

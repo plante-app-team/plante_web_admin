@@ -12,6 +12,7 @@ import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante_web_admin/backend_extensions.dart';
 
 class ManageProductPage extends StatefulWidget {
   const ManageProductPage({Key? key}) : super(key: key);
@@ -61,15 +62,8 @@ class _ManageProductPageState extends State<ManageProductPage> {
                     Text(context.strings.web_manage_product_page_type_barcode),
                   if (!_loading && _foundProduct != null)
                     Column(children: [
-                      VegStatusesWidget(
-                          _onProductVegStatusesChange,
-                          _changeProductVegStatuses,
-                          VegStatus.safeValueOf(
-                              _foundProduct!.vegetarianStatus ?? ''),
-                          _foundProduct!.vegetarianStatusSource,
-                          VegStatus.safeValueOf(
-                              _foundProduct!.veganStatus ?? ''),
-                          _foundProduct!.veganStatusSource),
+                      VegStatusesWidget(_onProductVegStatusesChange,
+                          _changeProductVegStatuses, _foundProduct!),
                       SizedBox(height: 25),
                       CheckboxText(
                           text: context.strings
@@ -103,14 +97,9 @@ class _ManageProductPageState extends State<ManageProductPage> {
     });
   }
 
-  void _onProductVegStatusesChange(
-      VegStatus? vegetarianStatus, VegStatus? veganStatus) {
+  void _onProductVegStatusesChange(BackendProduct backendProduct) {
     setState(() {
-      _foundProduct = _foundProduct!.rebuild((e) => e
-        ..vegetarianStatus = vegetarianStatus?.name
-        ..vegetarianStatusSource = VegStatusSource.moderator.name
-        ..veganStatus = veganStatus?.name
-        ..veganStatusSource = VegStatusSource.moderator.name);
+      _foundProduct = backendProduct;
     });
   }
 
@@ -136,22 +125,16 @@ class _ManageProductPageState extends State<ManageProductPage> {
     _performNetworkAction(() async {
       final product = _foundProduct!;
       if (_changeProductVegStatuses) {
-        if (product.vegetarianStatus != null && product.veganStatus != null) {
-          final resp =
-              await _backend.customGet("moderate_product_veg_statuses/", {
-            "barcode": product.barcode,
-            "vegetarianStatus": product.vegetarianStatus!,
-            "veganStatus": product.veganStatus!
-          });
-          if (jsonDecode(resp.body)["result"] != "ok") {
-            throw Exception('Unexpected response: ${resp.body}');
-          }
-        } else {
-          final resp = await _backend.customGet(
-              "clear_product_veg_statuses/", {"barcode": product.barcode});
-          if (jsonDecode(resp.body)["result"] != "ok") {
-            throw Exception('Unexpected response: ${resp.body}');
-          }
+        final resp = await _backend.moderateProduct(
+            product.barcode,
+            product.vegetarianStatus!,
+            product.veganStatus!,
+            product.moderatorVegetarianChoiceReason,
+            product.moderatorVegetarianSourcesText,
+            product.moderatorVeganChoiceReason,
+            product.moderatorVeganSourcesText);
+        if (resp.isErr) {
+          throw Exception('Backend error: ${resp.unwrapErr()}');
         }
       }
       showSnackBar(context.strings.global_done_thanks, context);

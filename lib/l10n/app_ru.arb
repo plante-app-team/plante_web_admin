@@ -12,13 +12,15 @@
     "web_auth_page_sign_in_with_google": "Войти через Google",
     "web_auth_page_error_user_is_not_moderator": "Пользователь не является модераторором",
 
-    "web_veg_statuses_widget_vegetarian_status_and_source": "Вегетарианский статус,\nисточник: ",
-    "web_veg_statuses_widget_vegan_status_and_source": "Веганский статус,\nисточник: ",
+    "web_veg_statuses_widget_vegetarian_status": "Вегетарианский статус",
+    "web_veg_statuses_widget_vegan_status": "Веганский статус",
     "web_veg_statuses_widget_veg_status_positive": "Положительно",
     "web_veg_statuses_widget_veg_status_negative": "Отрицательно",
     "web_veg_statuses_widget_veg_status_possible": "Неоднозначно",
     "web_veg_statuses_widget_veg_status_unknown": "Неизвестно",
     "web_veg_statuses_widget_erase_product_veg_statuses": "Стереть вег-статусы продукта",
+    "web_veg_statuses_veg_status_choice_reason": "Причина выбора вег-статуса\n(опционально)",
+    "web_veg_statuses_veg_status_choice_reason_source": "Ссылка (URL) на источник\n(опционально)",
 
     "web_user_report_task_page_title": "Получена жалоба на продукт",
     "web_user_report_task_page_descr": "Пожалуйста, попробуйте исправить проблему из текста жалобы. \nДля этого возможно придётся перейти на страницу продукта в \nOpen Food Facts и отредактировать его там, либо поменять вег-статус продукта тут.",

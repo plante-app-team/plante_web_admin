@@ -12,13 +12,15 @@
     "web_auth_page_sign_in_with_google": "Sign in Google",
     "web_auth_page_error_user_is_not_moderator": "The user is not a moderator",
 
-    "web_veg_statuses_widget_vegetarian_status_and_source": "Vegetarian status,\nsource: ",
-    "web_veg_statuses_widget_vegan_status_and_source": "Vegan status,\nsource: ",
+    "web_veg_statuses_widget_vegetarian_status": "Vegetarian status",
+    "web_veg_statuses_widget_vegan_status": "Vegan status",
     "web_veg_statuses_widget_veg_status_positive": "Positive",
     "web_veg_statuses_widget_veg_status_negative": "Negative",
     "web_veg_statuses_widget_veg_status_possible": "Ambiguous",
     "web_veg_statuses_widget_veg_status_unknown": "Unknown",
     "web_veg_statuses_widget_erase_product_veg_statuses": "Erase veg-statuses of the product",
+    "web_veg_statuses_veg_status_choice_reason": "Veg-status choice reason\n(optional)",
+    "web_veg_statuses_veg_status_choice_reason_source": "Link (URL) to the source\n(optional)",
 
     "web_user_report_task_page_title": "Product complaint received",
     "web_user_report_task_page_descr": "Please try to resolve the problem from the user's product complaint. \nIn order to do that you may need to open the product page in \nOpen Food Facts and to edit the product there, or to change product's veg-status here.",
