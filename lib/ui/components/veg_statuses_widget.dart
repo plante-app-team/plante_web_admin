@@ -135,6 +135,7 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
                       _vegetarianStatus,
                       _vegetarianChoiceReason,
                       _product.moderatorVegetarianSourcesText,
+                      vegetarianModeratorChoiceReasons(),
                       (choiceReason, sources) {
                     updateProduct(_product.rebuild((e) => e
                       ..moderatorVegetarianChoiceReason =
@@ -174,6 +175,7 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
                       onChanged: veganChangeCallback),
                   _ModeratorChoiceReasoningWidget(widget.editable, _veganStatus,
                       _veganChoiceReason, _product.moderatorVeganSourcesText,
+                      veganModeratorChoiceReasons(),
                       (choiceReason, sources) {
                     updateProduct(_product.rebuild((e) => e
                       ..moderatorVeganChoiceReason = choiceReason?.persistentId
@@ -223,9 +225,10 @@ class _ModeratorChoiceReasoningWidget extends StatefulWidget {
   final VegStatus? vegStatus;
   final ModeratorChoiceReason? moderatorChoiceReason;
   final String? sources;
+  final List<ModeratorChoiceReason> acceptableReasons;
   final _ModeratorChoiceReasoningCallback callback;
   _ModeratorChoiceReasoningWidget(this.editable, this.vegStatus,
-      this.moderatorChoiceReason, this.sources, this.callback,
+      this.moderatorChoiceReason, this.sources, this.acceptableReasons, this.callback,
       {Key? key})
       : super(key: key);
 
@@ -237,6 +240,13 @@ class _ModeratorChoiceReasoningWidget extends StatefulWidget {
 class __ModeratorChoiceReasoningWidgetState
     extends State<_ModeratorChoiceReasoningWidget> {
   final _sourcesController = TextEditingController();
+
+  List<ModeratorChoiceReason?> get acceptableReasons {
+    final result = <ModeratorChoiceReason?>[];
+    result.add(null);
+    result.addAll(widget.acceptableReasons);
+    return result;
+  }
 
   @override
   void initState() {
@@ -277,7 +287,7 @@ class __ModeratorChoiceReasoningWidgetState
                 DropdownPlante<ModeratorChoiceReason?>(
                     isExpanded: true,
                     value: widget.moderatorChoiceReason,
-                    values: _nullableModerationChoices(),
+                    values: acceptableReasons,
                     dropdownItemBuilder: (value) {
                       final String text;
                       if (value != null) {
@@ -311,12 +321,5 @@ class __ModeratorChoiceReasoningWidgetState
               ])
       ]),
     );
-  }
-
-  static List<ModeratorChoiceReason?> _nullableModerationChoices() {
-    final result = <ModeratorChoiceReason?>[];
-    result.add(null);
-    result.addAll(ModeratorChoiceReason.values);
-    return result;
   }
 }
