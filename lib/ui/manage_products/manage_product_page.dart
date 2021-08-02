@@ -127,8 +127,8 @@ class _ManageProductPageState extends State<ManageProductPage> {
       if (_changeProductVegStatuses) {
         final resp = await _backend.moderateProduct(
             product.barcode,
-            product.vegetarianStatus!,
-            product.veganStatus!,
+            product.vegetarianStatus,
+            product.veganStatus,
             product.moderatorVegetarianChoiceReason,
             product.moderatorVegetarianSourcesText,
             product.moderatorVeganChoiceReason,

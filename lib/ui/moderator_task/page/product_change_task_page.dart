@@ -97,8 +97,8 @@ class _ProductChangeTaskPageState
     if (task.barcode != null && task.barcode!.trim().isNotEmpty) {
       final resp = await backend.moderateProduct(
           product.barcode,
-          product.vegetarianStatus!,
-          product.veganStatus!,
+          product.vegetarianStatus,
+          product.veganStatus,
           product.moderatorVegetarianChoiceReason,
           product.moderatorVegetarianSourcesText,
           product.moderatorVeganChoiceReason,
