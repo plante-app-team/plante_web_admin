@@ -1,5 +1,11 @@
 import 'package:get_it/get_it.dart';
+import 'package:plante/base/permissions_manager.dart';
 import 'package:plante/base/settings.dart';
+import 'package:plante/lang/countries_lang_codes_table.dart';
+import 'package:plante/lang/sys_lang_code_holder.dart';
+import 'package:plante/lang/user_langs_manager.dart';
+import 'package:plante/location/ip_location_provider.dart';
+import 'package:plante/location/location_controller.dart';
 import 'package:plante/logging/analytics.dart';
 import 'package:plante/model/shared_preferences_holder.dart';
 import 'package:plante/outside/backend/backend.dart';
@@ -11,8 +17,8 @@ import 'package:plante/outside/off/off_api.dart';
 import 'package:plante/outside/map/open_street_map.dart';
 import 'package:plante/model/user_params_controller.dart';
 import 'package:plante/outside/products/products_manager.dart';
+import 'package:plante/outside/products/products_obtainer.dart';
 import 'package:plante/outside/products/taken_products_images_storage.dart';
-import 'package:plante/ui/base/lang_code_holder.dart';
 import 'package:plante/user_params_fetcher.dart';
 
 void initDI() {
@@ -22,7 +28,7 @@ void initDI() {
       _FakeTakenProductsImagesStorage());
 
   GetIt.I.registerSingleton<SharedPreferencesHolder>(SharedPreferencesHolder());
-  GetIt.I.registerSingleton<LangCodeHolder>(LangCodeHolder());
+  GetIt.I.registerSingleton<SysLangCodeHolder>(SysLangCodeHolder());
   GetIt.I.registerSingleton<UserParamsController>(UserParamsController());
   GetIt.I.registerSingleton<HttpClient>(HttpClient());
   GetIt.I.registerSingleton<OpenStreetMap>(
@@ -39,14 +45,33 @@ void initDI() {
   GetIt.I.registerSingleton<ProductsManager>(ProductsManager(
       GetIt.I.get<OffApi>(),
       GetIt.I.get<Backend>(),
-      GetIt.I.get<LangCodeHolder>(),
-      GetIt.I.get<TakenProductsImagesStorage>()));
+      GetIt.I.get<TakenProductsImagesStorage>(),
+      GetIt.I.get<Analytics>()));
   GetIt.I.registerSingleton<UserParamsFetcher>(UserParamsFetcher(
       GetIt.I.get<Backend>(), GetIt.I.get<UserParamsController>()));
+
+  GetIt.I.registerSingleton<IpLocationProvider>(IpLocationProvider(
+      GetIt.I.get<HttpClient>()));
+  GetIt.I.registerSingleton<LocationController>(LocationController(
+      GetIt.I.get<IpLocationProvider>(),
+      _FakePermissionsManager(),
+      GetIt.I.get<SharedPreferencesHolder>(),
+    ));
+  GetIt.I.registerSingleton<UserLangsManager>(UserLangsManager(
+      GetIt.I.get<SysLangCodeHolder>(),
+      CountriesLangCodesTable(GetIt.I.get<Analytics>()),
+      GetIt.I.get<LocationController>(),
+      GetIt.I.get<OpenStreetMap>(),
+    GetIt.I.get<SharedPreferencesHolder>(),
+      GetIt.I.get<UserParamsController>(),
+      GetIt.I.get<Backend>()));
+
+  GetIt.I.registerSingleton<ProductsObtainer>(ProductsObtainer(
+      GetIt.I.get<ProductsManager>(), GetIt.I.get<UserLangsManager>()));
   GetIt.I.registerSingleton<ShopsManager>(ShopsManager(
       GetIt.I.get<OpenStreetMap>(),
       GetIt.I.get<Backend>(),
-      GetIt.I.get<ProductsManager>(),
+      GetIt.I.get<ProductsObtainer>(),
       GetIt.I.get<Analytics>()));
 }
 
@@ -106,4 +131,21 @@ class _FakeTakenProductsImagesStorage implements TakenProductsImagesStorage {
 
   @override
   Future<void> store(Uri localFile) async {}
+}
+
+class _FakePermissionsManager implements PermissionsManager {
+  @override
+  Future<bool> openAppSettings() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<PermissionState> request(PermissionKind permission) async {
+    return PermissionState.permanentlyDenied;
+  }
+
+  @override
+  Future<PermissionState> status(PermissionKind permission) async {
+    return PermissionState.permanentlyDenied;
+  }
 }

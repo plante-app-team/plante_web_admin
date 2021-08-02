@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:plante/lang/sys_lang_code_holder.dart';
 import 'package:plante/model/user_params.dart';
 import 'package:plante/model/user_params_controller.dart';
-import 'package:plante/ui/base/lang_code_holder.dart';
 import 'package:plante_web_admin/ui/auth_page.dart';
 import 'package:plante_web_admin/ui/main_actions_widget.dart';
 
@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage>
   @override
   Widget build(BuildContext context) {
     if (!_initedLang) {
-      GetIt.I.get<LangCodeHolder>().langCode =
+      GetIt.I.get<SysLangCodeHolder>().langCode =
           Localizations.localeOf(context).languageCode;
       _initedLang = true;
     }
