@@ -12,10 +12,28 @@ import 'package:plante_web_admin/ui/moderator_task/no_tasks_page.dart';
 import 'package:plante/l10n/strings.dart';
 
 class ModeratorTasksListPage extends StatefulWidget {
-  const ModeratorTasksListPage({Key? key}) : super(key: key);
+  static const NAME = '/list_moderator_tasks';
+  final String? lang;
+  final bool tasksWithoutLangs;
 
   @override
   _ModeratorTasksListPageState createState() => _ModeratorTasksListPageState();
+
+  ModeratorTasksListPage.createFor(Uri uri)
+      : lang = uri.queryParameters['lang'],
+        tasksWithoutLangs = uri.queryParameters['tasksWithoutLangs'] == 'true';
+
+  static Future<void> openForLang(BuildContext context, String lang) async {
+    await Navigator.pushNamed(context, '$NAME?lang=$lang');
+  }
+
+  static Future<void> openForAllLangs(BuildContext context) async {
+    await Navigator.pushNamed(context, '$NAME');
+  }
+
+  static Future<void> openForTasksWithoutLangs(BuildContext context) async {
+    await Navigator.pushNamed(context, '$NAME?tasksWithoutLangs=true');
+  }
 }
 
 class _ModeratorTasksListPageState extends State<ModeratorTasksListPage> {
@@ -96,9 +114,9 @@ class _ModeratorTasksListPageState extends State<ModeratorTasksListPage> {
     _performNetworkAction(() async {
       _pageNumber = pageNumber;
       final resp1 = await _backend.customGet(
-          'all_moderator_tasks_data/', {'page': _pageNumber.toString()});
+          'all_moderator_tasks_data/', _queryParamsForPage(_pageNumber));
       final resp2 = await _backend.customGet(
-          'all_moderator_tasks_data/', {'page': (_pageNumber + 1).toString()});
+          'all_moderator_tasks_data/', _queryParamsForPage(_pageNumber + 1));
 
       final json1 = jsonDecode(resp1.body);
       final json2 = jsonDecode(resp2.body);
@@ -110,6 +128,14 @@ class _ModeratorTasksListPageState extends State<ModeratorTasksListPage> {
           .map((e) => ModeratorTask.fromJson(e as Map<String, dynamic>))
           .toList();
     });
+  }
+
+  Map<String, String> _queryParamsForPage(int page) {
+    return {
+      'page': page.toString(),
+      if (widget.lang != null) 'lang': widget.lang!,
+      if (widget.tasksWithoutLangs) 'onlyWithNoLang': 'true',
+    };
   }
 
   void _performNetworkAction(dynamic Function() action) async {

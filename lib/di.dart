@@ -50,19 +50,19 @@ void initDI() {
   GetIt.I.registerSingleton<UserParamsFetcher>(UserParamsFetcher(
       GetIt.I.get<Backend>(), GetIt.I.get<UserParamsController>()));
 
-  GetIt.I.registerSingleton<IpLocationProvider>(IpLocationProvider(
-      GetIt.I.get<HttpClient>()));
+  GetIt.I.registerSingleton<IpLocationProvider>(
+      IpLocationProvider(GetIt.I.get<HttpClient>()));
   GetIt.I.registerSingleton<LocationController>(LocationController(
-      GetIt.I.get<IpLocationProvider>(),
-      _FakePermissionsManager(),
-      GetIt.I.get<SharedPreferencesHolder>(),
-    ));
+    GetIt.I.get<IpLocationProvider>(),
+    _FakePermissionsManager(),
+    GetIt.I.get<SharedPreferencesHolder>(),
+  ));
   GetIt.I.registerSingleton<UserLangsManager>(UserLangsManager(
       GetIt.I.get<SysLangCodeHolder>(),
       CountriesLangCodesTable(GetIt.I.get<Analytics>()),
       GetIt.I.get<LocationController>(),
       GetIt.I.get<OpenStreetMap>(),
-    GetIt.I.get<SharedPreferencesHolder>(),
+      GetIt.I.get<SharedPreferencesHolder>(),
       GetIt.I.get<UserParamsController>(),
       GetIt.I.get<Backend>()));
 

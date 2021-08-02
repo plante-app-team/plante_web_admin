@@ -53,6 +53,8 @@ class _ProductChangeTaskPageState
 
   @override
   Widget buildPage(BuildContext context) {
+    final lang = task.lang ?? 'world';
+
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text(context.strings.web_product_change_task_page_title,
           style: Theme.of(context).textTheme.headline5),
@@ -63,7 +65,7 @@ class _ProductChangeTaskPageState
           Text(context.strings.web_product_change_task_page_product,
               style: Theme.of(context).textTheme.headline6),
           Linkify(
-            text: "https://ru.openfoodfacts.org/product/${task.barcode}/",
+            text: "https://$lang.openfoodfacts.org/product/${task.barcode}/",
             onOpen: (e) {
               launch(e.url);
             },

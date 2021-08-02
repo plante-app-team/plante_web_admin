@@ -3,6 +3,7 @@ import 'package:plante_web_admin/di.dart';
 import 'package:plante_web_admin/ui/main_page.dart';
 import 'package:plante_web_admin/ui/manage_products/manage_product_page.dart';
 import 'package:plante_web_admin/ui/manage_users/manage_users_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_categories_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_list_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/unassigned_moderator_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/auto_moderator_task_page.dart';
@@ -24,8 +25,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MainPage(),
-        '/list_moderator_tasks': (context) => Builder(builder: (b) {
-              return ModeratorTasksListPage();
+        ModeratorTasksCategoriesPage.NAME: (context) => Builder(builder: (b) {
+              return ModeratorTasksCategoriesPage();
             }),
         '/next_moderator_task': (context) => Builder(builder: (b) {
               return AutoModeratorTaskPage();
@@ -45,6 +46,14 @@ class MyApp extends StatelessWidget {
             settings: settings,
             builder: (context) {
               return UnassignedModeratorTaskPage(taskId);
+            },
+          );
+        } else if (settings.name!.contains(ModeratorTasksListPage.NAME)) {
+          final settingsUri = Uri.parse(settings.name ?? '');
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (context) {
+              return ModeratorTasksListPage.createFor(settingsUri);
             },
           );
         }

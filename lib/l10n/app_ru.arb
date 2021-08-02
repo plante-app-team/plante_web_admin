@@ -70,5 +70,11 @@
     "web_manage_product_page_search": "Поиск",
     "web_manage_product_page_product_not_found": "Продукт не найден",
     "web_manage_product_page_type_barcode": "Введите штрихкод",
-    "web_manage_product_page_send_modifications": "Отправить изменения"
+    "web_manage_product_page_send_modifications": "Отправить изменения",
+
+    "web_moderator_tasks_categories_page_title": "Задачи модерации",
+    "web_moderator_tasks_categories_page_tasks_without_langs": "Задачи без языка",
+    "web_moderator_tasks_categories_page_all_tasks": "Все задачи",
+    "web_moderator_tasks_categories_page_tasks_for_langs_you_know": "Задачи для языков, которые вы знаете",
+    "web_moderator_tasks_categories_page_tasks_for_langs_you_do_not_know": "Задачи для языков, которые вы не знаете"
 }

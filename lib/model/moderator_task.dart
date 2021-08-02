@@ -28,6 +28,9 @@ abstract class ModeratorTask
   @BuiltValueField(wireName: 'resolution_time')
   int? get resolutionTime;
 
+  @BuiltValueField(wireName: 'lang')
+  String? get lang;
+
   static ModeratorTask fromJson(Map<String, dynamic> json) {
     return BuildValueHelper.jsonSerializers
         .deserializeWith(ModeratorTask.serializer, json)!;

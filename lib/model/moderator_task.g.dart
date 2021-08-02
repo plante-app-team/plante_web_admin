@@ -72,6 +72,13 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
         ..add('resolution_time')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.lang;
+    if (value != null) {
+      result
+        ..add('lang')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -127,6 +134,10 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
           result.resolutionTime = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'lang':
+          result.lang = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -155,6 +166,8 @@ class _$ModeratorTask extends ModeratorTask {
   final int? assignTime;
   @override
   final int? resolutionTime;
+  @override
+  final String? lang;
 
   factory _$ModeratorTask([void Function(ModeratorTaskBuilder)? updates]) =>
       (new ModeratorTaskBuilder()..update(updates)).build();
@@ -169,7 +182,8 @@ class _$ModeratorTask extends ModeratorTask {
       required this.creationTime,
       this.assignee,
       this.assignTime,
-      this.resolutionTime})
+      this.resolutionTime,
+      this.lang})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'ModeratorTask', 'id');
     BuiltValueNullFieldError.checkNotNull(
@@ -200,7 +214,8 @@ class _$ModeratorTask extends ModeratorTask {
         creationTime == other.creationTime &&
         assignee == other.assignee &&
         assignTime == other.assignTime &&
-        resolutionTime == other.resolutionTime;
+        resolutionTime == other.resolutionTime &&
+        lang == other.lang;
   }
 
   @override
@@ -212,15 +227,19 @@ class _$ModeratorTask extends ModeratorTask {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc($jc(0, id.hashCode), barcode.hashCode),
-                                    osmId.hashCode),
-                                taskType.hashCode),
-                            taskSourceUserId.hashCode),
-                        textFromUser.hashCode),
-                    creationTime.hashCode),
-                assignee.hashCode),
-            assignTime.hashCode),
-        resolutionTime.hashCode));
+                                $jc(
+                                    $jc(
+                                        $jc($jc(0, id.hashCode),
+                                            barcode.hashCode),
+                                        osmId.hashCode),
+                                    taskType.hashCode),
+                                taskSourceUserId.hashCode),
+                            textFromUser.hashCode),
+                        creationTime.hashCode),
+                    assignee.hashCode),
+                assignTime.hashCode),
+            resolutionTime.hashCode),
+        lang.hashCode));
   }
 
   @override
@@ -235,7 +254,8 @@ class _$ModeratorTask extends ModeratorTask {
           ..add('creationTime', creationTime)
           ..add('assignee', assignee)
           ..add('assignTime', assignTime)
-          ..add('resolutionTime', resolutionTime))
+          ..add('resolutionTime', resolutionTime)
+          ..add('lang', lang))
         .toString();
   }
 }
@@ -286,6 +306,10 @@ class ModeratorTaskBuilder
   set resolutionTime(int? resolutionTime) =>
       _$this._resolutionTime = resolutionTime;
 
+  String? _lang;
+  String? get lang => _$this._lang;
+  set lang(String? lang) => _$this._lang = lang;
+
   ModeratorTaskBuilder();
 
   ModeratorTaskBuilder get _$this {
@@ -301,6 +325,7 @@ class ModeratorTaskBuilder
       _assignee = $v.assignee;
       _assignTime = $v.assignTime;
       _resolutionTime = $v.resolutionTime;
+      _lang = $v.lang;
       _$v = null;
     }
     return this;
@@ -334,7 +359,8 @@ class ModeratorTaskBuilder
                 creationTime, 'ModeratorTask', 'creationTime'),
             assignee: assignee,
             assignTime: assignTime,
-            resolutionTime: resolutionTime);
+            resolutionTime: resolutionTime,
+            lang: lang);
     replace(_$result);
     return _$result;
   }

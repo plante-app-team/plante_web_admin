@@ -67,7 +67,7 @@ class _UserReportTaskPageState
         Text(context.strings.web_user_report_task_page_product,
             style: Theme.of(context).textTheme.headline6),
         Linkify(
-          text: "https://ru.openfoodfacts.org/product/${task.barcode}/",
+          text: "https://world.openfoodfacts.org/product/${task.barcode}/",
           onOpen: (e) {
             launch(e.url);
           },

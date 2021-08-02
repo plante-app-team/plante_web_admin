@@ -173,10 +173,12 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
                       value: VegStatus.unknown,
                       groupValue: _veganStatus,
                       onChanged: veganChangeCallback),
-                  _ModeratorChoiceReasoningWidget(widget.editable, _veganStatus,
-                      _veganChoiceReason, _product.moderatorVeganSourcesText,
-                      veganModeratorChoiceReasons(),
-                      (choiceReason, sources) {
+                  _ModeratorChoiceReasoningWidget(
+                      widget.editable,
+                      _veganStatus,
+                      _veganChoiceReason,
+                      _product.moderatorVeganSourcesText,
+                      veganModeratorChoiceReasons(), (choiceReason, sources) {
                     updateProduct(_product.rebuild((e) => e
                       ..moderatorVeganChoiceReason = choiceReason?.persistentId
                       ..moderatorVeganSourcesText = sources));
@@ -227,8 +229,13 @@ class _ModeratorChoiceReasoningWidget extends StatefulWidget {
   final String? sources;
   final List<ModeratorChoiceReason> acceptableReasons;
   final _ModeratorChoiceReasoningCallback callback;
-  _ModeratorChoiceReasoningWidget(this.editable, this.vegStatus,
-      this.moderatorChoiceReason, this.sources, this.acceptableReasons, this.callback,
+  _ModeratorChoiceReasoningWidget(
+      this.editable,
+      this.vegStatus,
+      this.moderatorChoiceReason,
+      this.sources,
+      this.acceptableReasons,
+      this.callback,
       {Key? key})
       : super(key: key);
 

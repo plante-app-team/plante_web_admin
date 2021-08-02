@@ -4,6 +4,7 @@ import 'package:plante/model/user_params.dart';
 import 'package:plante/model/user_params_controller.dart';
 import 'package:plante/l10n/strings.dart';
 import 'package:plante/ui/base/components/button_outlined_plante.dart';
+import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_categories_page.dart';
 
 class MainActionsWidget extends StatefulWidget {
   const MainActionsWidget({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _MainActionsWidgetState extends State<MainActionsWidget>
             child: ButtonOutlinedPlante.withText(
                 context.strings.web_main_actions_widget_list_moderation_tasks,
                 onPressed: () {
-              Navigator.pushNamed(context, '/list_moderator_tasks');
+              ModeratorTasksCategoriesPage.open(context);
             })),
         SizedBox(height: 10),
         SizedBox(
