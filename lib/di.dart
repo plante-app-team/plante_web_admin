@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:plante/base/permissions_manager.dart';
+import 'package:plante/base/result.dart';
 import 'package:plante/base/settings.dart';
 import 'package:plante/lang/countries_lang_codes_table.dart';
 import 'package:plante/lang/sys_lang_code_holder.dart';
@@ -7,11 +8,17 @@ import 'package:plante/lang/user_langs_manager.dart';
 import 'package:plante/location/ip_location_provider.dart';
 import 'package:plante/location/location_controller.dart';
 import 'package:plante/logging/analytics.dart';
+import 'package:plante/model/coords_bounds.dart';
 import 'package:plante/model/shared_preferences_holder.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/user_params_auto_wiper.dart';
 import 'package:plante/outside/http_client.dart';
 import 'package:plante/outside/identity/google_authorizer.dart';
+import 'package:plante/outside/map/address_obtainer.dart';
+import 'package:plante/outside/map/osm_cached_territory.dart';
+import 'package:plante/outside/map/osm_cacher.dart';
+import 'package:plante/outside/map/osm_road.dart';
+import 'package:plante/outside/map/osm_shop.dart';
 import 'package:plante/outside/map/shops_manager.dart';
 import 'package:plante/outside/off/off_api.dart';
 import 'package:plante/outside/map/open_street_map.dart';
@@ -20,6 +27,7 @@ import 'package:plante/outside/products/products_manager.dart';
 import 'package:plante/outside/products/products_obtainer.dart';
 import 'package:plante/outside/products/taken_products_images_storage.dart';
 import 'package:plante/user_params_fetcher.dart';
+import 'package:sqflite_common/sqlite_api.dart';
 
 void initDI() {
   GetIt.I.registerSingleton<Settings>(_FakeSettings());
@@ -32,7 +40,7 @@ void initDI() {
   GetIt.I.registerSingleton<UserParamsController>(UserParamsController());
   GetIt.I.registerSingleton<HttpClient>(HttpClient());
   GetIt.I.registerSingleton<OpenStreetMap>(
-      OpenStreetMap(GetIt.I.get<HttpClient>()));
+      OpenStreetMap(GetIt.I.get<HttpClient>(), GetIt.I.get<Analytics>()));
   GetIt.I.registerSingleton<GoogleAuthorizer>(GoogleAuthorizer());
   GetIt.I.registerSingleton<Backend>(Backend(
       GetIt.I.get<Analytics>(),
@@ -57,14 +65,17 @@ void initDI() {
     _FakePermissionsManager(),
     GetIt.I.get<SharedPreferencesHolder>(),
   ));
+  GetIt.I.registerSingleton<AddressObtainer>(
+      AddressObtainer(GetIt.I.get<OpenStreetMap>()));
   GetIt.I.registerSingleton<UserLangsManager>(UserLangsManager(
       GetIt.I.get<SysLangCodeHolder>(),
       CountriesLangCodesTable(GetIt.I.get<Analytics>()),
       GetIt.I.get<LocationController>(),
-      GetIt.I.get<OpenStreetMap>(),
+      GetIt.I.get<AddressObtainer>(),
       GetIt.I.get<SharedPreferencesHolder>(),
       GetIt.I.get<UserParamsController>(),
-      GetIt.I.get<Backend>()));
+      GetIt.I.get<Backend>(),
+      GetIt.I.get<Analytics>()));
 
   GetIt.I.registerSingleton<ProductsObtainer>(ProductsObtainer(
       GetIt.I.get<ProductsManager>(), GetIt.I.get<UserLangsManager>()));
@@ -72,7 +83,8 @@ void initDI() {
       GetIt.I.get<OpenStreetMap>(),
       GetIt.I.get<Backend>(),
       GetIt.I.get<ProductsObtainer>(),
-      GetIt.I.get<Analytics>()));
+      GetIt.I.get<Analytics>(),
+      _FakeOsmCacher()));
 }
 
 class _FakeSettings implements Settings {
@@ -147,5 +159,44 @@ class _FakePermissionsManager implements PermissionsManager {
   @override
   Future<PermissionState> status(PermissionKind permission) async {
     return PermissionState.permanentlyDenied;
+  }
+}
+
+class _FakeOsmCacher implements OsmCacher {
+  @override
+  Future<Result<OsmCachedTerritory<OsmRoad>, OsmCacherError>> addRoadToCache(int territoryId, OsmRoad road) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<OsmCachedTerritory<OsmShop>, OsmCacherError>> addShopToCache(int territoryId, OsmShop shop) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<OsmCachedTerritory<OsmRoad>> cacheRoads(DateTime whenObtained, CoordsBounds bounds, List<OsmRoad> roads) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<OsmCachedTerritory<OsmShop>> cacheShops(DateTime whenObtained, CoordsBounds bounds, List<OsmShop> shops) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Database> get dbForTesting => throw UnimplementedError();
+
+  @override
+  Future<void> deleteCachedTerritory(int territoryId) async {
+  }
+
+  @override
+  Future<List<OsmCachedTerritory<OsmRoad>>> getCachedRoads() async {
+    return const [];
+  }
+
+  @override
+  Future<List<OsmCachedTerritory<OsmShop>>> getCachedShops() async {
+    return const [];
   }
 }
