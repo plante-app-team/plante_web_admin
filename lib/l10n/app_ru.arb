@@ -8,6 +8,7 @@
     "web_main_actions_widget_list_moderation_tasks": "Список задач модерации",
     "web_main_actions_widget_products_management": "Управление продуктами",
     "web_main_actions_widget_next_users_management": "Управление пользователями",
+    "web_main_actions_widget_recently_added_products_map": "Карта недавно добавленных продуктов",
 
     "web_auth_page_sign_in_with_google": "Войти через Google",
     "web_auth_page_error_user_is_not_moderator": "Пользователь не является модераторором",
@@ -76,5 +77,9 @@
     "web_moderator_tasks_categories_page_tasks_without_langs": "Задачи без языка",
     "web_moderator_tasks_categories_page_all_tasks": "Все задачи",
     "web_moderator_tasks_categories_page_tasks_for_langs_you_know": "Задачи для языков, которые вы знаете",
-    "web_moderator_tasks_categories_page_tasks_for_langs_you_do_not_know": "Задачи для языков, которые вы не знаете"
+    "web_moderator_tasks_categories_page_tasks_for_langs_you_do_not_know": "Задачи для языков, которые вы не знаете",
+
+    "web_recently_added_products_map_page_descr": "Расположение последних <LIMIT> добавленных на карту продуктов. Числа на маркерах это не число продуктов в магазине, это положение добавленного продукта в топе, отсортированном по времени добавления. Продукт 1 добавлен последним (самый новый), 2 - предпоследним и т.д.",
+    "web_recently_added_products_map_page_limit": "Показывать последних продуктов:",
+    "web_recently_added_products_map_page_apply": "Применить"
 }

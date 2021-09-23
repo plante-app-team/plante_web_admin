@@ -8,6 +8,7 @@
     "web_main_actions_widget_list_moderation_tasks": "Moderator tasks list",
     "web_main_actions_widget_products_management": "Products management",
     "web_main_actions_widget_next_users_management": "Users management",
+    "web_main_actions_widget_recently_added_products_map": "Map of recently added products",
 
     "web_auth_page_sign_in_with_google": "Sign in Google",
     "web_auth_page_error_user_is_not_moderator": "The user is not a moderator",
@@ -76,5 +77,9 @@
     "web_moderator_tasks_categories_page_tasks_without_langs": "Tasks without a language",
     "web_moderator_tasks_categories_page_all_tasks": "All tasks",
     "web_moderator_tasks_categories_page_tasks_for_langs_you_know": "Tasks for languages you know",
-    "web_moderator_tasks_categories_page_tasks_for_langs_you_do_not_know": "Task for languages you don't know"
+    "web_moderator_tasks_categories_page_tasks_for_langs_you_do_not_know": "Task for languages you don't know",
+
+    "web_recently_added_products_map_page_descr": "Locations of last <LIMIT> added to the map products. Numbers on the markers are NOT numbers of products within shops, but rather these are positions of the products within the last <LIMIT> products sorted by the addition time. Product 1 was added last (it's the most recent product), 2 - before the last one, etc.",
+    "web_recently_added_products_map_page_limit": "Show last products number:",
+    "web_recently_added_products_map_page_apply": "Apply"
 }

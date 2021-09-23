@@ -164,22 +164,26 @@ class _FakePermissionsManager implements PermissionsManager {
 
 class _FakeOsmCacher implements OsmCacher {
   @override
-  Future<Result<OsmCachedTerritory<OsmRoad>, OsmCacherError>> addRoadToCache(int territoryId, OsmRoad road) {
+  Future<Result<OsmCachedTerritory<OsmRoad>, OsmCacherError>> addRoadToCache(
+      int territoryId, OsmRoad road) {
     throw UnimplementedError();
   }
 
   @override
-  Future<Result<OsmCachedTerritory<OsmShop>, OsmCacherError>> addShopToCache(int territoryId, OsmShop shop) {
+  Future<Result<OsmCachedTerritory<OsmShop>, OsmCacherError>> addShopToCache(
+      int territoryId, OsmShop shop) {
     throw UnimplementedError();
   }
 
   @override
-  Future<OsmCachedTerritory<OsmRoad>> cacheRoads(DateTime whenObtained, CoordsBounds bounds, List<OsmRoad> roads) {
+  Future<OsmCachedTerritory<OsmRoad>> cacheRoads(
+      DateTime whenObtained, CoordsBounds bounds, List<OsmRoad> roads) {
     throw UnimplementedError();
   }
 
   @override
-  Future<OsmCachedTerritory<OsmShop>> cacheShops(DateTime whenObtained, CoordsBounds bounds, List<OsmShop> shops) {
+  Future<OsmCachedTerritory<OsmShop>> cacheShops(
+      DateTime whenObtained, CoordsBounds bounds, List<OsmShop> shops) {
     throw UnimplementedError();
   }
 
@@ -187,8 +191,7 @@ class _FakeOsmCacher implements OsmCacher {
   Future<Database> get dbForTesting => throw UnimplementedError();
 
   @override
-  Future<void> deleteCachedTerritory(int territoryId) async {
-  }
+  Future<void> deleteCachedTerritory(int territoryId) async {}
 
   @override
   Future<List<OsmCachedTerritory<OsmRoad>>> getCachedRoads() async {

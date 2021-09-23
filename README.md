@@ -1,0 +1,5 @@
+DO NOT MAKE THE REPO PUBLIC
+
+It contains Google API keys in web/index.html!
+
+API KEYS COST REAL MONEY AND ARE VERY EXPENSIVE!!!

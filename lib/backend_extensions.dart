@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:plante/base/result.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_error.dart';
+import 'package:plante_web_admin/model/latest_products_added_to_shops.dart';
 
 extension BackendExtensions on Backend {
   Future<Result<None, BackendError>> moderateProduct(
@@ -72,5 +73,13 @@ extension BackendExtensions on Backend {
       }
     }
     return Ok(None());
+  }
+
+  Future<Result<LatestProductsAddedToShops, BackendError>>
+      latestProductsAddedToShops(int limit) async {
+    var resp = await customGet("latest_products_added_to_shops_data/", {
+      "limit": limit.toString(),
+    });
+    return Ok(LatestProductsAddedToShops.fromJson(jsonDecode(resp.body)));
   }
 }

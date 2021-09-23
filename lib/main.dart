@@ -3,6 +3,7 @@ import 'package:plante_web_admin/di.dart';
 import 'package:plante_web_admin/ui/main_page.dart';
 import 'package:plante_web_admin/ui/manage_products/manage_product_page.dart';
 import 'package:plante_web_admin/ui/manage_users/manage_users_page.dart';
+import 'package:plante_web_admin/ui/map/recently_added_products_map_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_categories_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_list_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/unassigned_moderator_task_page.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
             }),
         '/manage_users': (context) => Builder(builder: (b) {
               return ManageUsersPage();
+            }),
+        '/recently_added_products_map': (context) => Builder(builder: (b) {
+              return RecentlyAddedProductsMapPage();
             }),
       },
       onGenerateRoute: (settings) {

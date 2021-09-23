@@ -81,6 +81,15 @@ class _MainActionsWidgetState extends State<MainActionsWidget>
                 onPressed: () {
               Navigator.pushNamed(context, '/manage_users');
             })),
+        SizedBox(height: 10),
+        SizedBox(
+            width: 400,
+            child: ButtonOutlinedPlante.withText(
+                context.strings
+                    .web_main_actions_widget_recently_added_products_map,
+                onPressed: () {
+              Navigator.pushNamed(context, '/recently_added_products_map');
+            })),
       ]),
     );
   }
