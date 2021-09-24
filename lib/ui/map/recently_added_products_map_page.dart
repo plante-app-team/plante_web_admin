@@ -53,10 +53,10 @@ class _RecentlyAddedProductsMapPageState
       showSnackBar(context.strings.global_something_went_wrong, context);
       return;
     }
-    final backendShops =
-        LinkedHashSet.of(latestProductsRes.unwrap().shopsOrdered).toList();
+    final backendShops = latestProductsRes.unwrap().shopsOrdered.toList();
     final osmShopsRes = await _osm.withOverpass((overpass) async =>
-        await overpass.fetchShops(ids: backendShops.map((e) => e.osmId)));
+        await overpass.fetchShops(
+            ids: backendShops.map((e) => e.osmId).toSet()));
     if (osmShopsRes.isErr) {
       showSnackBar(context.strings.global_something_went_wrong, context);
       return;
