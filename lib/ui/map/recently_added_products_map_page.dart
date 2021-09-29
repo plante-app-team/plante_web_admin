@@ -56,21 +56,21 @@ class _RecentlyAddedProductsMapPageState
     final backendShops = latestProductsRes.unwrap().shopsOrdered.toList();
     final osmShopsRes = await _osm.withOverpass((overpass) async =>
         await overpass.fetchShops(
-            ids: backendShops.map((e) => e.osmId).toSet()));
+            osmUIDs: backendShops.map((e) => e.osmUID).toSet()));
     if (osmShopsRes.isErr) {
       showSnackBar(context.strings.global_something_went_wrong, context);
       return;
     }
 
     final osmShopsMap = {
-      for (var shop in osmShopsRes.unwrap()) shop.osmId: shop
+      for (var shop in osmShopsRes.unwrap()) shop.osmUID: shop
     };
 
     final markers = <Marker>{};
     var index = 0;
     for (final shop in backendShops) {
       index += 1;
-      final osmShop = osmShopsMap[shop.osmId];
+      final osmShop = osmShopsMap[shop.osmUID];
       if (osmShop == null) {
         Log.w('Backend shop not found in OSM: $shop');
         continue;

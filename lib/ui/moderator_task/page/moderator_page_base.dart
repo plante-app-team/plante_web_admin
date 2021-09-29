@@ -38,7 +38,7 @@ abstract class ModeratorTaskPage extends StatefulWidget {
       return ProductChangeTaskPage(
           callback, task, product ?? BackendProduct.empty);
     } else if (task.taskType == "osm_shop_creation") {
-      return OsmShopCreationTaskPage(callback, task, task.osmId!);
+      return OsmShopCreationTaskPage(callback, task, task.osmUID!);
     } else {
       showSnackBar("Error: unknown task type ${task.taskType}", context);
       throw Exception("Error: unknown task type ${task.taskType}");

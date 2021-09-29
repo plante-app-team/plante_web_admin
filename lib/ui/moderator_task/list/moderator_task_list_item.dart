@@ -62,7 +62,7 @@ class _ShopCreatedTaskListItem extends ModeratorTaskListItem {
     return Column(children: [
       Text(context.strings.web_moderator_task_list_item_task_shop_created,
           style: TextStyles.headline4),
-      Text(task.osmId ?? '',
+      Text(task.osmUID?.toString() ?? '',
           style: TextStyles.hint, maxLines: 1, overflow: TextOverflow.ellipsis),
     ]);
   }

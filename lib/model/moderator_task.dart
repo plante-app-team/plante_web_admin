@@ -1,5 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:plante/outside/map/osm_uid.dart';
 import 'package:plante_web_admin/build_value_helper.dart';
 
 part 'moderator_task.g.dart';
@@ -10,8 +11,8 @@ abstract class ModeratorTask
   int get id;
   @BuiltValueField(wireName: 'barcode')
   String? get barcode;
-  @BuiltValueField(wireName: 'osm_id')
-  String? get osmId;
+  @BuiltValueField(wireName: 'osm_uid')
+  OsmUID? get osmUID;
   @BuiltValueField(wireName: 'task_type')
   String get taskType;
   @BuiltValueField(wireName: 'task_source_user_id')

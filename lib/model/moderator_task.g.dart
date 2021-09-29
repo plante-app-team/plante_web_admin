@@ -39,12 +39,12 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.osmId;
+    value = object.osmUID;
     if (value != null) {
       result
-        ..add('osm_id')
+        ..add('osm_uid')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(OsmUID)));
     }
     value = object.textFromUser;
     if (value != null) {
@@ -102,9 +102,9 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
           result.barcode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'osm_id':
+        case 'osm_uid':
           result.osmId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+              specifiedType: const FullType(OsmUID)) as OsmUID?;
           break;
         case 'task_type':
           result.taskType = serializers.deserialize(value,
@@ -151,7 +151,7 @@ class _$ModeratorTask extends ModeratorTask {
   @override
   final String? barcode;
   @override
-  final String? osmId;
+  final OsmUID? osmUID;
   @override
   final String taskType;
   @override
@@ -175,7 +175,7 @@ class _$ModeratorTask extends ModeratorTask {
   _$ModeratorTask._(
       {required this.id,
       this.barcode,
-      this.osmId,
+      this.osmUID,
       required this.taskType,
       required this.taskSourceUserId,
       this.textFromUser,
@@ -207,7 +207,7 @@ class _$ModeratorTask extends ModeratorTask {
     return other is ModeratorTask &&
         id == other.id &&
         barcode == other.barcode &&
-        osmId == other.osmId &&
+        osmUID == other.osmUID &&
         taskType == other.taskType &&
         taskSourceUserId == other.taskSourceUserId &&
         textFromUser == other.textFromUser &&
@@ -231,7 +231,7 @@ class _$ModeratorTask extends ModeratorTask {
                                     $jc(
                                         $jc($jc(0, id.hashCode),
                                             barcode.hashCode),
-                                        osmId.hashCode),
+                                        osmUID.hashCode),
                                     taskType.hashCode),
                                 taskSourceUserId.hashCode),
                             textFromUser.hashCode),
@@ -247,7 +247,7 @@ class _$ModeratorTask extends ModeratorTask {
     return (newBuiltValueToStringHelper('ModeratorTask')
           ..add('id', id)
           ..add('barcode', barcode)
-          ..add('osmId', osmId)
+          ..add('osmId', osmUID)
           ..add('taskType', taskType)
           ..add('taskSourceUserId', taskSourceUserId)
           ..add('textFromUser', textFromUser)
@@ -272,9 +272,9 @@ class ModeratorTaskBuilder
   String? get barcode => _$this._barcode;
   set barcode(String? barcode) => _$this._barcode = barcode;
 
-  String? _osmId;
-  String? get osmId => _$this._osmId;
-  set osmId(String? osmId) => _$this._osmId = osmId;
+  OsmUID? _osmId;
+  OsmUID? get osmId => _$this._osmId;
+  set osmId(OsmUID? osmId) => _$this._osmId = osmId;
 
   String? _taskType;
   String? get taskType => _$this._taskType;
@@ -317,7 +317,7 @@ class ModeratorTaskBuilder
     if ($v != null) {
       _id = $v.id;
       _barcode = $v.barcode;
-      _osmId = $v.osmId;
+      _osmId = $v.osmUID;
       _taskType = $v.taskType;
       _taskSourceUserId = $v.taskSourceUserId;
       _textFromUser = $v.textFromUser;
@@ -349,7 +349,7 @@ class ModeratorTaskBuilder
             id: BuiltValueNullFieldError.checkNotNull(
                 id, 'ModeratorTask', 'id'),
             barcode: barcode,
-            osmId: osmId,
+            osmUID: osmId,
             taskType: BuiltValueNullFieldError.checkNotNull(
                 taskType, 'ModeratorTask', 'taskType'),
             taskSourceUserId: BuiltValueNullFieldError.checkNotNull(
