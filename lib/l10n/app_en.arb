@@ -4,11 +4,11 @@
     "web_main_actions_widget_nameless_moderator": "nameless moderator",
     "web_main_actions_widget_hello": "Hello, ",
     "web_main_actions_widget_your_id": "Your ID: ",
-    "web_main_actions_widget_next_moderation_task": "Assign to me next moderation task",
     "web_main_actions_widget_list_moderation_tasks": "Moderator tasks list",
     "web_main_actions_widget_products_management": "Products management",
     "web_main_actions_widget_next_users_management": "Users management",
     "web_main_actions_widget_recently_added_products_map": "Map of recently added products",
+    "web_main_actions_widget_social_media_added_products_map_page": "Map for social media posts about new products",
 
     "web_auth_page_sign_in_with_google": "Sign in Google",
     "web_auth_page_error_user_is_not_moderator": "The user is not a moderator",
@@ -81,5 +81,13 @@
 
     "web_recently_added_products_map_page_descr": "Locations of last <LIMIT> added to the map products. Numbers on the markers are NOT numbers of products within shops, but rather these are positions of the products within the last <LIMIT> products sorted by the addition time. Product 1 was added last (it's the most recent product), 2 - before the last one, etc.",
     "web_recently_added_products_map_page_limit": "Show last products number:",
-    "web_recently_added_products_map_page_apply": "Apply"
+    "web_recently_added_products_map_page_apply": "Apply",
+
+    "web_social_media_added_products_map_page_descr": "Show locations of last <LIMIT> products put to the map",
+    "web_social_media_added_products_map_page_enable_map_gestures": "Enable map gestures",
+    "web_social_media_added_products_map_page_hide_marker": "Hide marker",
+    "web_social_media_added_products_map_page_bring_products_icons": "Bring products icons to the map",
+    "web_social_media_added_products_map_page_show_controls": "Show controls",
+
+    "web_select_products_dialog_default_title": "Select products"
 }

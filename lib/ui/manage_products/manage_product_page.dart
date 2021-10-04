@@ -87,8 +87,13 @@ class _ManageProductPageState extends State<ManageProductPage> {
   void _onProductSearch() async {
     _performNetworkAction(() async {
       final productRes =
-          await _backend.requestProduct(_barcodeInputController.text);
-      _foundProduct = productRes.maybeOk();
+          await _backend.requestProducts([_barcodeInputController.text], 0);
+      final products = productRes.maybeOk()?.products;
+      if (products != null && products.isNotEmpty) {
+        _foundProduct = products.first;
+      } else {
+        _foundProduct = null;
+      }
       _changeProductVegStatuses = false;
     });
   }

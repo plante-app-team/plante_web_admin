@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,7 +11,7 @@ import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante/ui/base/text_styles.dart';
 import 'package:plante/ui/base/ui_utils.dart';
 import 'package:plante_web_admin/backend_extensions.dart';
-import 'package:plante_web_admin/ui/map/markers_building.dart';
+import 'package:plante_web_admin/ui/map/recently_added_products_markers_building.dart';
 
 const _PRODUCTS_LIMIT_DEFAULT = 100;
 

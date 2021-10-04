@@ -61,26 +61,22 @@ class _MainActionsWidgetState extends State<MainActionsWidget>
         SizedBox(
             width: 400,
             child: ButtonOutlinedPlante.withText(
-                context.strings.web_main_actions_widget_next_moderation_task,
-                onPressed: () {
-              Navigator.pushNamed(context, '/next_moderator_task');
-            })),
-        SizedBox(height: 10),
-        SizedBox(
-            width: 400,
-            child: ButtonOutlinedPlante.withText(
                 context.strings.web_main_actions_widget_products_management,
                 onPressed: () {
               Navigator.pushNamed(context, '/manage_products');
             })),
-        SizedBox(height: 10),
-        SizedBox(
-            width: 400,
-            child: ButtonOutlinedPlante.withText(
-                context.strings.web_main_actions_widget_next_users_management,
-                onPressed: () {
-              Navigator.pushNamed(context, '/manage_users');
-            })),
+        if ((_user?.userGroup ?? 0) >= 4)
+          Column(children: [
+            SizedBox(height: 10),
+            SizedBox(
+                width: 400,
+                child: ButtonOutlinedPlante.withText(
+                    context
+                        .strings.web_main_actions_widget_next_users_management,
+                    onPressed: () {
+                  Navigator.pushNamed(context, '/manage_users');
+                })),
+          ]),
         SizedBox(height: 10),
         SizedBox(
             width: 400,
@@ -89,6 +85,15 @@ class _MainActionsWidgetState extends State<MainActionsWidget>
                     .web_main_actions_widget_recently_added_products_map,
                 onPressed: () {
               Navigator.pushNamed(context, '/recently_added_products_map');
+            })),
+        SizedBox(height: 10),
+        SizedBox(
+            width: 400,
+            child: ButtonOutlinedPlante.withText(
+                context.strings
+                    .web_main_actions_widget_social_media_added_products_map_page,
+                onPressed: () {
+              Navigator.pushNamed(context, '/social_media_added_products_map');
             })),
       ]),
     );
