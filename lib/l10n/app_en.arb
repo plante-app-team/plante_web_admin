@@ -34,7 +34,7 @@
     "web_user_report_task_page_please_moderate_both_veg_statuses": "Please, moderate both statuses - vegetarian and vegan",
 
     "web_product_change_task_page_title": "Product created/modified",
-    "web_product_change_task_page_descr": "Please, check that the product in Open Food Facts:\n- has a proper packaging photo\n- has a proper ingredients photo\n- ingredients text is taken from the ingredients photo\n- brands and categories, if present, fit the product.\nBy products ingredients in Open Food Facts (and by googling) you should figure out the proper veg-statuses of the product and select them",
+    "web_product_change_task_page_descr": "Please, check that the product in Open Food Facts:\n- has a proper packaging photo\n- has a proper ingredients photo\n- ingredients text is taken from the ingredients photo\n- brands and categories, if present, fit the product.\nFigure out the proper veg-status of the product by:",
     "web_product_change_task_page_product": "Product: ",
     "web_product_change_task_page_empty_product_error_descr": "Empty product - server error occurred. Click \"Moderated\" and report the error to the developer",
     "web_product_change_task_page_user": "User: ",

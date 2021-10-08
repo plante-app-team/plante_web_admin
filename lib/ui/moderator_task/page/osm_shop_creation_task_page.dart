@@ -3,6 +3,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:plante/outside/map/osm_uid.dart';
 import 'package:plante/outside/map/osm_element_type.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
+import 'package:plante_web_admin/ui/components/linkify_url.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
 
@@ -40,13 +41,8 @@ class _OsmShopCreationTaskPageState
       Row(children: [
         Text(context.strings.web_osm_shop_creation_task_page_shop,
             style: Theme.of(context).textTheme.headline6),
-        Linkify(
-          text:
-              "https://www.openstreetmap.org/${osmUID.type.name}/${osmUID.osmId}/",
-          onOpen: (e) {
-            launch(e.url);
-          },
-        )
+        LinkifyUrl(
+            "https://www.openstreetmap.org/${osmUID.type.name}/${osmUID.osmId}/"),
       ]),
       Row(children: [
         Text(context.strings.web_osm_shop_creation_task_page_user,

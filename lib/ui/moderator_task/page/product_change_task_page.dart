@@ -3,6 +3,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
+import 'package:plante_web_admin/ui/components/linkify_url.dart';
 import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
@@ -55,37 +56,38 @@ class _ProductChangeTaskPageState
   Widget buildPage(BuildContext context) {
     final lang = task.lang ?? 'world';
 
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text(context.strings.web_product_change_task_page_title,
-          style: Theme.of(context).textTheme.headline5),
-      Text(context.strings.web_product_change_task_page_descr),
-      SizedBox(height: 50),
-      if (product.barcode.isNotEmpty)
-        Row(children: [
-          Text(context.strings.web_product_change_task_page_product,
-              style: Theme.of(context).textTheme.headline6),
-          Linkify(
-            text: "https://$lang.openfoodfacts.org/product/${task.barcode}/",
-            onOpen: (e) {
-              launch(e.url);
-            },
-          )
-        ]),
-      if (product.barcode.isEmpty)
-        Text(
-            context
-                .strings.web_product_change_task_page_empty_product_error_descr,
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                ?.copyWith(color: Colors.red)),
-      Row(children: [
-        Text(context.strings.web_product_change_task_page_user,
-            style: Theme.of(context).textTheme.headline6),
-        SelectableText(task.taskSourceUserId)
-      ]),
-      vegStatusesWidget(),
-    ]);
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(context.strings.web_product_change_task_page_title,
+              style: Theme.of(context).textTheme.headline5),
+          Text(context.strings.web_product_change_task_page_descr),
+          LinkifyUrl(
+              'https://plante.atlassian.net/wiki/spaces/PS/pages/26116097/How+to+moderate+products'),
+          SizedBox(height: 50),
+          if (product.barcode.isNotEmpty)
+            Row(children: [
+              Text(context.strings.web_product_change_task_page_product,
+                  style: Theme.of(context).textTheme.headline6),
+              LinkifyUrl(
+                  "https://$lang.openfoodfacts.org/product/${task.barcode}/"),
+            ]),
+          if (product.barcode.isEmpty)
+            Text(
+                context.strings
+                    .web_product_change_task_page_empty_product_error_descr,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    ?.copyWith(color: Colors.red)),
+          Row(children: [
+            Text(context.strings.web_product_change_task_page_user,
+                style: Theme.of(context).textTheme.headline6),
+            SelectableText(task.taskSourceUserId)
+          ]),
+          vegStatusesWidget(),
+        ]);
   }
 
   Widget vegStatusesWidget() => VegStatusesWidget((updatedProduct) {
