@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:plante/base/result.dart';
+import 'package:plante/model/lang_code.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_error.dart';
 import 'package:plante_web_admin/model/latest_products_added_to_shops.dart';
@@ -81,5 +82,21 @@ extension BackendExtensions on Backend {
       "limit": limit.toString(),
     });
     return Ok(LatestProductsAddedToShops.fromJson(jsonDecode(resp.body)));
+  }
+
+  Future<Result<None, BackendError>> changeModeratorTaskLanguage(
+      int taskId, LangCode? lang) async {
+    final params = {
+      "taskId": "$taskId",
+    };
+    if (lang != null) {
+      params["lang"] = lang.name;
+    }
+    var resp = await customGet("change_moderator_task_lang/", params);
+    if (resp.isOk) {
+      return Ok(None());
+    } else {
+      return Err(BackendError.fromResp(resp));
+    }
   }
 }

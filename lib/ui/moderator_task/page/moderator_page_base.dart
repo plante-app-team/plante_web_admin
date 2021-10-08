@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:plante/model/lang_code.dart';
 import 'package:plante/model/user_params.dart';
 import 'package:plante/model/user_params_controller.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante/ui/base/components/button_outlined_plante.dart';
+import 'package:plante/ui/base/components/dropdown_plante.dart';
 import 'package:plante/ui/base/snack_bar_utils.dart';
+import 'package:plante/ui/base/text_styles.dart';
 import 'package:plante/ui/base/ui_utils.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante/l10n/strings.dart';
@@ -16,6 +19,7 @@ import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/osm_shop_creation_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/product_change_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/user_report_task_page.dart';
+import 'package:plante_web_admin/backend_extensions.dart';
 
 abstract class ModeratorTaskPage extends StatefulWidget {
   ModeratorTaskPage({Key? key}) : super(key: key);
@@ -61,7 +65,7 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
   final backend = GetIt.I.get<Backend>();
   final _userParamsController = GetIt.I.get<UserParamsController>();
   final VoidCallback callback;
-  final ModeratorTask task;
+  ModeratorTask task;
   bool _loading = false;
   bool _moderated = false;
   UserParams get _user => _userParamsController.cachedUserParams!;
@@ -96,6 +100,20 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
                           context.strings.web_moderator_page_base_unassign),
                       onPressed: _onUnassignClicked,
                     )),
+              Text(context.strings.web_moderator_page_base_task_lang),
+              DropdownPlante<LangCode?>(
+                  value: LangCode.safeValueOf(task.lang ?? ''),
+                  values: LangCode.valuesWithNullForUI(context),
+                  dropdownItemBuilder: (value) {
+                    final String text;
+                    if (value != null) {
+                      text = value.localize(context);
+                    } else {
+                      text = '-';
+                    }
+                    return Text(text, style: TextStyles.normal);
+                  },
+                  onChanged: _onTaskLanguageChange),
               buildPage(context),
               SizedBox(height: 50),
               Row(children: [
@@ -156,6 +174,29 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
           .customGet("reject_moderator_task/", {"taskId": task.id.toString()});
       assert(jsonDecode(resp.body)["result"] == "ok");
       callback.call();
+    });
+  }
+
+  void _onTaskLanguageChange(LangCode? newLang) async {
+    final String title;
+    if (newLang != null) {
+      title = context.strings.web_moderator_page_base_change_task_lang_q
+          .replaceAll('<LANG>', newLang.localize(context));
+    } else {
+      title = context.strings.web_moderator_page_base_erase_task_lang_q;
+    }
+    await showYesNoDialog(context, title, () {
+      _performNetworkAction(() async {
+        final result =
+            await backend.changeModeratorTaskLanguage(task.id, newLang);
+        if (result.isOk) {
+          setState(() {
+            task = task.rebuild((e) => e.lang = newLang?.name);
+          });
+        } else {
+          showSnackBar(context.strings.global_something_went_wrong, context);
+        }
+      });
     });
   }
 }

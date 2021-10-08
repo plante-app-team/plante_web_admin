@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:plante/base/permissions_manager.dart';
 import 'package:plante/base/result.dart';
@@ -30,6 +31,9 @@ import 'package:plante/user_params_fetcher.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 
 void initDI() {
+  GetIt.I.registerSingleton<RouteObserver<ModalRoute>>(
+      RouteObserver<ModalRoute>());
+
   GetIt.I.registerSingleton<Settings>(_FakeSettings());
   GetIt.I.registerSingleton<Analytics>(_FakeAnalytics());
   GetIt.I.registerSingleton<TakenProductsImagesStorage>(

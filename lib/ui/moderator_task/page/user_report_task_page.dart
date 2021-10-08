@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/components/linkify_url.dart';
 import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:plante/l10n/strings.dart';
 import 'package:plante_web_admin/backend_extensions.dart';
 

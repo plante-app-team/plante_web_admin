@@ -60,6 +60,9 @@
     "web_moderator_page_base_unassign": "Снять задачу с меня",
     "web_moderator_page_base_unassign_dialog_title": "Снятие задачи",
     "web_moderator_page_base_unassign_dialog_descr": "Снять с себя задачу? Назначить на себя её обратно можно будет только вручную",
+    "web_moderator_page_base_task_lang": "Язык задачи:",
+    "web_moderator_page_base_change_task_lang_q": "Сменить язык задачи на <LANG>?",
+    "web_moderator_page_base_erase_task_lang_q": "Стереть язык задачи?",
 
     "web_moderator_tasks_list_page_forward": "Вперёд",
     "web_moderator_tasks_list_page_backward": "Назад",

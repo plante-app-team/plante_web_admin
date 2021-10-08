@@ -60,6 +60,9 @@
     "web_moderator_page_base_unassign": "Unassign task from me",
     "web_moderator_page_base_unassign_dialog_title": "Unassign task",
     "web_moderator_page_base_unassign_dialog_descr": "Unassign the task? You'll be able to assign it back only manually",
+    "web_moderator_page_base_task_lang": "Task language:",
+    "web_moderator_page_base_change_task_lang_q": "Change task language to <LANG>?",
+    "web_moderator_page_base_erase_task_lang_q": "Erase task language?",
 
     "web_moderator_tasks_list_page_forward": "Forward",
     "web_moderator_tasks_list_page_backward": "Backward",
