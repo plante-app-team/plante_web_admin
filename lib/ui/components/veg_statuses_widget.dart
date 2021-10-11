@@ -44,14 +44,6 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
     return VegStatus.safeValueOf(_product.veganStatus!);
   }
 
-  ModeratorChoiceReason? get _vegetarianChoiceReason {
-    if (_product.moderatorVegetarianChoiceReason == null) {
-      return null;
-    }
-    return moderatorChoiceReasonFromPersistentId(
-        _product.moderatorVegetarianChoiceReason!);
-  }
-
   ModeratorChoiceReason? get _veganChoiceReason {
     if (_product.moderatorVeganChoiceReason == null) {
       return null;
@@ -69,7 +61,13 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
   }
 
   void updateProduct(BackendProduct updatedProduct) {
+    final oldVegStatus = _veganStatus;
     _product = updatedProduct;
+    if (oldVegStatus != _veganStatus) {
+      _product = _product.rebuild((e) => e
+        ..moderatorVeganChoiceReason = null
+        ..moderatorVeganSourcesText = null);
+    }
     widget.callback.call(_product);
   }
 
@@ -83,12 +81,6 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final vegetarianChangeCallback = !_editable
-        ? null
-        : (VegStatus? value) {
-            updateProduct(
-                _product.rebuild((e) => e.vegetarianStatus = value?.name));
-          };
     final veganChangeCallback = !_editable
         ? null
         : (VegStatus? value) {
@@ -96,95 +88,49 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
           };
 
     return Column(children: [
-      Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(context
-                      .strings.web_veg_statuses_widget_vegetarian_status),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_positive,
-                      value: VegStatus.positive,
-                      groupValue: _vegetarianStatus,
-                      onChanged: vegetarianChangeCallback),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_negative,
-                      value: VegStatus.negative,
-                      groupValue: _vegetarianStatus,
-                      onChanged: vegetarianChangeCallback),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_possible,
-                      value: VegStatus.possible,
-                      groupValue: _vegetarianStatus,
-                      onChanged: vegetarianChangeCallback),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_unknown,
-                      value: VegStatus.unknown,
-                      groupValue: _vegetarianStatus,
-                      onChanged: vegetarianChangeCallback),
-                  _ModeratorChoiceReasoningWidget(
-                      widget.editable,
-                      _vegetarianStatus,
-                      _vegetarianChoiceReason,
-                      _product.moderatorVegetarianSourcesText,
-                      vegetarianModeratorChoiceReasons(),
-                      (choiceReason, sources) {
-                    updateProduct(_product.rebuild((e) => e
-                      ..moderatorVegetarianChoiceReason =
-                          choiceReason?.persistentId
-                      ..moderatorVegetarianSourcesText = sources));
-                  }),
-                ]),
-            SizedBox(width: 50),
-            Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(context.strings.web_veg_statuses_widget_vegan_status),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_positive,
-                      value: VegStatus.positive,
-                      groupValue: _veganStatus,
-                      onChanged: veganChangeCallback),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_negative,
-                      value: VegStatus.negative,
-                      groupValue: _veganStatus,
-                      onChanged: veganChangeCallback),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_possible,
-                      value: VegStatus.possible,
-                      groupValue: _veganStatus,
-                      onChanged: veganChangeCallback),
-                  RadioText<VegStatus>(
-                      text: context
-                          .strings.web_veg_statuses_widget_veg_status_unknown,
-                      value: VegStatus.unknown,
-                      groupValue: _veganStatus,
-                      onChanged: veganChangeCallback),
-                  _ModeratorChoiceReasoningWidget(
-                      widget.editable,
-                      _veganStatus,
-                      _veganChoiceReason,
-                      _product.moderatorVeganSourcesText,
-                      veganModeratorChoiceReasons(), (choiceReason, sources) {
-                    updateProduct(_product.rebuild((e) => e
-                      ..moderatorVeganChoiceReason = choiceReason?.persistentId
-                      ..moderatorVeganSourcesText = sources));
-                  }),
-                ]),
-          ]),
+      Center(
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+            Text(context.strings.web_veg_statuses_widget_vegan_status),
+            RadioText<VegStatus>(
+                text:
+                    context.strings.web_veg_statuses_widget_veg_status_positive,
+                value: VegStatus.positive,
+                groupValue: _veganStatus,
+                onChanged: veganChangeCallback),
+            RadioText<VegStatus>(
+                text:
+                    context.strings.web_veg_statuses_widget_veg_status_negative,
+                value: VegStatus.negative,
+                groupValue: _veganStatus,
+                onChanged: veganChangeCallback),
+            RadioText<VegStatus>(
+                text:
+                    context.strings.web_veg_statuses_widget_veg_status_possible,
+                value: VegStatus.possible,
+                groupValue: _veganStatus,
+                onChanged: veganChangeCallback),
+            RadioText<VegStatus>(
+                text:
+                    context.strings.web_veg_statuses_widget_veg_status_unknown,
+                value: VegStatus.unknown,
+                groupValue: _veganStatus,
+                onChanged: veganChangeCallback),
+            _ModeratorChoiceReasoningWidget(
+                widget.editable,
+                _veganStatus,
+                _veganChoiceReason,
+                _product.moderatorVeganSourcesText,
+                _veganStatus?.possibleReasons ?? const [],
+                (choiceReason, sources) {
+              updateProduct(_product.rebuild((e) => e
+                ..moderatorVeganChoiceReason = choiceReason?.persistentId
+                ..moderatorVeganSourcesText = sources));
+            }),
+          ])),
       RadioText<bool>(
           text: context
               .strings.web_veg_statuses_widget_erase_product_veg_statuses,
@@ -328,5 +274,16 @@ class __ModeratorChoiceReasoningWidgetState
               ])
       ]),
     );
+  }
+}
+
+extension _VegStatusExt on VegStatus {
+  List<ModeratorChoiceReason> get possibleReasons {
+    final result = ModeratorChoiceReason.values
+        .where((e) => e.targetStatuses.contains(this))
+        .toList();
+    result.sort((ModeratorChoiceReason lhs, ModeratorChoiceReason rhs) =>
+        lhs.persistentId - rhs.persistentId);
+    return result;
   }
 }
