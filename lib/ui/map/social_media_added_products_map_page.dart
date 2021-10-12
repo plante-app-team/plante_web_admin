@@ -300,7 +300,8 @@ class _SocialMediaAddedProductsMapPageState
       Align(
           alignment: Alignment.topRight,
           child: CheckboxText(
-              text: 'Show controls', //TODO: i18n
+              text: context.strings
+                  .web_social_media_added_products_map_page_show_controls,
               value: _showControls,
               onChanged: (value) {
                 setState(() {

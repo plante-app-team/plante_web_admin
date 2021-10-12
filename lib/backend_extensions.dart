@@ -4,6 +4,7 @@ import 'package:plante/base/result.dart';
 import 'package:plante/model/lang_code.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_error.dart';
+import 'package:plante/outside/map/osm_uid.dart';
 import 'package:plante_web_admin/model/latest_products_added_to_shops.dart';
 
 extension BackendExtensions on Backend {
@@ -93,6 +94,17 @@ extension BackendExtensions on Backend {
       params["lang"] = lang.name;
     }
     var resp = await customGet("change_moderator_task_lang/", params);
+    if (resp.isOk) {
+      return Ok(None());
+    } else {
+      return Err(BackendError.fromResp(resp));
+    }
+  }
+
+  Future<Result<None, BackendError>> deleteShop(OsmUID shopUid) async {
+    var resp = await customGet("delete_shop/", {
+      "shopOsmUID": shopUid.toString(),
+    });
     if (resp.isOk) {
       return Ok(None());
     } else {

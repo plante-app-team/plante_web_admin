@@ -46,6 +46,13 @@
     "web_osm_shop_creation_task_page_user": "Пользователь: ",
     "web_osm_shop_creation_task_page_moderated": "Промодерировано",
 
+    "web_shop_manual_validation_task_page_title": "Магазин нуждается в ручной проверке",
+    "web_shop_manual_validation_task_page_descr": "Авто-проверку магазина <SHOP> не удалось выполнить, механизм авто-проверки создал эту задачу модерации.\nВ большинстве случаев нужен прямой доступ до базы данных чтобы выполнить ручную проверку. Если у вас его нет, отправьте задачу тому, у кого есть.\nДля выполнения ручной проверки убедитесь, что магазин существует в Open Street Map, что он действительно магазин и что нет причин удалять его.\nЕсли причины есть - нажмите на галочку. Иначе измените магазин в БД вручную.",
+    "web_shop_manual_validation_task_page_shop": "Магазин: ",
+    "web_shop_manual_validation_task_page_user": "Пользователь: ",
+    "web_shop_manual_validation_task_page_delete_shop": "Удалить магазин",
+    "web_shop_manual_validation_task_page_delete_shop_warning": "Удалить магазин? Это действие НЕ МОЖЕТ БЫТЬ ОТМЕНЕНО",
+
     "web_no_tasks_page_title": "Задач на модерацию нет",
 
     "web_manage_users_page_user_id": "ID пользователя",
@@ -70,6 +77,7 @@
     "web_moderator_task_list_item_task_user_complaint": "Жалоба пользователя",
     "web_moderator_task_list_item_task_product_update": "Продукт создан или изменён",
     "web_moderator_task_list_item_task_shop_created": "Создан магазин в Open Street Map",
+    "web_moderator_task_list_item_task_shop_needs_manual_validation": "Магазин нуждается в ручной проверке",
 
     "web_manage_product_page_search": "Поиск",
     "web_manage_product_page_product_not_found": "Продукт не найден",

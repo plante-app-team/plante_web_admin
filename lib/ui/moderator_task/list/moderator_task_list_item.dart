@@ -13,6 +13,8 @@ abstract class ModeratorTaskListItem extends StatelessWidget {
       return _ProductChangeTaskListItem(task, key: key);
     } else if (task.taskType == "osm_shop_creation") {
       return _ShopCreatedTaskListItem(task, key: key);
+    } else if (task.taskType == "osm_shop_needs_manual_validation") {
+      return _ShopNeedsManualValidationTaskListItem(task, key: key);
     } else {
       throw Exception(
           'ModeratorTaskListItem Error: unknown task type ${task.taskType}');
@@ -61,6 +63,25 @@ class _ShopCreatedTaskListItem extends ModeratorTaskListItem {
   Widget build(BuildContext context) {
     return Column(children: [
       Text(context.strings.web_moderator_task_list_item_task_shop_created,
+          style: TextStyles.headline4),
+      Text(task.osmUID?.toString() ?? '',
+          style: TextStyles.hint, maxLines: 1, overflow: TextOverflow.ellipsis),
+    ]);
+  }
+}
+
+class _ShopNeedsManualValidationTaskListItem extends ModeratorTaskListItem {
+  final ModeratorTask task;
+
+  _ShopNeedsManualValidationTaskListItem(this.task, {Key? key})
+      : super._(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Text(
+          context.strings
+              .web_moderator_task_list_item_task_shop_needs_manual_validation,
           style: TextStyles.headline4),
       Text(task.osmUID?.toString() ?? '',
           style: TextStyles.hint, maxLines: 1, overflow: TextOverflow.ellipsis),
