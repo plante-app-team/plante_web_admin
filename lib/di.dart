@@ -60,7 +60,9 @@ void initDI() {
       GetIt.I.get<MobileAppConfigManager>()));
   GetIt.I.registerSingleton<UserParamsAutoWiper>(UserParamsAutoWiper(
       GetIt.I.get<Backend>(), GetIt.I.get<UserParamsController>()));
-  GetIt.I.registerSingleton<OffApi>(OffApi(GetIt.I.get<Settings>()));
+  GetIt.I.registerSingleton<OffApi>(OffApi(
+      GetIt.I.get<Settings>(),
+      GetIt.I.get<HttpClient>()));
   GetIt.I.registerSingleton<ProductsManager>(ProductsManager(
       GetIt.I.get<OffApi>(),
       GetIt.I.get<Backend>(),
