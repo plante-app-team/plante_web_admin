@@ -9,7 +9,8 @@ abstract class ModeratorTaskListItem extends StatelessWidget {
   factory ModeratorTaskListItem(ModeratorTask task, {Key? key}) {
     if (task.taskType == "user_report") {
       return _UserReportTaskListItem(task, key: key);
-    } else if (task.taskType == "product_change") {
+    } else if (task.taskType == "product_change" ||
+        task.taskType == "product_change_in_off") {
       return _ProductChangeTaskListItem(task, key: key);
     } else if (task.taskType == "osm_shop_creation") {
       return _ShopCreatedTaskListItem(task, key: key);

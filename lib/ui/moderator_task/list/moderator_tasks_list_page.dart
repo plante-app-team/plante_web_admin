@@ -15,24 +15,63 @@ class ModeratorTasksListPage extends StatefulWidget {
   static const NAME = '/list_moderator_tasks';
   final String? lang;
   final bool tasksWithoutLangs;
+  final List<String> includeTypes = [];
+  final List<String> excludeTypes = [];
 
   @override
   _ModeratorTasksListPageState createState() => _ModeratorTasksListPageState();
 
   ModeratorTasksListPage.createFor(Uri uri)
       : lang = uri.queryParameters['lang'],
-        tasksWithoutLangs = uri.queryParameters['tasksWithoutLangs'] == 'true';
-
-  static Future<void> openForLang(BuildContext context, String lang) async {
-    await Navigator.pushNamed(context, '$NAME?lang=$lang');
+        tasksWithoutLangs = uri.queryParameters['tasksWithoutLangs'] == 'true' {
+    if (uri.queryParameters.containsKey('includeTypes')) {
+      includeTypes.addAll(uri.queryParameters['includeTypes']!.split('.'));
+    }
+    if (uri.queryParameters.containsKey('excludeTypes')) {
+      excludeTypes.addAll(uri.queryParameters['excludeTypes']!.split('.'));
+    }
   }
 
-  static Future<void> openForAllLangs(BuildContext context) async {
-    await Navigator.pushNamed(context, '$NAME');
+  static Future<void> openForLang(BuildContext context, String lang,
+      {List<String> includeTypes = const [],
+      List<String> excludeTypes = const []}) async {
+    final typesParams = makeTypesParams(includeTypes, excludeTypes);
+    await Navigator.pushNamed(context, '$NAME?lang=$lang$typesParams');
   }
 
-  static Future<void> openForTasksWithoutLangs(BuildContext context) async {
-    await Navigator.pushNamed(context, '$NAME?tasksWithoutLangs=true');
+  static String makeTypesParams(
+      List<String> includeTypes, List<String> excludeTypes) {
+    var includeParam = '';
+    if (includeTypes.isNotEmpty) {
+      includeParam = 'includeTypes=${includeTypes.join('.')}';
+    }
+    var excludeParam = '';
+    if (excludeTypes.isNotEmpty) {
+      excludeParam = 'excludeTypes=${excludeTypes.join('.')}';
+    }
+    final result = [
+      if (includeParam.isNotEmpty) includeParam,
+      if (excludeParam.isNotEmpty) excludeParam,
+    ];
+    if (result.isNotEmpty) {
+      return '&' + result.join('&');
+    }
+    return '';
+  }
+
+  static Future<void> openForAllLangs(BuildContext context,
+      {List<String> includeTypes = const [],
+      List<String> excludeTypes = const []}) async {
+    final typesParams = makeTypesParams(includeTypes, excludeTypes);
+    await Navigator.pushNamed(context, '$NAME?$typesParams');
+  }
+
+  static Future<void> openForTasksWithoutLangs(BuildContext context,
+      {List<String> includeTypes = const [],
+      List<String> excludeTypes = const []}) async {
+    final typesParams = makeTypesParams(includeTypes, excludeTypes);
+    await Navigator.pushNamed(
+        context, '$NAME?tasksWithoutLangs=true$typesParams');
   }
 }
 
@@ -130,11 +169,13 @@ class _ModeratorTasksListPageState extends State<ModeratorTasksListPage> {
     });
   }
 
-  Map<String, String> _queryParamsForPage(int page) {
+  Map<String, dynamic> _queryParamsForPage(int page) {
     return {
       'page': page.toString(),
       if (widget.lang != null) 'lang': widget.lang!,
       if (widget.tasksWithoutLangs) 'onlyWithNoLang': 'true',
+      if (widget.includeTypes.isNotEmpty) 'includeTypes': widget.includeTypes,
+      if (widget.excludeTypes.isNotEmpty) 'excludeTypes': widget.excludeTypes,
     };
   }
 

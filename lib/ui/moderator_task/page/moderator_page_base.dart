@@ -39,7 +39,8 @@ abstract class ModeratorTaskPage extends StatefulWidget {
 
     if (task.taskType == "user_report") {
       return UserReportTaskPage(callback, task, product);
-    } else if (task.taskType == "product_change") {
+    } else if (task.taskType == "product_change" ||
+        task.taskType == "product_change_in_off") {
       return ProductChangeTaskPage(
           callback, task, product ?? BackendProduct.empty);
     } else if (task.taskType == "osm_shop_creation") {

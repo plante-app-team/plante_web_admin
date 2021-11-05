@@ -87,6 +87,7 @@
     "web_moderator_tasks_categories_page_title": "Задачи модерации",
     "web_moderator_tasks_categories_page_tasks_without_langs": "Задачи без языка",
     "web_moderator_tasks_categories_page_all_tasks": "Все задачи",
+    "web_moderator_tasks_categories_page_off_products_tasks": "Продукты в OFF без указанного в Plante вег-статуса",
     "web_moderator_tasks_categories_page_tasks_for_langs_you_know": "Задачи для языков, которые вы знаете",
     "web_moderator_tasks_categories_page_tasks_for_langs_you_do_not_know": "Задачи для языков, которые вы не знаете",
 

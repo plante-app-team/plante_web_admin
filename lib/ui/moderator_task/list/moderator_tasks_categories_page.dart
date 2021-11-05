@@ -28,10 +28,12 @@ class ModeratorTasksCategoriesPage extends StatefulWidget {
 
 class _ModeratorTasksCategoriesPageState
     extends State<ModeratorTasksCategoriesPage> with RouteAware {
+  static const _OFF_PRODUCT_TASK_TYPE = 'product_change_in_off';
   final _backend = GetIt.I.get<Backend>();
   final _user = GetIt.I.get<UserParamsController>().cachedUserParams!;
   var _loading = true;
-  ModeratorTasksCounts? _counts;
+  ModeratorTasksCounts? _highPriorityTasksCounts;
+  ModeratorTasksCounts? _offProductsModerationTasksCounts;
 
   @override
   void initState() {
@@ -60,12 +62,20 @@ class _ModeratorTasksCategoriesPageState
 
   void _reload() async {
     _longAction(() async {
-      final response = await _backend.customGet('count_moderator_tasks/');
-      if (response.isError) {
+      final highPriorityRes =
+          await _backend.customGet('count_moderator_tasks/', {
+        'excludeTypes': _OFF_PRODUCT_TASK_TYPE,
+      });
+      final offProductsRes = await _backend.customGet(
+          'count_moderator_tasks/', {'includeTypes': _OFF_PRODUCT_TASK_TYPE});
+      if (highPriorityRes.isError || offProductsRes.isError) {
         showSnackBar(context.strings.global_something_went_wrong, context);
         return;
       }
-      _counts = ModeratorTasksCounts.fromJson(jsonDecode(response.body));
+      _highPriorityTasksCounts =
+          ModeratorTasksCounts.fromJson(jsonDecode(highPriorityRes.body));
+      _offProductsModerationTasksCounts =
+          ModeratorTasksCounts.fromJson(jsonDecode(offProductsRes.body));
     });
   }
 
@@ -88,9 +98,12 @@ class _ModeratorTasksCategoriesPageState
       return Center(child: CircularProgressIndicator());
     }
 
-    final knownLangsCounts = _counts!.langsCounts.entries.where((entry) =>
+    final mainCounts = _highPriorityTasksCounts!;
+    final offCounts = _offProductsModerationTasksCounts!;
+
+    final knownLangsCounts = mainCounts.langsCounts.entries.where((entry) =>
         (_user.langsPrioritized?.toList() ?? []).contains(entry.key));
-    final notKnownLangsCounts = _counts!.langsCounts.entries.where((entry) =>
+    final notKnownLangsCounts = mainCounts.langsCounts.entries.where((entry) =>
         !(_user.langsPrioritized?.toList() ?? []).contains(entry.key));
 
     final langCountToWidget = (MapEntry<String, int> entry) {
@@ -115,13 +128,18 @@ class _ModeratorTasksCategoriesPageState
       const SizedBox(height: 24),
       ButtonFilledPlante.withText(
           '${context.strings.web_moderator_tasks_categories_page_tasks_without_langs} '
-          '(${_counts!.withoutLangsCount})',
+          '(${mainCounts.withoutLangsCount})',
           onPressed: _onTasksWithoutLangsButtonPressed),
       const SizedBox(height: 8),
       ButtonFilledPlante.withText(
           '${context.strings.web_moderator_tasks_categories_page_all_tasks} '
-          '(${_counts!.totalCount})',
+          '(${mainCounts.totalCount})',
           onPressed: _onAllTasksButtonPressed),
+      const SizedBox(height: 8),
+      ButtonOutlinedPlante.withText(
+          '${context.strings.web_moderator_tasks_categories_page_off_products_tasks} '
+          '(${offCounts.totalCount})',
+          onPressed: _onOffProductsTasksButtonPressed),
       const SizedBox(height: 12),
       if (knownLangsButtons.isNotEmpty)
         Column(children: [
@@ -145,14 +163,22 @@ class _ModeratorTasksCategoriesPageState
   }
 
   void _onLangButtonPress(String lang) {
-    ModeratorTasksListPage.openForLang(context, lang);
+    ModeratorTasksListPage.openForLang(context, lang,
+        excludeTypes: [_OFF_PRODUCT_TASK_TYPE]);
   }
 
   void _onAllTasksButtonPressed() {
-    ModeratorTasksListPage.openForAllLangs(context);
+    ModeratorTasksListPage.openForAllLangs(context,
+        excludeTypes: [_OFF_PRODUCT_TASK_TYPE]);
+  }
+
+  void _onOffProductsTasksButtonPressed() {
+    ModeratorTasksListPage.openForAllLangs(context,
+        includeTypes: [_OFF_PRODUCT_TASK_TYPE]);
   }
 
   void _onTasksWithoutLangsButtonPressed() {
-    ModeratorTasksListPage.openForTasksWithoutLangs(context);
+    ModeratorTasksListPage.openForTasksWithoutLangs(context,
+        excludeTypes: [_OFF_PRODUCT_TASK_TYPE]);
   }
 }

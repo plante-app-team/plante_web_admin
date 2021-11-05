@@ -87,6 +87,7 @@
     "web_moderator_tasks_categories_page_title": "Moderation tasks",
     "web_moderator_tasks_categories_page_tasks_without_langs": "Tasks without a language",
     "web_moderator_tasks_categories_page_all_tasks": "All tasks",
+    "web_moderator_tasks_categories_page_off_products_tasks": "OFF products without specified in Plante veg-status",
     "web_moderator_tasks_categories_page_tasks_for_langs_you_know": "Tasks for languages you know",
     "web_moderator_tasks_categories_page_tasks_for_langs_you_do_not_know": "Task for languages you don't know",
 

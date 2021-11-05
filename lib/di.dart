@@ -60,9 +60,8 @@ void initDI() {
       GetIt.I.get<MobileAppConfigManager>()));
   GetIt.I.registerSingleton<UserParamsAutoWiper>(UserParamsAutoWiper(
       GetIt.I.get<Backend>(), GetIt.I.get<UserParamsController>()));
-  GetIt.I.registerSingleton<OffApi>(OffApi(
-      GetIt.I.get<Settings>(),
-      GetIt.I.get<HttpClient>()));
+  GetIt.I.registerSingleton<OffApi>(
+      OffApi(GetIt.I.get<Settings>(), GetIt.I.get<HttpClient>()));
   GetIt.I.registerSingleton<ProductsManager>(ProductsManager(
       GetIt.I.get<OffApi>(),
       GetIt.I.get<Backend>(),
@@ -196,8 +195,8 @@ class _FakeOsmCacher implements OsmCacher {
   }
 
   @override
-  Future<OsmCachedTerritory<OsmShop>> cacheShops(
-      DateTime whenObtained, CoordsBounds bounds, List<OsmShop> shops) {
+  Future<OsmCachedTerritory<OsmShop>> cacheShops(DateTime whenObtained,
+      CoordsBounds bounds, Iterable<OsmShop> shops) async {
     throw UnimplementedError();
   }
 
