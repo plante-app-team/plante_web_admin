@@ -27,22 +27,12 @@ class _ProductChangeTaskPageState
     extends ModeratorPageStateBase<ProductChangeTaskPage> {
   BackendProduct product;
 
-  VegStatus? get vegetarianStatus =>
-      VegStatus.safeValueOf(product.vegetarianStatus ?? '');
   VegStatus? get veganStatus =>
       VegStatus.safeValueOf(product.veganStatus ?? '');
 
   @override
   bool get canSend {
-    if (vegetarianStatus == null && veganStatus == null) {
-      // Erased
-      return true;
-    } else if (vegetarianStatus != null && veganStatus != null) {
-      // Filled
-      return true;
-    } else {
-      return false;
-    }
+    return true;
   }
 
   _ProductChangeTaskPageState(
@@ -99,10 +89,7 @@ class _ProductChangeTaskPageState
     if (task.barcode != null && task.barcode!.trim().isNotEmpty) {
       final resp = await backend.moderateProduct(
           product.barcode,
-          product.vegetarianStatus,
           product.veganStatus,
-          product.moderatorVegetarianChoiceReason,
-          product.moderatorVegetarianSourcesText,
           product.moderatorVeganChoiceReason,
           product.moderatorVeganSourcesText);
       if (resp.isErr) {

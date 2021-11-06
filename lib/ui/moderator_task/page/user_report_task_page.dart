@@ -29,24 +29,11 @@ class _UserReportTaskPageState
 
   bool editVegStatuses = false;
 
-  VegStatus? get vegetarianStatus =>
-      VegStatus.safeValueOf(product?.vegetarianStatus ?? '');
   VegStatus? get veganStatus =>
       VegStatus.safeValueOf(product?.veganStatus ?? '');
 
   @override
   bool get canSend {
-    if (editVegStatuses) {
-      if (vegetarianStatus == null && veganStatus == null) {
-        // Erased
-        return true;
-      } else if (vegetarianStatus != null && veganStatus != null) {
-        // Filled
-        return true;
-      } else {
-        return false;
-      }
-    }
     return true;
   }
 
@@ -108,22 +95,12 @@ class _UserReportTaskPageState
         }, editVegStatuses, product!)
       ]);
 
-  void showModerateBothStatusesWarning() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(context.strings
-            .web_user_report_task_page_please_moderate_both_veg_statuses),
-        duration: Duration(seconds: 10)));
-  }
-
   @protected
   Future<bool> sendExtraData() async {
     if (editVegStatuses && product != null) {
       final resp = await backend.moderateProduct(
           product!.barcode,
-          product!.vegetarianStatus,
           product!.veganStatus,
-          product!.moderatorVegetarianChoiceReason,
-          product!.moderatorVegetarianSourcesText,
           product!.moderatorVeganChoiceReason,
           product!.moderatorVeganSourcesText);
       if (resp.isErr) {

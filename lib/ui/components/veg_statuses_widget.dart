@@ -30,13 +30,6 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
 
   bool get _editable => widget.editable;
 
-  VegStatus? get _vegetarianStatus {
-    if (_product.vegetarianStatus == null) {
-      return null;
-    }
-    return VegStatus.safeValueOf(_product.vegetarianStatus!);
-  }
-
   VegStatus? get _veganStatus {
     if (_product.veganStatus == null) {
       return null;
@@ -55,9 +48,8 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
   @override
   void initState() {
     super.initState();
-    _product = widget.initialProduct.rebuild((e) => e
-      ..vegetarianStatusSource = VegStatusSource.moderator.name
-      ..veganStatusSource = VegStatusSource.moderator.name);
+    _product = widget.initialProduct
+        .rebuild((e) => e..veganStatusSource = VegStatusSource.moderator.name);
   }
 
   void updateProduct(BackendProduct updatedProduct) {
@@ -135,28 +127,20 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
           text: context
               .strings.web_veg_statuses_widget_erase_product_veg_statuses,
           value: true,
-          groupValue: _veganStatus == null && _vegetarianStatus == null,
+          groupValue: _veganStatus == null,
           onChanged: _editable == false
               ? null
               : (value) {
                   if (value == true) {
                     updateProduct(_product.rebuild((e) => e
                       ..veganStatus = null
-                      ..vegetarianStatus = null
                       ..veganStatusSource = null
-                      ..vegetarianStatusSource = null
-                      ..moderatorVegetarianChoiceReason = null
-                      ..moderatorVegetarianSourcesText = null
                       ..moderatorVeganChoiceReason = null
                       ..moderatorVeganSourcesText = null));
                   } else if (value == false) {
                     updateProduct(_product.rebuild((e) => e
                       ..veganStatus = VegStatus.unknown.name
-                      ..vegetarianStatus = VegStatus.unknown.name
                       ..veganStatusSource = VegStatusSource.moderator.name
-                      ..vegetarianStatusSource = VegStatusSource.moderator.name
-                      ..moderatorVegetarianChoiceReason = null
-                      ..moderatorVegetarianSourcesText = null
                       ..moderatorVeganChoiceReason = null
                       ..moderatorVeganSourcesText = null));
                   }

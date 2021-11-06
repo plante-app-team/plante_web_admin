@@ -108,17 +108,6 @@ class _ManageProductPageState extends State<ManageProductPage> {
     if (_foundProduct == null) {
       return false;
     }
-
-    // Both have to be nulls or non-nulls.
-    if (_foundProduct!.veganStatus == null &&
-        _foundProduct!.vegetarianStatus != null) {
-      return false;
-    }
-    if (_foundProduct!.veganStatus != null &&
-        _foundProduct!.vegetarianStatus == null) {
-      return false;
-    }
-
     return true;
   }
 
@@ -129,9 +118,6 @@ class _ManageProductPageState extends State<ManageProductPage> {
         final resp = await _backend.moderateProduct(
             product.barcode,
             product.vegetarianStatus,
-            product.veganStatus,
-            product.moderatorVegetarianChoiceReason,
-            product.moderatorVegetarianSourcesText,
             product.moderatorVeganChoiceReason,
             product.moderatorVeganSourcesText);
         if (resp.isErr) {

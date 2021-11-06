@@ -13,7 +13,6 @@
     "web_auth_page_sign_in_with_google": "Войти через Google",
     "web_auth_page_error_user_is_not_moderator": "Пользователь не является модераторором",
 
-    "web_veg_statuses_widget_vegetarian_status": "Вегетарианский статус",
     "web_veg_statuses_widget_vegan_status": "Веганский статус",
     "web_veg_statuses_widget_veg_status_positive": "Положительно",
     "web_veg_statuses_widget_veg_status_negative": "Отрицательно",
@@ -31,7 +30,7 @@
     "web_user_report_task_page_product_exists_only_in_off": "Продукт существует только в Open Food Facts",
     "web_user_report_task_page_moderated": "Промодерировано",
     "web_user_report_task_page_change_veg_statuses": "Изменить вег-статусы",
-    "web_user_report_task_page_please_moderate_both_veg_statuses": "Пожалуйста, промодерируйте оба статуса - и вегетарианский, и веганский",
+    "web_user_report_task_page_please_moderate_both_veg_statuses": "Пожалуйста, промодерируйте веганский статус",
 
     "web_product_change_task_page_title": "Продукт создан/изменён",
     "web_product_change_task_page_descr": "Пожалуйста, убедитесь, что продукт в Open Food Facts:\n- имеет нормальное фото упаковки\n- имеет нормальное фото состава\n- текст состава соответствует фото\n- имя бренда и категорий, если есть, соответствуют продукту.\nНужно понять правильный вег-статус продукта, используя:",
