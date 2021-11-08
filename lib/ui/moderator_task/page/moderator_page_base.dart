@@ -91,51 +91,54 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: SizedBox(
-            width: 700,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              if (_loading) CircularProgressIndicator(),
-              if (task.assignee == _user.backendId)
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: OutlinedButton(
-                      child: Text(
-                          context.strings.web_moderator_page_base_unassign),
-                      onPressed: _onUnassignClicked,
-                    )),
-              Text(context.strings.web_moderator_page_base_task_lang),
-              DropdownPlante<LangCode?>(
-                  value: LangCode.safeValueOf(task.lang ?? ''),
-                  values: LangCode.valuesWithNullForUI(context),
-                  dropdownItemBuilder: (value) {
-                    final String text;
-                    if (value != null) {
-                      text = value.localize(context);
-                    } else {
-                      text = '-';
-                    }
-                    return Text(text, style: TextStyles.normal);
-                  },
-                  onChanged: _onTaskLanguageChange),
-              buildPage(context),
-              SizedBox(height: 50),
-              Row(children: [
-                CheckboxText(
-                    text: context.strings.web_user_report_task_page_moderated,
-                    value: _moderated,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _moderated = value ?? false;
-                      });
-                    }),
-              ]),
-              SizedBox(
-                  width: 500,
-                  child: ButtonOutlinedPlante.withText(
-                      context.strings.web_global_send,
-                      onPressed: _canSend ? _onSendClicked : null))
-            ])));
+        child: SingleChildScrollView(
+            child: SizedBox(
+                width: 700,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (_loading) CircularProgressIndicator(),
+                      if (task.assignee == _user.backendId)
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: OutlinedButton(
+                              child: Text(context
+                                  .strings.web_moderator_page_base_unassign),
+                              onPressed: _onUnassignClicked,
+                            )),
+                      Text(context.strings.web_moderator_page_base_task_lang),
+                      DropdownPlante<LangCode?>(
+                          value: LangCode.safeValueOf(task.lang ?? ''),
+                          values: LangCode.valuesWithNullForUI(context),
+                          dropdownItemBuilder: (value) {
+                            final String text;
+                            if (value != null) {
+                              text = value.localize(context);
+                            } else {
+                              text = '-';
+                            }
+                            return Text(text, style: TextStyles.normal);
+                          },
+                          onChanged: _onTaskLanguageChange),
+                      buildPage(context),
+                      SizedBox(height: 50),
+                      Row(children: [
+                        CheckboxText(
+                            text: context
+                                .strings.web_user_report_task_page_moderated,
+                            value: _moderated,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                _moderated = value ?? false;
+                              });
+                            }),
+                      ]),
+                      SizedBox(
+                          width: 500,
+                          child: ButtonOutlinedPlante.withText(
+                              context.strings.web_global_send,
+                              onPressed: _canSend ? _onSendClicked : null))
+                    ]))));
   }
 
   void _onSendClicked() async {
