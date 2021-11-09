@@ -86,6 +86,8 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
   Widget buildPage(BuildContext context);
   @protected
   Future<bool> sendExtraData() async => true;
+  @protected
+  Future<String> plannedActionPastTense();
 
   @nonVirtual
   @override
@@ -143,12 +145,15 @@ abstract class ModeratorPageStateBase<T extends StatefulWidget>
 
   void _onSendClicked() async {
     _performNetworkAction(() async {
+      final plannedAction = await plannedActionPastTense();
       final extraSent = await sendExtraData();
       if (!extraSent) {
         return;
       }
-      final resp = await backend
-          .customGet("resolve_moderator_task/", {"taskId": task.id.toString()});
+      final resp = await backend.customGet("resolve_moderator_task/", {
+        "taskId": task.id.toString(),
+        "performedAction": plannedAction,
+      });
       assert(jsonDecode(resp.body)["result"] == "ok");
       callback.call();
     });

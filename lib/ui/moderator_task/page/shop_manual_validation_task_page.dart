@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:plante/outside/backend/backend.dart';
+import 'package:plante/outside/map/osm_shop.dart';
 import 'package:plante/outside/map/osm_uid.dart';
 import 'package:plante/outside/map/osm_element_type.dart';
 import 'package:plante/ui/base/ui_utils.dart';
@@ -9,6 +10,7 @@ import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/components/linkify_url.dart';
 import 'package:plante/l10n/strings.dart';
 import 'package:plante_web_admin/backend_extensions.dart';
+import 'package:plante_web_admin/utils/moderation_utils.dart';
 
 import 'moderator_page_base.dart';
 
@@ -47,7 +49,7 @@ class _ShopManualValidationTaskPageState
           .replaceAll("<SHOP>", osmUID.toString())),
       SizedBox(height: 50),
       Row(children: [
-        Text(context.strings.web_shop_manual_validation_task_page_shop,
+        Text(context.strings.web_global_shop_is,
             style: Theme.of(context).textTheme.headline6),
         LinkifyUrl(
             "https://www.openstreetmap.org/${osmUID.type.name}/${osmUID.osmId}/"),
@@ -86,5 +88,25 @@ class _ShopManualValidationTaskPageState
     }
     final result = await _backend.deleteShop(widget.osmUID);
     return result.isOk;
+  }
+
+  @override
+  Future<String> plannedActionPastTense() async {
+    final task = widget.task;
+    final shopAndAddressRes =
+        await ModerationUtils.shopAndAddress(task.osmUID!);
+    final OsmShop? shop;
+    if (shopAndAddressRes.isErr) {
+      shop = null;
+    } else {
+      shop = shopAndAddressRes.unwrap().first;
+    }
+    final shopStr = shop?.name ?? '{INVALID SHOP ${task.osmUID}';
+
+    var action = 'Performed manual validation of $shopStr';
+    if (_deleteShop) {
+      action += ', among other action also deleted it';
+    }
+    return action;
   }
 }

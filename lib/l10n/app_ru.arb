@@ -1,5 +1,9 @@
 {
     "web_global_send": "Отправить",
+    "web_global_unknown_user": "Неизвестный пользователь",
+    "web_global_task_not_resolved": "Задача не решена",
+    "web_global_product_is": "Продукт: ",
+    "web_global_shop_is": "Магазин: ",
 
     "web_main_actions_widget_nameless_moderator": "безымянный модератор",
     "web_main_actions_widget_hello": "Привет,",
@@ -9,6 +13,7 @@
     "web_main_actions_widget_next_users_management": "Управление пользователями",
     "web_main_actions_widget_recently_added_products_map": "Карта недавно добавленных продуктов",
     "web_main_actions_widget_social_media_added_products_map_page": "Карта для постов в соцсети о новых продуктах",
+    "web_main_actions_widget_latest_moderation_actions": "Лог модерации",
 
     "web_auth_page_sign_in_with_google": "Войти через Google",
     "web_auth_page_error_user_is_not_moderator": "Пользователь не является модераторором",
@@ -24,7 +29,6 @@
 
     "web_user_report_task_page_title": "Получена жалоба на продукт",
     "web_user_report_task_page_descr": "Пожалуйста, попробуйте исправить проблему из текста жалобы. \nДля этого возможно придётся перейти на страницу продукта в \nOpen Food Facts и отредактировать его там, либо поменять вег-статус продукта тут.",
-    "web_user_report_task_page_product": "Продукт: ",
     "web_user_report_task_page_user": "Пользователь: ",
     "web_user_report_task_page_complaint": "Жалоба: ",
     "web_user_report_task_page_product_exists_only_in_off": "Продукт существует только в Open Food Facts",
@@ -34,20 +38,17 @@
 
     "web_product_change_task_page_title": "Продукт создан/изменён",
     "web_product_change_task_page_descr": "Пожалуйста, убедитесь, что продукт в Open Food Facts:\n- имеет нормальное фото упаковки\n- имеет нормальное фото состава\n- текст состава соответствует фото\n- имя бренда и категорий, если есть, соответствуют продукту.\nНужно понять правильный вег-статус продукта, используя:",
-    "web_product_change_task_page_product": "Продукт: ",
     "web_product_change_task_page_empty_product_error_descr": "Пустой продукт - произошла серверная ошибка. Нажмите \"Промодерировано\" и сообщите о об ошибке разработчику",
     "web_product_change_task_page_user": "Пользователь: ",
     "web_product_change_task_page_moderated": "Промодерировано",
 
     "web_osm_shop_creation_task_page_title": "Магазин создан в Open Street Map",
     "web_osm_shop_creation_task_page_descr": "Пожалуйста, убедитесь, что созданный магазин в Open Street Map:\n- имеет нормальное название\n- имеет правдоподобную локацию\nЕсли с магазином что-то не так, его следует удалить",
-    "web_osm_shop_creation_task_page_shop": "Магазин: ",
     "web_osm_shop_creation_task_page_user": "Пользователь: ",
     "web_osm_shop_creation_task_page_moderated": "Промодерировано",
 
     "web_shop_manual_validation_task_page_title": "Магазин нуждается в ручной проверке",
     "web_shop_manual_validation_task_page_descr": "Авто-проверку магазина <SHOP> не удалось выполнить, механизм авто-проверки создал эту задачу модерации.\nВ большинстве случаев нужен прямой доступ до базы данных чтобы выполнить ручную проверку. Если у вас его нет, отправьте задачу тому, у кого есть.\nДля выполнения ручной проверки убедитесь, что магазин существует в Open Street Map, что он действительно магазин и что нет причин удалять его.\nЕсли причины есть - нажмите на галочку. Иначе измените магазин в БД вручную.",
-    "web_shop_manual_validation_task_page_shop": "Магазин: ",
     "web_shop_manual_validation_task_page_user": "Пользователь: ",
     "web_shop_manual_validation_task_page_delete_shop": "Удалить магазин",
     "web_shop_manual_validation_task_page_delete_shop_warning": "Удалить магазин? Это действие НЕ МОЖЕТ БЫТЬ ОТМЕНЕНО",
@@ -100,5 +101,15 @@
     "web_social_media_added_products_map_page_bring_products_icons": "Принести иконки продуктов на карту",
     "web_social_media_added_products_map_page_show_controls": "Показать кнопочки",
 
-    "web_select_products_dialog_default_title": "выберете продукты"
+    "web_select_products_dialog_default_title": "выберете продукты",
+
+    "web_all_latest_moderation_actions_page_title": "Модераторы",
+    "web_all_latest_moderation_actions_page_latest_activity": "Последняя активность:",
+
+    "web_latest_moderator_actions_page": "Действия по модерации",
+
+    "web_moderation_action_page_title": "Действие по модерации",
+    "web_moderation_action_page_task_type": "Тип задачи модерации: ",
+    "web_moderation_action_page_moderator_is": "Модератор: ",
+    "web_moderation_action_page_performed_action_is": "Выполненное действие: "
 }

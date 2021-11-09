@@ -9,6 +9,9 @@ import 'package:plante_web_admin/ui/manage_products/manage_product_page.dart';
 import 'package:plante_web_admin/ui/manage_users/manage_users_page.dart';
 import 'package:plante_web_admin/ui/map/recently_added_products_map_page.dart';
 import 'package:plante_web_admin/ui/map/social_media_added_products_map_page.dart';
+import 'package:plante_web_admin/ui/moderation_actions/all_latest_moderation_actions_page.dart';
+import 'package:plante_web_admin/ui/moderation_actions/latest_moderator_actions_page.dart';
+import 'package:plante_web_admin/ui/moderation_actions/moderation_action_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_categories_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/moderator_tasks_list_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/list/unassigned_moderator_task_page.dart';
@@ -51,6 +54,9 @@ class MyApp extends StatelessWidget {
         '/social_media_added_products_map': (context) => Builder(builder: (b) {
               return SocialMediaAddedProductsMapPage();
             }),
+        '/latest_moderation_actions': (context) => Builder(builder: (b) {
+              return AllLatestModerationActionsPage();
+            }),
       },
       onGenerateRoute: (settings) {
         if (settings.name!.contains("/unassigned_moderator_task")) {
@@ -68,6 +74,22 @@ class MyApp extends StatelessWidget {
             settings: settings,
             builder: (context) {
               return ModeratorTasksListPage.createFor(settingsUri);
+            },
+          );
+        } else if (settings.name!.contains(ModerationActionPage.NAME)) {
+          final settingsUri = Uri.parse(settings.name ?? '');
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (context) {
+              return ModerationActionPage.createFor(settingsUri);
+            },
+          );
+        } else if (settings.name!.contains(LatestModeratorActionsPage.NAME)) {
+          final settingsUri = Uri.parse(settings.name ?? '');
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (context) {
+              return LatestModeratorActionsPage.createFor(settingsUri);
             },
           );
         }

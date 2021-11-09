@@ -72,6 +72,20 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
         ..add('resolution_time')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.resolver;
+    if (value != null) {
+      result
+        ..add('resolver')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.resolverAction;
+    if (value != null) {
+      result
+        ..add('resolver_action')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.lang;
     if (value != null) {
       result
@@ -103,7 +117,7 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
               specifiedType: const FullType(String)) as String?;
           break;
         case 'osm_uid':
-          result.osmId = serializers.deserialize(value,
+          result.osmUID = serializers.deserialize(value,
               specifiedType: const FullType(OsmUID)) as OsmUID?;
           break;
         case 'task_type':
@@ -133,6 +147,14 @@ class _$ModeratorTaskSerializer implements StructuredSerializer<ModeratorTask> {
         case 'resolution_time':
           result.resolutionTime = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
+          break;
+        case 'resolver':
+          result.resolver = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'resolver_action':
+          result.resolverAction = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'lang':
           result.lang = serializers.deserialize(value,
@@ -167,6 +189,10 @@ class _$ModeratorTask extends ModeratorTask {
   @override
   final int? resolutionTime;
   @override
+  final String? resolver;
+  @override
+  final String? resolverAction;
+  @override
   final String? lang;
 
   factory _$ModeratorTask([void Function(ModeratorTaskBuilder)? updates]) =>
@@ -183,6 +209,8 @@ class _$ModeratorTask extends ModeratorTask {
       this.assignee,
       this.assignTime,
       this.resolutionTime,
+      this.resolver,
+      this.resolverAction,
       this.lang})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'ModeratorTask', 'id');
@@ -215,6 +243,8 @@ class _$ModeratorTask extends ModeratorTask {
         assignee == other.assignee &&
         assignTime == other.assignTime &&
         resolutionTime == other.resolutionTime &&
+        resolver == other.resolver &&
+        resolverAction == other.resolverAction &&
         lang == other.lang;
   }
 
@@ -229,16 +259,20 @@ class _$ModeratorTask extends ModeratorTask {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, id.hashCode),
-                                            barcode.hashCode),
-                                        osmUID.hashCode),
-                                    taskType.hashCode),
-                                taskSourceUserId.hashCode),
-                            textFromUser.hashCode),
-                        creationTime.hashCode),
-                    assignee.hashCode),
-                assignTime.hashCode),
-            resolutionTime.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, id.hashCode),
+                                                    barcode.hashCode),
+                                                osmUID.hashCode),
+                                            taskType.hashCode),
+                                        taskSourceUserId.hashCode),
+                                    textFromUser.hashCode),
+                                creationTime.hashCode),
+                            assignee.hashCode),
+                        assignTime.hashCode),
+                    resolutionTime.hashCode),
+                resolver.hashCode),
+            resolverAction.hashCode),
         lang.hashCode));
   }
 
@@ -247,7 +281,7 @@ class _$ModeratorTask extends ModeratorTask {
     return (newBuiltValueToStringHelper('ModeratorTask')
           ..add('id', id)
           ..add('barcode', barcode)
-          ..add('osmId', osmUID)
+          ..add('osmUID', osmUID)
           ..add('taskType', taskType)
           ..add('taskSourceUserId', taskSourceUserId)
           ..add('textFromUser', textFromUser)
@@ -255,6 +289,8 @@ class _$ModeratorTask extends ModeratorTask {
           ..add('assignee', assignee)
           ..add('assignTime', assignTime)
           ..add('resolutionTime', resolutionTime)
+          ..add('resolver', resolver)
+          ..add('resolverAction', resolverAction)
           ..add('lang', lang))
         .toString();
   }
@@ -272,9 +308,9 @@ class ModeratorTaskBuilder
   String? get barcode => _$this._barcode;
   set barcode(String? barcode) => _$this._barcode = barcode;
 
-  OsmUID? _osmId;
-  OsmUID? get osmId => _$this._osmId;
-  set osmId(OsmUID? osmId) => _$this._osmId = osmId;
+  OsmUID? _osmUID;
+  OsmUID? get osmUID => _$this._osmUID;
+  set osmUID(OsmUID? osmUID) => _$this._osmUID = osmUID;
 
   String? _taskType;
   String? get taskType => _$this._taskType;
@@ -306,6 +342,15 @@ class ModeratorTaskBuilder
   set resolutionTime(int? resolutionTime) =>
       _$this._resolutionTime = resolutionTime;
 
+  String? _resolver;
+  String? get resolver => _$this._resolver;
+  set resolver(String? resolver) => _$this._resolver = resolver;
+
+  String? _resolverAction;
+  String? get resolverAction => _$this._resolverAction;
+  set resolverAction(String? resolverAction) =>
+      _$this._resolverAction = resolverAction;
+
   String? _lang;
   String? get lang => _$this._lang;
   set lang(String? lang) => _$this._lang = lang;
@@ -317,7 +362,7 @@ class ModeratorTaskBuilder
     if ($v != null) {
       _id = $v.id;
       _barcode = $v.barcode;
-      _osmId = $v.osmUID;
+      _osmUID = $v.osmUID;
       _taskType = $v.taskType;
       _taskSourceUserId = $v.taskSourceUserId;
       _textFromUser = $v.textFromUser;
@@ -325,6 +370,8 @@ class ModeratorTaskBuilder
       _assignee = $v.assignee;
       _assignTime = $v.assignTime;
       _resolutionTime = $v.resolutionTime;
+      _resolver = $v.resolver;
+      _resolverAction = $v.resolverAction;
       _lang = $v.lang;
       _$v = null;
     }
@@ -349,7 +396,7 @@ class ModeratorTaskBuilder
             id: BuiltValueNullFieldError.checkNotNull(
                 id, 'ModeratorTask', 'id'),
             barcode: barcode,
-            osmUID: osmId,
+            osmUID: osmUID,
             taskType: BuiltValueNullFieldError.checkNotNull(
                 taskType, 'ModeratorTask', 'taskType'),
             taskSourceUserId: BuiltValueNullFieldError.checkNotNull(
@@ -360,6 +407,8 @@ class ModeratorTaskBuilder
             assignee: assignee,
             assignTime: assignTime,
             resolutionTime: resolutionTime,
+            resolver: resolver,
+            resolverAction: resolverAction,
             lang: lang);
     replace(_$result);
     return _$result;

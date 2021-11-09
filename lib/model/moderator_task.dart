@@ -28,6 +28,10 @@ abstract class ModeratorTask
   int? get assignTime;
   @BuiltValueField(wireName: 'resolution_time')
   int? get resolutionTime;
+  @BuiltValueField(wireName: 'resolver')
+  String? get resolver;
+  @BuiltValueField(wireName: 'resolver_action')
+  String? get resolverAction;
 
   @BuiltValueField(wireName: 'lang')
   String? get lang;

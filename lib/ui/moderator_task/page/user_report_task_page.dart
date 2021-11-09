@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend_product.dart';
+import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/components/linkify_url.dart';
 import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante/model/product.dart';
 import 'package:plante_web_admin/backend_extensions.dart';
+import 'package:plante_web_admin/utils/moderation_utils.dart';
 
 import 'moderator_page_base.dart';
 
@@ -50,7 +53,7 @@ class _UserReportTaskPageState
       Text(context.strings.web_user_report_task_page_descr),
       SizedBox(height: 50),
       Row(children: [
-        Text(context.strings.web_user_report_task_page_product,
+        Text(context.strings.web_global_product_is,
             style: Theme.of(context).textTheme.headline6),
         LinkifyUrl("https://world.openfoodfacts.org/product/${task.barcode}/"),
       ]),
@@ -108,5 +111,35 @@ class _UserReportTaskPageState
       }
     }
     return true;
+  }
+
+  @override
+  Future<String> plannedActionPastTense() async {
+    final task = widget.task;
+    var action = 'Moderated report "${task.textFromUser}" for ';
+    if (task.barcode != null) {
+      final productRes = await ModerationUtils.productWith(task.barcode!);
+      if (productRes.isErr) {
+        showSnackBar(context.strings.global_something_went_wrong, context);
+        throw Exception(productRes.unwrapErr());
+      }
+      final fullProduct = productRes.unwrap();
+      action += 'product ${fullProduct.name} (${fullProduct.barcode})';
+    } else if (task.osmUID != null) {
+      final shopAndAddressRes =
+          await ModerationUtils.shopAndAddress(task.osmUID!);
+      if (shopAndAddressRes.isErr) {
+        showSnackBar(context.strings.global_something_went_wrong, context);
+        throw Exception(shopAndAddressRes.unwrapErr());
+      }
+      final shop = shopAndAddressRes.unwrap().first;
+      final address = shopAndAddressRes.unwrap().second;
+      action += '$shop ($address)';
+    }
+    if (widget.backendProduct != product) {
+      action +=
+          ' and changed product from: ${widget.backendProduct} to $product';
+    }
+    return action;
   }
 }

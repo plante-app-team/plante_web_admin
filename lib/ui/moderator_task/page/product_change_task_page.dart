@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/outside/backend/backend_product.dart';
+import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/components/linkify_url.dart';
 import 'package:plante_web_admin/ui/components/veg_statuses_widget.dart';
 import 'package:plante/l10n/strings.dart';
 import 'package:plante_web_admin/backend_extensions.dart';
+import 'package:plante_web_admin/utils/moderation_utils.dart';
+import 'package:plante/model/product.dart';
 
 import 'moderator_page_base.dart';
 
@@ -56,7 +59,7 @@ class _ProductChangeTaskPageState
           SizedBox(height: 50),
           if (product.barcode.isNotEmpty)
             Row(children: [
-              Text(context.strings.web_product_change_task_page_product,
+              Text(context.strings.web_global_shop_is,
                   style: Theme.of(context).textTheme.headline6),
               LinkifyUrl(
                   "https://$lang.openfoodfacts.org/product/${task.barcode}/"),
@@ -97,5 +100,20 @@ class _ProductChangeTaskPageState
       }
     }
     return true;
+  }
+
+  @override
+  Future<String> plannedActionPastTense() async {
+    final task = widget.task;
+    final productRes = await ModerationUtils.productWith(task.barcode!);
+    if (productRes.isErr) {
+      showSnackBar(context.strings.global_something_went_wrong, context);
+      throw Exception(productRes.unwrapErr());
+    }
+    final productFull = productRes.unwrap();
+    var action =
+        'Moderated product ${productFull.name} (${productFull.barcode})';
+    action += ' and changed product from: ${widget.backendProduct} to $product';
+    return action;
   }
 }
