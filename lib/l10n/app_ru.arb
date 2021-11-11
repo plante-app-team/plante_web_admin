@@ -4,6 +4,7 @@
     "web_global_task_not_resolved": "Задача не решена",
     "web_global_product_is": "Продукт: ",
     "web_global_shop_is": "Магазин: ",
+    "web_global_user_is": "Пользователь: ",
 
     "web_main_actions_widget_nameless_moderator": "безымянный модератор",
     "web_main_actions_widget_hello": "Привет,",
@@ -29,7 +30,6 @@
 
     "web_user_report_task_page_title": "Получена жалоба на продукт",
     "web_user_report_task_page_descr": "Пожалуйста, попробуйте исправить проблему из текста жалобы. \nДля этого возможно придётся перейти на страницу продукта в \nOpen Food Facts и отредактировать его там, либо поменять вег-статус продукта тут.",
-    "web_user_report_task_page_user": "Пользователь: ",
     "web_user_report_task_page_complaint": "Жалоба: ",
     "web_user_report_task_page_product_exists_only_in_off": "Продукт существует только в Open Food Facts",
     "web_user_report_task_page_moderated": "Промодерировано",
@@ -39,17 +39,15 @@
     "web_product_change_task_page_title": "Продукт создан/изменён",
     "web_product_change_task_page_descr": "Пожалуйста, убедитесь, что продукт в Open Food Facts:\n- имеет нормальное фото упаковки\n- имеет нормальное фото состава\n- текст состава соответствует фото\n- имя бренда и категорий, если есть, соответствуют продукту.\nНужно понять правильный вег-статус продукта, используя:",
     "web_product_change_task_page_empty_product_error_descr": "Пустой продукт - произошла серверная ошибка. Нажмите \"Промодерировано\" и сообщите о об ошибке разработчику",
-    "web_product_change_task_page_user": "Пользователь: ",
-    "web_product_change_task_page_moderated": "Промодерировано",
 
     "web_osm_shop_creation_task_page_title": "Магазин создан в Open Street Map",
-    "web_osm_shop_creation_task_page_descr": "Пожалуйста, убедитесь, что созданный магазин в Open Street Map:\n- имеет нормальное название\n- имеет правдоподобную локацию\nЕсли с магазином что-то не так, его следует удалить",
-    "web_osm_shop_creation_task_page_user": "Пользователь: ",
-    "web_osm_shop_creation_task_page_moderated": "Промодерировано",
+    "web_osm_shop_creation_task_page_descr": "Как модерировать новый магазин:",
+    "web_osm_shop_creation_task_page_danger_title": "Опасно",
+    "web_osm_shop_creation_task_page_delete_shop_move_products_to": "Удалить магазин и перенести продукты в: ",
+    "web_osm_shop_creation_task_page_osm_url_label": "Ссылка на магазин в Open Street Map",
 
     "web_shop_manual_validation_task_page_title": "Магазин нуждается в ручной проверке",
     "web_shop_manual_validation_task_page_descr": "Авто-проверку магазина <SHOP> не удалось выполнить, механизм авто-проверки создал эту задачу модерации.\nВ большинстве случаев нужен прямой доступ до базы данных чтобы выполнить ручную проверку. Если у вас его нет, отправьте задачу тому, у кого есть.\nДля выполнения ручной проверки убедитесь, что магазин существует в Open Street Map, что он действительно магазин и что нет причин удалять его.\nЕсли причины есть - нажмите на галочку. Иначе измените магазин в БД вручную.",
-    "web_shop_manual_validation_task_page_user": "Пользователь: ",
     "web_shop_manual_validation_task_page_delete_shop": "Удалить магазин",
     "web_shop_manual_validation_task_page_delete_shop_warning": "Удалить магазин? Это действие НЕ МОЖЕТ БЫТЬ ОТМЕНЕНО",
 

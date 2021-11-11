@@ -55,7 +55,7 @@ class _ShopManualValidationTaskPageState
             "https://www.openstreetmap.org/${osmUID.type.name}/${osmUID.osmId}/"),
       ]),
       Row(children: [
-        Text(context.strings.web_shop_manual_validation_task_page_user,
+        Text(context.strings.web_global_user_is,
             style: Theme.of(context).textTheme.headline6),
         SelectableText(widget.task.taskSourceUserId)
       ]),

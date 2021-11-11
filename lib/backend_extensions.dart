@@ -78,7 +78,7 @@ extension BackendExtensions on Backend {
   }
 
   Future<Result<None, BackendError>> deleteShop(OsmUID shopUid) async {
-    var resp = await customGet("delete_shop/", {
+    var resp = await customGet("delete_shop_locally/", {
       "shopOsmUID": shopUid.toString(),
     });
     if (resp.isOk) {

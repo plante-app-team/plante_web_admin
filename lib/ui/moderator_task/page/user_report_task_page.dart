@@ -58,7 +58,7 @@ class _UserReportTaskPageState
         LinkifyUrl("https://world.openfoodfacts.org/product/${task.barcode}/"),
       ]),
       Row(children: [
-        Text(context.strings.web_user_report_task_page_user,
+        Text(context.strings.web_global_user_is,
             style: Theme.of(context).textTheme.headline6),
         SelectableText(task.taskSourceUserId)
       ]),

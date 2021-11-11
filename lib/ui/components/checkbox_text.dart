@@ -10,11 +10,14 @@ class CheckboxText extends StatelessWidget {
   /// See [Checkbox.onChanged]
   final ValueChanged<bool?>? onChanged;
 
+  final TextStyle? textStyle;
+
   const CheckboxText(
       {Key? key,
       required this.text,
       required this.value,
-      required this.onChanged})
+      required this.onChanged,
+      this.textStyle = TextStyles.normal})
       : super(key: key);
 
   @override
@@ -27,7 +30,7 @@ class CheckboxText extends StatelessWidget {
             },
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               Checkbox(value: value, onChanged: onChanged),
-              Text(text, style: TextStyles.normal),
+              Text(text, style: textStyle),
             ])));
   }
 }
