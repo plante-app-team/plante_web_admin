@@ -90,4 +90,23 @@ extension BackendExtensions on Backend {
       return Err(BackendError.fromResp(resp));
     }
   }
+
+  Future<Result<None, BackendError>> recordCustomModerationAction(String action,
+      {String? barcode, OsmUID? osmUID}) async {
+    final params = {
+      "performedAction": action,
+    };
+    if (barcode != null) {
+      params["barcode"] = barcode;
+    }
+    if (osmUID != null) {
+      params["osmUID"] = osmUID.toString();
+    }
+    var resp = await customGet("record_custom_moderation_action/", params);
+    if (resp.isOk) {
+      return Ok(None());
+    } else {
+      return Err(BackendError.fromResp(resp));
+    }
+  }
 }

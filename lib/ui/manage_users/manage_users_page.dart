@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/l10n/strings.dart';
+import 'package:plante_web_admin/backend_extensions.dart';
 
 class ManageUsersPage extends StatefulWidget {
   @override
@@ -63,6 +64,13 @@ class _ManageUsersPageState extends State<ManageUsersPage> {
                           _loading = true;
                         });
                         try {
+                          final recordResp =
+                              await _backend.recordCustomModerationAction(
+                                  'User deletion: $deletedUserId');
+                          if (recordResp.isErr) {
+                            throw Exception(
+                                'Backend error: ${recordResp.unwrapErr()}');
+                          }
                           final resp = await _backend.customGet(
                               "delete_user/", {"userId": deletedUserId});
                           final json = jsonDecode(resp.body);

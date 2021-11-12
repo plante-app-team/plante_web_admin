@@ -21,6 +21,7 @@ class _ManageProductPageState extends State<ManageProductPage> {
   final _backend = GetIt.I.get<Backend>();
   final _barcodeInputController = TextEditingController();
   BackendProduct? _foundProduct;
+  BackendProduct? _foundProductUnchanged;
   bool _loading = false;
 
   bool _changeProductVegStatuses = false;
@@ -93,8 +94,10 @@ class _ManageProductPageState extends State<ManageProductPage> {
       final products = productRes.maybeOk()?.products;
       if (products != null && products.isNotEmpty) {
         _foundProduct = products.first;
+        _foundProductUnchanged = _foundProduct;
       } else {
         _foundProduct = null;
+        _foundProductUnchanged = null;
       }
       _changeProductVegStatuses = false;
     });
@@ -116,8 +119,15 @@ class _ManageProductPageState extends State<ManageProductPage> {
   void _onSendModifications() async {
     _performNetworkAction(() async {
       final product = _foundProduct!;
+      final initialProduct = _foundProductUnchanged!;
       if (_changeProductVegStatuses) {
-        final resp = await _backend.moderateProduct(
+        var resp = await _backend.recordCustomModerationAction(
+            'Modified product from $initialProduct to $product',
+            barcode: product.barcode);
+        if (resp.isErr) {
+          throw Exception('Backend error: ${resp.unwrapErr()}');
+        }
+        resp = await _backend.moderateProduct(
             product.barcode,
             product.veganStatus,
             product.moderatorVeganChoiceReasons,
