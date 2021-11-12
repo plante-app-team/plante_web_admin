@@ -93,7 +93,7 @@ class _ProductChangeTaskPageState
       final resp = await backend.moderateProduct(
           product.barcode,
           product.veganStatus,
-          product.moderatorVeganChoiceReason,
+          product.moderatorVeganChoiceReasons,
           product.moderatorVeganSourcesText);
       if (resp.isErr) {
         throw Exception('Backend error: ${resp.unwrapErr()}');

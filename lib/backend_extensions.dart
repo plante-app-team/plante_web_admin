@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:plante/base/result.dart';
 import 'package:plante/model/lang_code.dart';
+import 'package:plante/model/moderator_choice_reason.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_error.dart';
 import 'package:plante/outside/map/osm_uid.dart';
@@ -11,10 +12,12 @@ extension BackendExtensions on Backend {
   Future<Result<None, BackendError>> moderateProduct(
       String barcode,
       String? veganStatus,
-      int? veganStatusChoiceReason,
+      String? veganStatusChoiceReasonsStr,
       String? veganStatusChoiceReasonSource) async {
+    final veganStatusChoiceReasons =
+        moderatorChoiceReasonFromPersistentIdsStr(veganStatusChoiceReasonsStr);
     if (veganStatus == null &&
-        (veganStatusChoiceReason != null ||
+        (veganStatusChoiceReasons.isNotEmpty ||
             veganStatusChoiceReasonSource != null)) {
       throw Exception(
           'Moderator veg-status reasoning does not make sense without the status set');
@@ -27,10 +30,10 @@ extension BackendExtensions on Backend {
         throw Exception('Unexpected response: ${resp.body}');
       }
 
-      final choiceReasonParams = <String, String>{};
-      if (veganStatusChoiceReason != null) {
-        choiceReasonParams['veganChoiceReason'] =
-            veganStatusChoiceReason.toString();
+      final choiceReasonParams = <String, dynamic>{};
+      if (veganStatusChoiceReasons.isNotEmpty) {
+        choiceReasonParams['veganChoiceReasons'] =
+            veganStatusChoiceReasons.map((e) => '${e.persistentId}');
       }
       if (veganStatusChoiceReasonSource != null) {
         choiceReasonParams['veganSourcesText'] = veganStatusChoiceReasonSource;

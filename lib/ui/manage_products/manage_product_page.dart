@@ -29,59 +29,61 @@ class _ManageProductPageState extends State<ManageProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-            child: Container(
-                width: 1000,
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  SizedBox(
-                      width: 400,
-                      child: InputFieldPlante(
-                        controller: _barcodeInputController,
-                        label: context.strings.global_barcode,
-                      )),
-                  SizedBox(height: 30),
-                  SizedBox(
-                      width: 400,
-                      child: ButtonOutlinedPlante.withText(
-                        context.strings.web_manage_product_page_search,
-                        onPressed: _onProductSearch,
-                      )),
-                  SizedBox(height: 50),
-                  if (_loading) CircularProgressIndicator(),
-                  if (!_loading &&
-                      _foundProduct == null &&
-                      _barcodeInputController.text.isNotEmpty)
-                    Text(context
-                        .strings.web_manage_product_page_product_not_found),
-                  if (!_loading &&
-                      _foundProduct == null &&
-                      _barcodeInputController.text.isEmpty)
-                    Text(context.strings.web_manage_product_page_type_barcode),
-                  if (!_loading && _foundProduct != null)
-                    Column(children: [
-                      VegStatusesWidget(_onProductVegStatusesChange,
-                          _changeProductVegStatuses, _foundProduct!),
-                      SizedBox(height: 25),
-                      CheckboxText(
-                          text: context.strings
-                              .web_user_report_task_page_change_veg_statuses,
-                          value: _changeProductVegStatuses,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _changeProductVegStatuses = value ?? false;
-                            });
-                          }),
-                      SizedBox(height: 50),
+            child: SingleChildScrollView(
+                child: Container(
+                    width: 1000,
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
                       SizedBox(
-                          width: 500,
-                          child: ButtonOutlinedPlante.withText(
-                            context.strings
-                                .web_manage_product_page_send_modifications,
-                            onPressed: _canSendModifications()
-                                ? _onSendModifications
-                                : null,
+                          width: 400,
+                          child: InputFieldPlante(
+                            controller: _barcodeInputController,
+                            label: context.strings.global_barcode,
                           )),
-                    ])
-                ]))));
+                      SizedBox(height: 30),
+                      SizedBox(
+                          width: 400,
+                          child: ButtonOutlinedPlante.withText(
+                            context.strings.web_manage_product_page_search,
+                            onPressed: _onProductSearch,
+                          )),
+                      SizedBox(height: 50),
+                      if (_loading) CircularProgressIndicator(),
+                      if (!_loading &&
+                          _foundProduct == null &&
+                          _barcodeInputController.text.isNotEmpty)
+                        Text(context
+                            .strings.web_manage_product_page_product_not_found),
+                      if (!_loading &&
+                          _foundProduct == null &&
+                          _barcodeInputController.text.isEmpty)
+                        Text(context
+                            .strings.web_manage_product_page_type_barcode),
+                      if (!_loading && _foundProduct != null)
+                        Column(children: [
+                          VegStatusesWidget(_onProductVegStatusesChange,
+                              _changeProductVegStatuses, _foundProduct!),
+                          SizedBox(height: 25),
+                          CheckboxText(
+                              text: context.strings
+                                  .web_user_report_task_page_change_veg_statuses,
+                              value: _changeProductVegStatuses,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  _changeProductVegStatuses = value ?? false;
+                                });
+                              }),
+                          SizedBox(height: 50),
+                          SizedBox(
+                              width: 500,
+                              child: ButtonOutlinedPlante.withText(
+                                context.strings
+                                    .web_manage_product_page_send_modifications,
+                                onPressed: _canSendModifications()
+                                    ? _onSendModifications
+                                    : null,
+                              )),
+                        ])
+                    ])))));
   }
 
   void _onProductSearch() async {
@@ -117,8 +119,8 @@ class _ManageProductPageState extends State<ManageProductPage> {
       if (_changeProductVegStatuses) {
         final resp = await _backend.moderateProduct(
             product.barcode,
-            product.vegetarianStatus,
-            product.moderatorVeganChoiceReason,
+            product.veganStatus,
+            product.moderatorVeganChoiceReasons,
             product.moderatorVeganSourcesText);
         if (resp.isErr) {
           throw Exception('Backend error: ${resp.unwrapErr()}');

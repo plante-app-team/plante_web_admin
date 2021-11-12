@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plante/base/base.dart';
 import 'package:plante/model/moderator_choice_reason.dart';
 import 'package:plante/model/veg_status.dart';
 import 'package:plante/l10n/strings.dart';
@@ -37,14 +38,6 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
     return VegStatus.safeValueOf(_product.veganStatus!);
   }
 
-  ModeratorChoiceReason? get _veganChoiceReason {
-    if (_product.moderatorVeganChoiceReason == null) {
-      return null;
-    }
-    return moderatorChoiceReasonFromPersistentId(
-        _product.moderatorVeganChoiceReason!);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -57,7 +50,7 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
     _product = updatedProduct;
     if (oldVegStatus != _veganStatus) {
       _product = _product.rebuild((e) => e
-        ..moderatorVeganChoiceReason = null
+        ..moderatorVeganChoiceReasons = null
         ..moderatorVeganSourcesText = null);
     }
     widget.callback.call(_product);
@@ -79,10 +72,9 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
             updateProduct(_product.rebuild((e) => e.veganStatus = value?.name));
           };
 
-    return Column(children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Center(
           child: Column(
-              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -111,16 +103,21 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
                 value: VegStatus.unknown,
                 groupValue: _veganStatus,
                 onChanged: veganChangeCallback),
-            _ModeratorChoiceReasoningWidget(
+            _ModeratorChoiceReasonsStrWidget(
                 widget.editable,
                 _veganStatus,
-                _veganChoiceReason,
+                _product.moderatorVeganChoiceReasons,
+                _veganStatus?.possibleReasons ?? const [], (newVal) {
+              updateProduct(_product
+                  .rebuild((e) => e..moderatorVeganChoiceReasons = newVal));
+            }),
+            _ModeratorCommentWidget(
+                widget.editable,
+                _veganStatus,
                 _product.moderatorVeganSourcesText,
-                _veganStatus?.possibleReasons ?? const [],
-                (choiceReason, sources) {
-              updateProduct(_product.rebuild((e) => e
-                ..moderatorVeganChoiceReason = choiceReason?.persistentId
-                ..moderatorVeganSourcesText = sources));
+                _product.moderatorVeganChoiceReasonsList, (sources) {
+              updateProduct(_product
+                  .rebuild((e) => e..moderatorVeganSourcesText = sources));
             }),
           ])),
       RadioText<bool>(
@@ -135,13 +132,13 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
                     updateProduct(_product.rebuild((e) => e
                       ..veganStatus = null
                       ..veganStatusSource = null
-                      ..moderatorVeganChoiceReason = null
+                      ..moderatorVeganChoiceReasons = null
                       ..moderatorVeganSourcesText = null));
                   } else if (value == false) {
                     updateProduct(_product.rebuild((e) => e
                       ..veganStatus = VegStatus.unknown.name
                       ..veganStatusSource = VegStatusSource.moderator.name
-                      ..moderatorVeganChoiceReason = null
+                      ..moderatorVeganChoiceReasons = null
                       ..moderatorVeganSourcesText = null));
                   }
                 }),
@@ -149,115 +146,167 @@ class _VegStatusesWidgetState extends State<VegStatusesWidget> {
   }
 }
 
-typedef _ModeratorChoiceReasoningCallback = void Function(
-    ModeratorChoiceReason? choiceReason, String? sources);
-
-class _ModeratorChoiceReasoningWidget extends StatefulWidget {
+class _ModeratorCommentWidget extends StatefulWidget {
   final bool editable;
   final VegStatus? vegStatus;
-  final ModeratorChoiceReason? moderatorChoiceReason;
-  final String? sources;
-  final List<ModeratorChoiceReason> acceptableReasons;
-  final _ModeratorChoiceReasoningCallback callback;
-  _ModeratorChoiceReasoningWidget(
-      this.editable,
-      this.vegStatus,
-      this.moderatorChoiceReason,
-      this.sources,
-      this.acceptableReasons,
-      this.callback,
+  final String? comment;
+  final List<ModeratorChoiceReason> moderatorChoiceReasons;
+  final ArgCallback<String?> callback;
+  _ModeratorCommentWidget(this.editable, this.vegStatus, this.comment,
+      this.moderatorChoiceReasons, this.callback,
       {Key? key})
       : super(key: key);
 
   @override
-  __ModeratorChoiceReasoningWidgetState createState() =>
-      __ModeratorChoiceReasoningWidgetState();
+  _ModeratorCommentWidgetState createState() => _ModeratorCommentWidgetState();
 }
 
-class __ModeratorChoiceReasoningWidgetState
-    extends State<_ModeratorChoiceReasoningWidget> {
-  final _sourcesController = TextEditingController();
-
-  List<ModeratorChoiceReason?> get acceptableReasons {
-    final result = <ModeratorChoiceReason?>[];
-    result.add(null);
-    result.addAll(widget.acceptableReasons);
-    return result;
-  }
+class _ModeratorCommentWidgetState extends State<_ModeratorCommentWidget> {
+  final _commentController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _sourcesController.text = widget.sources ?? '';
-    _sourcesController.addListener(() {
+    _commentController.text = widget.comment ?? '';
+    _commentController.addListener(() {
       final String? text;
-      if (_sourcesController.text.isNotEmpty) {
-        text = _sourcesController.text;
+      if (_commentController.text.isNotEmpty) {
+        text = _commentController.text;
       } else {
         text = null;
       }
-      widget.callback.call(widget.moderatorChoiceReason, text);
+      widget.callback.call(text);
     });
   }
 
   @override
-  void didUpdateWidget(_ModeratorChoiceReasoningWidget oldWidget) {
+  void didUpdateWidget(_ModeratorCommentWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if ((widget.sources ?? '') != _sourcesController.text) {
-      _sourcesController.text = widget.sources ?? '';
+    if ((widget.comment ?? '') != _commentController.text) {
+      _commentController.text = widget.comment ?? '';
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      child: Column(children: [
-        if (widget.vegStatus != null)
-          Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 15),
-                Text(context.strings.web_veg_statuses_veg_status_choice_reason,
-                    style: TextStyles.hint),
-                DropdownPlante<ModeratorChoiceReason?>(
-                    isExpanded: true,
-                    value: widget.moderatorChoiceReason,
-                    values: acceptableReasons,
-                    dropdownItemBuilder: (value) {
-                      final String text;
+    return Column(children: [
+      if (widget.vegStatus != null && widget.moderatorChoiceReasons.isNotEmpty)
+        Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 15),
+              Text(context
+                  .strings.web_veg_statuses_veg_status_choice_reason_source),
+              InputFieldMultilinePlante(
+                readOnly: !widget.editable,
+                controller: _commentController,
+              ),
+            ])
+    ]);
+  }
+}
+
+class _ModeratorChoiceReasonsStrWidget extends StatefulWidget {
+  final bool editable;
+  final VegStatus? vegStatus;
+  final String? moderatorChoiceReasonsStr;
+  final List<ModeratorChoiceReason> acceptableReasons;
+  final ArgCallback<String?> callback;
+  _ModeratorChoiceReasonsStrWidget(this.editable, this.vegStatus,
+      this.moderatorChoiceReasonsStr, this.acceptableReasons, this.callback,
+      {Key? key})
+      : super(key: key);
+
+  @override
+  _ModeratorChoiceReasonsStrWidgetState createState() =>
+      _ModeratorChoiceReasonsStrWidgetState();
+}
+
+class _ModeratorChoiceReasonsStrWidgetState
+    extends State<_ModeratorChoiceReasonsStrWidget> {
+  final chosenReasons = <ModeratorChoiceReason>[];
+
+  @override
+  void initState() {
+    super.initState();
+    chosenReasons.addAll(moderatorChoiceReasonFromPersistentIdsStr(
+        widget.moderatorChoiceReasonsStr));
+  }
+
+  @override
+  void didUpdateWidget(_ModeratorChoiceReasonsStrWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    chosenReasons.removeWhere((e) => !widget.acceptableReasons.contains(e));
+  }
+
+  List<ModeratorChoiceReason?> get acceptableReasons {
+    final result = <ModeratorChoiceReason?>[];
+    result.add(null);
+    result.addAll(widget.acceptableReasons);
+    result.removeWhere((e) => chosenReasons.contains(e));
+    return result;
+  }
+
+  String? get chosenReasonsStr {
+    if (chosenReasons.isEmpty) {
+      return null;
+    }
+    return chosenReasons.map((e) => e.persistentId).join(',');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final content = Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 15),
+          Text(context.strings.web_veg_statuses_veg_status_choice_reason),
+          ...chosenReasons.map((e) => Column(children: [
+                Row(children: [
+                  IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: !widget.editable
+                          ? null
+                          : () {
+                              setState(() {
+                                chosenReasons.remove(e);
+                                widget.callback.call(chosenReasonsStr);
+                              });
+                            }),
+                  Flexible(
+                      child: SelectableText(
+                          '${e.persistentId}. ' + e.localize(context),
+                          style: TextStyles.normal)),
+                ]),
+                const SizedBox(height: 8),
+              ])),
+          DropdownPlante<ModeratorChoiceReason?>(
+              isExpanded: true,
+              value: null,
+              values: acceptableReasons,
+              dropdownItemBuilder: (value) {
+                final String text;
+                if (value != null) {
+                  text = '${value.persistentId}. ${value.localize(context)}';
+                } else {
+                  text = '-';
+                }
+                return Text(text, style: TextStyles.normal);
+              },
+              onChanged: widget.editable == false
+                  ? null
+                  : (value) {
                       if (value != null) {
-                        text =
-                            '${value.persistentId}. ${value.localize(context)}';
-                      } else {
-                        text = '-';
+                        setState(() {
+                          chosenReasons.add(value);
+                          widget.callback.call(chosenReasonsStr);
+                        });
                       }
-                      return Text(text, style: TextStyles.normal);
-                    },
-                    onChanged: widget.editable == false
-                        ? null
-                        : (value) {
-                            widget.callback.call(value, widget.sources);
-                          })
-              ]),
-        if (widget.vegStatus != null && widget.moderatorChoiceReason != null)
-          Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 15),
-                Text(
-                    context.strings
-                        .web_veg_statuses_veg_status_choice_reason_source,
-                    style: TextStyles.hint),
-                InputFieldMultilinePlante(
-                  readOnly: !widget.editable,
-                  controller: _sourcesController,
-                ),
-              ])
-      ]),
-    );
+                    })
+        ]);
+    return Column(children: [if (widget.vegStatus != null) content]);
   }
 }
 
@@ -269,5 +318,12 @@ extension _VegStatusExt on VegStatus {
     result.sort((ModeratorChoiceReason lhs, ModeratorChoiceReason rhs) =>
         lhs.persistentId - rhs.persistentId);
     return result;
+  }
+}
+
+extension _BackendProductExt on BackendProduct {
+  List<ModeratorChoiceReason> get moderatorVeganChoiceReasonsList {
+    return moderatorChoiceReasonFromPersistentIdsStr(
+        moderatorVeganChoiceReasons);
   }
 }

@@ -25,7 +25,7 @@
     "web_veg_statuses_widget_veg_status_possible": "Неоднозначно",
     "web_veg_statuses_widget_veg_status_unknown": "Неизвестно",
     "web_veg_statuses_widget_erase_product_veg_statuses": "Стереть вег-статусы продукта",
-    "web_veg_statuses_veg_status_choice_reason": "Причина выбора вег-статуса\n(опционально)",
+    "web_veg_statuses_veg_status_choice_reason": "Причины выбора вег-статуса\n(опционально)",
     "web_veg_statuses_veg_status_choice_reason_source": "Комментарий модератора (опционально).\nВАЖНО: поле не переводится на другие языки, поэтому в основном нужно для вставки ссылок и как последнее средство если нельзя добавить новый пункт в причину выбора вег-статуса (выше).",
 
     "web_user_report_task_page_title": "Получена жалоба на продукт",

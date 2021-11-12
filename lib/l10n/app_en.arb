@@ -25,7 +25,7 @@
     "web_veg_statuses_widget_veg_status_possible": "Ambiguous",
     "web_veg_statuses_widget_veg_status_unknown": "Unknown",
     "web_veg_statuses_widget_erase_product_veg_statuses": "Erase veg-statuses of the product",
-    "web_veg_statuses_veg_status_choice_reason": "Veg-status choice reason\n(optional)",
+    "web_veg_statuses_veg_status_choice_reason": "Veg-status choice reasons\n(optional)",
     "web_veg_statuses_veg_status_choice_reason_source": "Moderator's comment (optional).\nNOTE: this field is not auto-translatable and should be mostly used for Links and as a last resort when we cannot add new choice-reasons to the dropdown above.",
 
     "web_user_report_task_page_title": "Product complaint received",
