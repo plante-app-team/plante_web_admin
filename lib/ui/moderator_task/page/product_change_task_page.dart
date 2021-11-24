@@ -55,7 +55,7 @@ class _ProductChangeTaskPageState
               style: Theme.of(context).textTheme.headline5),
           Text(context.strings.web_product_change_task_page_descr),
           LinkifyUrl(
-              'https://plante.atlassian.net/wiki/spaces/PS/pages/26116097/How+to+moderate+products'),
+              'https://plante.atlassian.net/wiki/spaces/PS/pages/60817409/'),
           SizedBox(height: 50),
           if (product.barcode.isNotEmpty)
             Row(children: [

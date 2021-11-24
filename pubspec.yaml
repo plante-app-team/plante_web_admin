@@ -37,6 +37,7 @@ dependencies:
   intl: ^0.17.0
   get_it: ^7.1.3
   google_maps_flutter_web: ^0.3.1
+  flutter_config: ^2.0.0
   plante:
     path: submodules/plante
 

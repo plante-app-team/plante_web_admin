@@ -37,7 +37,7 @@
     "web_user_report_task_page_please_moderate_both_veg_statuses": "Пожалуйста, промодерируйте веганский статус",
 
     "web_product_change_task_page_title": "Продукт создан/изменён",
-    "web_product_change_task_page_descr": "Пожалуйста, убедитесь, что продукт в Open Food Facts:\n- имеет нормальное фото упаковки\n- имеет нормальное фото состава\n- текст состава соответствует фото\n- имя бренда и категорий, если есть, соответствуют продукту.\nНужно понять правильный вег-статус продукта, используя:",
+    "web_product_change_task_page_descr": "Как модерировать продукты:",
     "web_product_change_task_page_empty_product_error_descr": "Пустой продукт - произошла серверная ошибка. Нажмите \"Промодерировано\" и сообщите о об ошибке разработчику",
 
     "web_osm_shop_creation_task_page_title": "Магазин создан в Open Street Map",

@@ -349,6 +349,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  flutter_config:
+    dependency: "direct main"
+    description:
+      name: flutter_config
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_image_compress:
     dependency: transitive
     description:
@@ -804,7 +811,7 @@ packages:
       path: "submodules/plante"
       relative: true
     source: path
-    version: "21.10.223+49"
+    version: "21.11.180+51"
   platform:
     dependency: transitive
     description:
