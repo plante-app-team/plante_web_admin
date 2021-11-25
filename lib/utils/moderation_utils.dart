@@ -33,16 +33,12 @@ class ModerationUtils {
     return Ok(Pair(shop, address));
   }
 
-  static Future<Result<Product, String>> productWith(String barcode) async {
+  static Future<Result<Product?, String>> productWith(String barcode) async {
     final productsObtainer = GetIt.I.get<ProductsObtainer>();
     final productRes = await productsObtainer.getProduct(barcode);
     if (productRes.isErr) {
       return Err(productRes.toString());
     }
-    final product = productRes.unwrap();
-    if (product == null) {
-      return Err('Product $barcode is not found');
-    }
-    return Ok(product);
+    return Ok(productRes.unwrap());
   }
 }

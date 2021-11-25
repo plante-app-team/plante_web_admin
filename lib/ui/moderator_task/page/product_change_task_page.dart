@@ -111,8 +111,12 @@ class _ProductChangeTaskPageState
       throw Exception(productRes.unwrapErr());
     }
     final productFull = productRes.unwrap();
-    var action =
-        'Moderated product ${productFull.name} (${productFull.barcode})';
+    var action = 'Moderated product ';
+    if (productFull != null) {
+      action += '${productFull.name} (${productFull.barcode})';
+    } else {
+      action += 'which was deleted in OFF';
+    }
     action += ' and changed product from: ${widget.backendProduct} to $product';
     return action;
   }

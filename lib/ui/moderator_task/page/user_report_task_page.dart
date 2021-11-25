@@ -124,7 +124,11 @@ class _UserReportTaskPageState
         throw Exception(productRes.unwrapErr());
       }
       final fullProduct = productRes.unwrap();
-      action += 'product ${fullProduct.name} (${fullProduct.barcode})';
+      if (fullProduct != null) {
+        action += 'product ${fullProduct.name} (${fullProduct.barcode})';
+      } else {
+        action += 'product which was deleted in OFF (${task.barcode})';
+      }
     } else if (task.osmUID != null) {
       final shopAndAddressRes =
           await ModerationUtils.shopAndAddress(task.osmUID!);
