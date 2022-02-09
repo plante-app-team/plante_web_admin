@@ -5,7 +5,7 @@ import 'package:plante/model/lang_code.dart';
 import 'package:plante/model/moderator_choice_reason.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/outside/backend/backend_error.dart';
-import 'package:plante/outside/map/osm_uid.dart';
+import 'package:plante/outside/map/osm/osm_uid.dart';
 import 'package:plante_web_admin/model/latest_products_added_to_shops.dart';
 
 extension BackendExtensions on Backend {

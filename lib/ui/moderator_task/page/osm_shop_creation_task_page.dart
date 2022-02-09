@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:plante/outside/map/osm_uid.dart';
-import 'package:plante/outside/map/osm_element_type.dart';
+import 'package:plante/outside/map/osm/osm_uid.dart';
+import 'package:plante/outside/map/osm/osm_element_type.dart';
 import 'package:plante/ui/base/components/input_field_plante.dart';
 import 'package:plante/ui/base/snack_bar_utils.dart';
 import 'package:plante/ui/base/text_styles.dart';

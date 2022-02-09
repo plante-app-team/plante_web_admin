@@ -3,7 +3,7 @@ import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:plante/outside/backend/backend_product.dart';
 import 'package:plante/outside/backend/backend_shop.dart';
-import 'package:plante/outside/map/osm_uid.dart';
+import 'package:plante/outside/map/osm/osm_uid.dart';
 import 'package:plante_web_admin/model/latest_products_added_to_shops.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/model/moderator_tasks_counts.dart';

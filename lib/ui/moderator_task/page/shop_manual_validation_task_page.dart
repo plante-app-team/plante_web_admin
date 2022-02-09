@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:plante/outside/backend/backend.dart';
-import 'package:plante/outside/map/osm_shop.dart';
-import 'package:plante/outside/map/osm_uid.dart';
-import 'package:plante/outside/map/osm_element_type.dart';
+import 'package:plante/outside/map/osm/osm_shop.dart';
+import 'package:plante/outside/map/osm/osm_uid.dart';
+import 'package:plante/outside/map/osm/osm_element_type.dart';
 import 'package:plante/ui/base/ui_utils.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/components/checkbox_text.dart';

@@ -8,7 +8,7 @@ import 'package:plante/model/product.dart';
 import 'package:plante/model/shop.dart';
 import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/l10n/strings.dart';
-import 'package:plante/outside/map/open_street_map.dart';
+import 'package:plante/outside/map/osm/open_street_map.dart';
 import 'package:plante/ui/base/components/button_outlined_plante.dart';
 import 'package:plante/ui/base/components/checkbox_plante.dart';
 import 'package:plante/ui/base/components/input_field_plante.dart';

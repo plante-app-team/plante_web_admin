@@ -7,7 +7,7 @@ import 'package:plante/lang/countries_lang_codes_table.dart';
 import 'package:plante/lang/sys_lang_code_holder.dart';
 import 'package:plante/lang/user_langs_manager.dart';
 import 'package:plante/location/ip_location_provider.dart';
-import 'package:plante/location/location_controller.dart';
+import 'package:plante/location/user_location_manager.dart';
 import 'package:plante/logging/analytics.dart';
 import 'package:plante/model/coords_bounds.dart';
 import 'package:plante/model/shared_preferences_holder.dart';
@@ -18,17 +18,21 @@ import 'package:plante/outside/backend/user_params_fetcher.dart';
 import 'package:plante/outside/http_client.dart';
 import 'package:plante/outside/identity/google_authorizer.dart';
 import 'package:plante/outside/map/address_obtainer.dart';
-import 'package:plante/outside/map/osm_cached_territory.dart';
-import 'package:plante/outside/map/osm_cacher.dart';
-import 'package:plante/outside/map/osm_road.dart';
-import 'package:plante/outside/map/osm_shop.dart';
+import 'package:plante/outside/map/osm/open_street_map.dart';
+import 'package:plante/outside/map/osm/osm_cached_territory.dart';
+import 'package:plante/outside/map/osm/osm_cacher.dart';
+import 'package:plante/outside/map/osm/osm_road.dart';
+import 'package:plante/outside/map/osm/osm_shop.dart';
+import 'package:plante/outside/map/shops_large_local_cache_impl.dart';
 import 'package:plante/outside/map/shops_manager.dart';
+import 'package:plante/outside/map/user_address/caching_user_address_pieces_obtainer.dart';
 import 'package:plante/outside/off/off_api.dart';
-import 'package:plante/outside/map/open_street_map.dart';
 import 'package:plante/model/user_params_controller.dart';
+import 'package:plante/outside/off/off_geo_helper.dart';
 import 'package:plante/outside/products/products_manager.dart';
 import 'package:plante/outside/products/products_obtainer.dart';
 import 'package:plante/outside/products/taken_products_images_storage.dart';
+import 'package:plante/ui/map/latest_camera_pos_storage.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 
 void initDI() {
@@ -45,11 +49,8 @@ void initDI() {
   GetIt.I.registerSingleton<UserParamsController>(UserParamsController());
   GetIt.I.registerSingleton<HttpClient>(HttpClient());
   GetIt.I.registerSingleton<GoogleAuthorizer>(GoogleAuthorizer());
-  GetIt.I.registerSingleton<Backend>(Backend(
-      GetIt.I.get<Analytics>(),
-      GetIt.I.get<UserParamsController>(),
-      GetIt.I.get<HttpClient>(),
-      GetIt.I.get<Settings>()));
+  GetIt.I.registerSingleton<Backend>(Backend(GetIt.I.get<Analytics>(),
+      GetIt.I.get<UserParamsController>(), GetIt.I.get<HttpClient>()));
   GetIt.I.registerSingleton<MobileAppConfigManager>(MobileAppConfigManager(
       GetIt.I.get<Backend>(),
       GetIt.I.get<UserParamsController>(),
@@ -60,8 +61,7 @@ void initDI() {
       GetIt.I.get<MobileAppConfigManager>()));
   GetIt.I.registerSingleton<UserParamsAutoWiper>(UserParamsAutoWiper(
       GetIt.I.get<Backend>(), GetIt.I.get<UserParamsController>()));
-  GetIt.I.registerSingleton<OffApi>(
-      OffApi(GetIt.I.get<Settings>(), GetIt.I.get<HttpClient>()));
+  GetIt.I.registerSingleton<OffApi>(OffApi(GetIt.I.get<HttpClient>()));
   GetIt.I.registerSingleton<ProductsManager>(ProductsManager(
       GetIt.I.get<OffApi>(),
       GetIt.I.get<Backend>(),
@@ -73,18 +73,31 @@ void initDI() {
 
   GetIt.I.registerSingleton<IpLocationProvider>(
       IpLocationProvider(GetIt.I.get<HttpClient>()));
-  GetIt.I.registerSingleton<LocationController>(LocationController(
+  GetIt.I.registerSingleton<UserLocationManager>(UserLocationManager(
     GetIt.I.get<IpLocationProvider>(),
     _FakePermissionsManager(),
     GetIt.I.get<SharedPreferencesHolder>(),
   ));
   GetIt.I.registerSingleton<AddressObtainer>(
       AddressObtainer(GetIt.I.get<OpenStreetMap>()));
+
+  GetIt.I.registerSingleton<LatestCameraPosStorage>(LatestCameraPosStorage(
+    GetIt.I.get<SharedPreferencesHolder>(),
+  ));
+
+  GetIt.I.registerSingleton<CachingUserAddressPiecesObtainer>(
+      CachingUserAddressPiecesObtainer(
+    GetIt.I.get<SharedPreferencesHolder>(),
+    GetIt.I.get<UserLocationManager>(),
+    GetIt.I.get<LatestCameraPosStorage>(),
+    GetIt.I.get<AddressObtainer>(),
+  ));
+
   GetIt.I.registerSingleton<UserLangsManager>(UserLangsManager(
       GetIt.I.get<SysLangCodeHolder>(),
       CountriesLangCodesTable(GetIt.I.get<Analytics>()),
-      GetIt.I.get<LocationController>(),
-      GetIt.I.get<AddressObtainer>(),
+      GetIt.I.get<UserLocationManager>(),
+      GetIt.I.get<CachingUserAddressPiecesObtainer>(),
       GetIt.I.get<SharedPreferencesHolder>(),
       GetIt.I.get<UserParamsController>(),
       GetIt.I.get<Backend>(),
@@ -92,32 +105,30 @@ void initDI() {
 
   GetIt.I.registerSingleton<ProductsObtainer>(ProductsObtainer(
       GetIt.I.get<ProductsManager>(), GetIt.I.get<UserLangsManager>()));
+
+  GetIt.I.registerSingleton<OffGeoHelper>(OffGeoHelper(
+    GetIt.I.get<OffApi>(),
+    GetIt.I.get<AddressObtainer>(),
+    GetIt.I.get<Analytics>(),
+  ));
+
   GetIt.I.registerSingleton<ShopsManager>(ShopsManager(
       GetIt.I.get<OpenStreetMap>(),
       GetIt.I.get<Backend>(),
       GetIt.I.get<ProductsObtainer>(),
       GetIt.I.get<Analytics>(),
-      _FakeOsmCacher()));
+      _FakeOsmCacher(),
+      GetIt.I.get<OffGeoHelper>(),
+      largeCache: ShopsLargeLocalCacheImpl()));
 }
 
 class _FakeSettings implements Settings {
   @override
-  Future<bool> fakeOffApiProductNotFound() async => false;
+  Future<bool> enableNewestFeatures() async => false;
 
   @override
-  Future<void> setFakeOffApiProductNotFound(bool value) async {}
-
-  @override
-  Future<void> setTestingBackends(bool value) async {}
-
-  @override
-  Future<bool> testingBackends() async => false;
-
-  @override
-  Future<void> setTestingBackendsQuickAnswers(bool value) async {}
-
-  @override
-  Future<bool> testingBackendsQuickAnswers() async => true;
+  Future<void> setEnableNewestFeatures(bool value) =>
+      throw UnimplementedError();
 }
 
 class _FakeAnalytics implements Analytics {
@@ -214,5 +225,15 @@ class _FakeOsmCacher implements OsmCacher {
   @override
   Future<List<OsmCachedTerritory<OsmShop>>> getCachedShops() async {
     return const [];
+  }
+
+  @override
+  Future<String> dbFilePath() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteDatabase() {
+    throw UnimplementedError();
   }
 }

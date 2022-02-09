@@ -7,7 +7,7 @@ import 'package:plante/outside/backend/backend.dart';
 import 'package:plante/ui/base/text_styles.dart';
 import 'package:plante_web_admin/model/moderator_task.dart';
 import 'package:plante_web_admin/ui/components/linkify_url.dart';
-import 'package:plante/outside/map/osm_element_type.dart';
+import 'package:plante/outside/map/osm/osm_element_type.dart';
 import 'package:plante/l10n/strings.dart';
 
 class ModerationActionPage extends StatefulWidget {
