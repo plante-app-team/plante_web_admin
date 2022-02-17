@@ -181,8 +181,8 @@ abstract class ShopModerationPageStateBase<T extends ShopModerationPageBase>
     final String shopStr;
     final String addressStr;
     if (shopAndAddressRes.isErr) {
-      shopStr = '{INVALID SHOP ${task.osmUID}';
-      addressStr = '{INVALID ADDR ${task.osmUID}';
+      shopStr = '{INVALID SHOP ${task.osmUID}}';
+      addressStr = '{INVALID ADDR ${task.osmUID}}';
     } else {
       final shop = shopAndAddressRes.unwrap().first;
       final address = shopAndAddressRes.unwrap().second;
