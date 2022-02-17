@@ -55,11 +55,11 @@ class _ProductChangeTaskPageState
               style: Theme.of(context).textTheme.headline5),
           Text(context.strings.web_product_change_task_page_descr),
           LinkifyUrl(
-              'https://plante.atlassian.net/wiki/spaces/PS/pages/60817409/'),
+              'https://github.com/plante-app-team/plante_docs/blob/master/how-to-moderate-products.md'),
           SizedBox(height: 50),
           if (product.barcode.isNotEmpty)
             Row(children: [
-              Text(context.strings.web_global_shop_is,
+              Text(context.strings.web_global_product_is,
                   style: Theme.of(context).textTheme.headline6),
               LinkifyUrl(
                   "https://$lang.openfoodfacts.org/product/${task.barcode}/"),

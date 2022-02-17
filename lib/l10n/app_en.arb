@@ -48,7 +48,6 @@
     "web_shop_manual_validation_task_page_title": "A shop needs manual validation",
     "web_shop_manual_validation_task_page_descr": "Auto-validation of shop <SHOP> couldn't be done, auto-validator created this moderator task.\nMost of the time you need direct access to DB to perform manual validation. If you don't have it, send the task to someone who does.\nTo perform manual validation ensure the shop exists in Open Street Map, it's actually a shop and there's no reason to delete it.\nIf there is a reason to delete - check the checkbox. Otherwise edit it in DB directly.",
     "web_shop_manual_validation_task_page_delete_shop": "Delete shop",
-    "web_shop_manual_validation_task_page_delete_shop_warning": "Delete the shop? This action CANNOT BE UNDONE",
 
     "web_no_tasks_page_title": "There are no moderation tasks",
 
