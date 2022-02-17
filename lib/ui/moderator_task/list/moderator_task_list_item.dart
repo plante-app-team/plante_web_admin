@@ -16,6 +16,8 @@ abstract class ModeratorTaskListItem extends StatelessWidget {
       return _ShopCreatedTaskListItem(task, key: key);
     } else if (task.taskType == "osm_shop_needs_manual_validation") {
       return _ShopNeedsManualValidationTaskListItem(task, key: key);
+    } else if (task.taskType == "user_feedback") {
+      return _FeedbackTaskListItem(task, key: key);
     } else {
       throw Exception(
           'ModeratorTaskListItem Error: unknown task type ${task.taskType}');
@@ -85,6 +87,22 @@ class _ShopNeedsManualValidationTaskListItem extends ModeratorTaskListItem {
               .web_moderator_task_list_item_task_shop_needs_manual_validation,
           style: TextStyles.headline4),
       Text(task.osmUID?.toString() ?? '',
+          style: TextStyles.hint, maxLines: 1, overflow: TextOverflow.ellipsis),
+    ]);
+  }
+}
+
+class _FeedbackTaskListItem extends ModeratorTaskListItem {
+  final ModeratorTask task;
+
+  _FeedbackTaskListItem(this.task, {Key? key}) : super._(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Text(context.strings.web_moderator_task_list_item_task_feedback,
+          style: TextStyles.headline4),
+      Text(task.textFromUser ?? '',
           style: TextStyles.hint, maxLines: 1, overflow: TextOverflow.ellipsis),
     ]);
   }

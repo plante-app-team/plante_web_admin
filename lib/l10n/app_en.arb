@@ -35,6 +35,10 @@
     "web_user_report_task_page_moderated": "Moderated",
     "web_user_report_task_page_change_veg_statuses": "Change veg-statuses",
 
+    "web_user_feedback_task_page_title": "User feedback received",
+    "web_user_feedback_task_page_descr": "Please copy the feedback text to the team's chat to discuss it together.",
+    "web_user_feedback_task_page_feedback": "Feedback: ",
+
     "web_product_change_task_page_title": "Product created/modified",
     "web_product_change_task_page_descr": "How to moderate products:",
     "web_product_change_task_page_empty_product_error_descr": "Empty product - server error occurred. Click \"Moderated\" and report the error to the developer",
@@ -74,6 +78,7 @@
     "web_moderator_task_list_item_task_product_update": "Product created or updated",
     "web_moderator_task_list_item_task_shop_created": "Shop created in Open Street Map",
     "web_moderator_task_list_item_task_shop_needs_manual_validation": "Shop needs manual validation",
+    "web_moderator_task_list_item_task_feedback": "User feedback",
 
     "web_manage_product_page_search": "Search",
     "web_manage_product_page_product_not_found": "Product not found",

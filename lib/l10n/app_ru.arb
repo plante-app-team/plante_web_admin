@@ -34,7 +34,10 @@
     "web_user_report_task_page_product_exists_only_in_off": "Продукт существует только в Open Food Facts",
     "web_user_report_task_page_moderated": "Промодерировано",
     "web_user_report_task_page_change_veg_statuses": "Изменить вег-статусы",
-    "web_user_report_task_page_please_moderate_both_veg_statuses": "Пожалуйста, промодерируйте веганский статус",
+
+    "web_user_feedback_task_page_title": "Получена обратная связь от пользователя",
+    "web_user_feedback_task_page_descr": "Пожалуйста скопируйте текст пользователя в чат команды, чтобы вместе его обсудить.",
+    "web_user_feedback_task_page_feedback": "Текст: ",
 
     "web_product_change_task_page_title": "Продукт создан/изменён",
     "web_product_change_task_page_descr": "Как модерировать продукты:",
@@ -75,6 +78,7 @@
     "web_moderator_task_list_item_task_product_update": "Продукт создан или изменён",
     "web_moderator_task_list_item_task_shop_created": "Создан магазин в Open Street Map",
     "web_moderator_task_list_item_task_shop_needs_manual_validation": "Магазин нуждается в ручной проверке",
+    "web_moderator_task_list_item_task_feedback": "Обратная связь от пользователя",
 
     "web_manage_product_page_search": "Поиск",
     "web_manage_product_page_product_not_found": "Продукт не найден",

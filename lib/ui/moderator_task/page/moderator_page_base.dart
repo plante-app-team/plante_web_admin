@@ -19,6 +19,7 @@ import 'package:plante_web_admin/ui/components/checkbox_text.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/osm_shop_creation_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/product_change_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/shop_manual_validation_task_page.dart';
+import 'package:plante_web_admin/ui/moderator_task/page/user_feedback_task_page.dart';
 import 'package:plante_web_admin/ui/moderator_task/page/user_report_task_page.dart';
 import 'package:plante_web_admin/backend_extensions.dart';
 
@@ -47,6 +48,8 @@ abstract class ModeratorTaskPage extends StatefulWidget {
       return OsmShopCreationTaskPage(callback, task, task.osmUID!);
     } else if (task.taskType == "osm_shop_needs_manual_validation") {
       return ShopManualValidationTaskPage(callback, task, task.osmUID!);
+    } else if (task.taskType == "user_feedback") {
+      return UserFeedbackTaskPage(callback, task);
     } else {
       showSnackBar("Error: unknown task type ${task.taskType}", context);
       throw Exception("Error: unknown task type ${task.taskType}");
